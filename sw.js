@@ -4,6 +4,8 @@ const PRECACHE=[
   './index.html',
   './manifest.webmanifest',
   './icon.svg',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
   './飲食匯入格式範例.json'
 ];
 
