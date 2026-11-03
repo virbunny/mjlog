@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#e8f6ff" />
+<meta name="application-name" content="猛健錄" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="icon" href="icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="icon.svg" />
+<title>猛健錄 V0.3.1</title>
+<style>
+:root{--bg:#f7fbff;--card:#fff;--ink:#203040;--muted:#718096;--blue:#bfe8ff;--blue2:#e8f6ff;--pink:#ffd7e5;--green:#dff5de;--yellow:#fff1b8;--line:#dbe8f0;--accent:#4d9fd1;--danger:#d95f76}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#eef9ff,#fff8fb);font-family:system-ui,-apple-system,"Segoe UI","Noto Sans TC",sans-serif;color:var(--ink)}
+.app{max-width:760px;margin:auto;padding:16px 14px 90px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px}.title{font-weight:800;font-size:24px}.ver{font-size:12px;color:#7b93a4}.pill{display:inline-block;padding:6px 10px;border-radius:999px;background:var(--blue2);font-size:13px;color:#397ba6}
+.hero{margin-top:14px;background:linear-gradient(135deg,#dff4ff,#ffe7ef);padding:18px;border-radius:22px;box-shadow:0 6px 22px rgba(58,103,130,.08)}
+.hero .big{font-size:36px;font-weight:850;line-height:1}.hero .sub{margin-top:8px;color:var(--muted)}
+.progress{margin-top:14px;height:14px;background:#fff;border-radius:999px;overflow:hidden;border:1px solid #e4edf3}.bar{height:100%;width:0;background:linear-gradient(90deg,#7ecdf7,#ff9dbc)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 5px 16px rgba(67,97,115,.05)}.label{font-size:12px;color:var(--muted)}.value{font-size:22px;font-weight:800;margin-top:4px}
+.tabs{display:flex;gap:8px;overflow:auto;margin:18px 0 10px;padding-bottom:2px}.tab{white-space:nowrap;border:none;background:#edf5fa;padding:10px 12px;border-radius:12px;color:#46606f;font-weight:700}.tab.active{background:#bfe8ff;color:#245f83}
+.panel{display:none}.panel.active{display:block}.section-title{font-size:18px;font-weight:800;margin:14px 0 10px}.form{display:grid;gap:10px}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{display:grid;gap:5px}.field label{font-size:12px;color:var(--muted)}input,select,textarea{width:100%;border:1px solid #cfdee7;border-radius:12px;padding:11px 12px;background:#fff;font:inherit;color:var(--ink)}textarea{min-height:76px;resize:vertical}.btn{border:none;border-radius:13px;padding:12px 14px;font-weight:800;background:#7fc9f0;color:#123c56}.btn.secondary{background:#eef5f9;color:#46606f}.btn.pink{background:#ffc8da;color:#7d3148}.btn.danger{background:#ffe4e8;color:#9f3c52}.actions{display:flex;gap:8px;flex-wrap:wrap}
+.list{display:grid;gap:9px}.item{border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px}.item-top{display:flex;justify-content:space-between;gap:10px;align-items:center}.item-title{font-weight:800}.item-meta{font-size:13px;color:var(--muted);margin-top:5px}.badge{font-size:12px;padding:4px 8px;border-radius:999px;background:#eef5f9}.empty{padding:22px;text-align:center;color:var(--muted);border:1px dashed #cfdde6;border-radius:16px;background:#fbfdff}.hint{font-size:12px;color:var(--muted);line-height:1.55}.milestones{display:grid;gap:8px}.mile{display:flex;justify-content:space-between;padding:10px 12px;background:#fff;border:1px solid var(--line);border-radius:12px}.mile.done{background:#edf9ec}.bottom-note{margin-top:18px;font-size:12px;color:#7f8c95;line-height:1.5}.switch{display:flex;gap:8px;align-items:center}.switch input{width:auto}.footer{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-top:1px solid #e2edf3;padding:8px 14px}.footer-inner{max-width:760px;margin:auto;display:flex;gap:8px}.footer .btn{flex:1;padding:10px}.demo-strip{margin-top:12px;border:1px dashed #9fcfe8;background:#f8fdff;border-radius:16px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}.demo-copy{font-size:13px;color:#567180;line-height:1.5}.demo-copy b{color:#245f83}.demo-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.demo-strip .btn{padding:9px 11px;font-size:13px}.demo-active{background:#fff8e6;border-color:#ead18a}.demo-tag{display:inline-block;margin-left:6px;padding:3px 7px;border-radius:999px;background:#fff1b8;color:#725b13;font-size:11px;font-weight:800}.menu-home{margin-top:12px;background:linear-gradient(135deg,#fffef6,#eef9ff);border:1px solid var(--line);border-radius:18px;padding:14px}.menu-home-top{display:flex;justify-content:space-between;gap:10px;align-items:center}.menu-home-title{font-weight:850}.menu-home-list{margin-top:8px;display:grid;gap:5px;font-size:13px;color:#506a79}.menu-home-list div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.menu-day-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}.meal-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;display:grid;gap:8px}.meal-row{display:flex;gap:10px;align-items:flex-start}.meal-check{width:22px;height:22px;flex:0 0 auto;margin-top:2px}.meal-main{min-width:0;flex:1}.meal-name{font-weight:850}.meal-text{font-size:14px;line-height:1.55;margin-top:3px}.meal-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}.meal-chip{font-size:11px;padding:4px 7px;border-radius:999px;background:#eef6fb;color:#476879}.meal-swap{margin-top:4px}.menu-week{display:grid;gap:10px}.week-day{background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px}.week-day summary{cursor:pointer;font-weight:850}.week-meals{font-size:13px;color:#506a79;line-height:1.55;margin-top:8px;display:grid;gap:4px}.protein-progress{height:10px;background:#eef3f5;border-radius:999px;overflow:hidden;margin-top:8px}.protein-progress>div{height:100%;background:linear-gradient(90deg,#87d4a6,#7fc9f0);width:0}.smallbtn{border:none;border-radius:10px;padding:7px 9px;font-weight:800;background:#eef5f9;color:#46606f;font-size:12px}.shot-actions{display:flex;gap:7px;justify-content:flex-end;flex-wrap:wrap;margin-top:9px}.smallbtn.edit-shot{background:#e8f6ff;color:#245f83}.smallbtn.delete-shot{background:#ffe8ec;color:#9f3c52}
+
+.nutrition-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}.nutrition-card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px}.nutrition-name{font-size:12px;color:var(--muted)}.nutrition-value{font-size:18px;font-weight:850;margin-top:2px}.nutrition-sub{font-size:11px;color:var(--muted);margin-top:3px}.gap-box{margin-top:10px;background:#fffef7;border:1px solid #efe1aa;border-radius:14px;padding:11px 12px;font-size:13px;line-height:1.65}.gap-good{color:#2f7a51}.gap-near{color:#99721b}.gap-low{color:#b24b5f}.nutri-line{font-size:12px;color:#536d7c;line-height:1.65;margin-top:6px}.target-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.target-grid .field:last-child{grid-column:1/-1}
+.actual-badge{display:inline-block;margin-left:6px;padding:3px 7px;border-radius:999px;background:#e8f7ee;color:#397257;font-size:11px;font-weight:800}.meal-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:5px}.smallbtn.actual{background:#e8f6ff;color:#245f83}.meal-check:disabled{opacity:.45}
+.toast-backdrop{position:fixed;inset:0;background:rgba(32,48,64,.28);z-index:80;opacity:0;pointer-events:none;transition:.18s}.toast-backdrop.show{opacity:1;pointer-events:auto}.actual-toast{position:fixed;left:50%;bottom:18px;transform:translate(-50%,calc(100% + 40px));width:min(680px,calc(100% - 24px));max-height:min(78vh,720px);overflow:auto;background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:0 18px 55px rgba(28,63,83,.25);z-index:90;padding:14px;opacity:0;pointer-events:none;transition:.22s ease}.actual-toast.show{transform:translate(-50%,0);opacity:1;pointer-events:auto}.toast-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.toast-title{font-size:18px;font-weight:850}.toast-close{border:none;background:#eef5f9;border-radius:10px;width:34px;height:34px;font-size:18px;color:#486474}.toast-plan{margin-top:9px;background:#f7fbff;border:1px solid #e1edf4;border-radius:12px;padding:10px;font-size:13px;line-height:1.55;color:#526c7b}.toast-presets{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:10px}.toast-preset{border:1px solid #d5e4ec;background:#fff;border-radius:11px;padding:9px 6px;font-weight:800;color:#46606f}.toast-preset.active{background:#dff4ff;border-color:#8dcceb;color:#245f83}.toast-form{display:grid;gap:9px;margin-top:10px}.toast-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:11px}.toast-actions .btn{flex:1}.toast-note{font-size:11px;color:var(--muted);line-height:1.5}
+
+.food-calc{margin-top:10px;border-top:1px dashed #cfdee7;padding-top:10px}.food-picker{display:grid;grid-template-columns:1fr 92px auto;gap:7px;align-items:end}.calc-list{display:grid;gap:6px;margin-top:8px}.calc-item{display:flex;justify-content:space-between;gap:8px;align-items:center;background:#f7fbff;border:1px solid #e0edf4;border-radius:11px;padding:8px 9px;font-size:12px}.calc-item b{font-size:13px}.calc-remove{border:none;background:#ffe8ec;color:#9f3c52;border-radius:9px;width:28px;height:28px;font-weight:900}.calc-total{margin-top:8px;background:#eef9ff;border:1px solid #d5e9f4;border-radius:12px;padding:9px;font-size:12px;line-height:1.65}.compare-box{margin-top:8px;background:#fffaf0;border:1px solid #efdfb6;border-radius:12px;padding:9px;font-size:12px;line-height:1.65}.suggest-box{margin-top:8px;background:#f4fbf3;border:1px solid #d8ead5;border-radius:12px;padding:9px;font-size:12px;line-height:1.65}.temp-food{margin-top:8px}.temp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.temp-grid .field:first-child,.temp-grid .field:nth-child(2){grid-column:span 2}.food-lib-list{display:grid;gap:7px;margin-top:10px}.food-lib-row{display:flex;justify-content:space-between;gap:8px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:9px;background:#fff}.food-lib-meta{font-size:11px;color:var(--muted);margin-top:3px}.food-lib-tools{display:flex;gap:6px;flex-wrap:wrap}.diff-pos{color:#2f7a51}.diff-neg{color:#b24b5f}.diff-zero{color:#667d8a}
+@media(max-width:620px){.food-picker{grid-template-columns:1fr 88px}.food-picker .smallbtn{grid-column:1/-1}.temp-grid{grid-template-columns:repeat(2,1fr)}.temp-grid .field:first-child,.temp-grid .field:nth-child(2){grid-column:span 1}}
+@media(max-width:520px){.grid,.row{grid-template-columns:1fr 1fr}.title{font-size:21px}.hero .big{font-size:32px}}
+
+.live-strip{margin-top:12px;border:1px solid #9fcfe8;background:#f8fdff;border-radius:16px;padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}.live-strip.active{background:#eefaf1;border-color:#acd8b4}.live-strip.demo{background:#fff8e6;border-color:#ead18a}.live-title{font-weight:850}.live-text{font-size:13px;color:#567180;line-height:1.5;margin-top:3px}.week-cycle{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:10px}.cycle-day{border:1px solid var(--line);background:#fff;border-radius:12px;padding:8px 5px;text-align:center;min-height:70px}.cycle-day.current{background:#dff4ff;border-color:#8dcceb}.cycle-day.haslog{box-shadow:inset 0 -4px 0 #bfe8c7}.cycle-day .d{font-weight:900}.cycle-day .s{font-size:10px;color:var(--muted);margin-top:4px;line-height:1.3}.symptom-checks{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.symptom-checks label{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:10px;padding:8px;background:#fff;font-size:12px}.symptom-checks input{width:auto}.gap-now{margin-top:8px;background:#eef9ff;border:1px solid #d5e9f4;border-radius:12px;padding:10px;font-size:13px;line-height:1.65}.today-day-badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#dff5de;color:#397257;font-size:12px;font-weight:850;margin-left:6px}@media(max-width:620px){.week-cycle{grid-template-columns:repeat(4,1fr)}.symptom-checks{grid-template-columns:repeat(2,1fr)}}
+
+.system-strip{margin-top:10px;border:1px solid var(--line);border-radius:15px;padding:11px 12px;background:#fff;display:flex;align-items:center;justify-content:space-between;gap:10px}.system-strip[hidden]{display:none}.system-strip.update{background:#eef9ff;border-color:#b7dff3}.system-strip.backup{background:#fffaf0;border-color:#ead7a1}.system-copy{font-size:12px;line-height:1.5;color:#526c7b}.system-copy b{color:#245f83}.system-actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.pwa-dot{display:inline-block;width:9px;height:9px;border-radius:999px;background:#9fb0bb;margin-right:6px}.pwa-dot.ok{background:#56a36d}.pwa-dot.warn{background:#d69c35}.pwa-dot.bad{background:#d95f76}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top"><div><div class="title">🐰 猛健錄</div><div class="ver">V0.3.1｜PWA 正式版・Local-first</div></div><span class="pill" id="todayPill"></span></div>
+  <div class="system-strip update" id="updateStrip" hidden><div class="system-copy"><b>猛健錄有新版程式</b><br>資料仍留在本機；重新載入只更新程式，不會清空紀錄。</div><div class="system-actions"><button class="smallbtn actual" id="applyUpdate">重新載入更新</button></div></div>
+  <div class="system-strip backup" id="backupStrip" hidden><div class="system-copy" id="backupStripText"><b>建議做一次完整備份</b></div><div class="system-actions"><button class="smallbtn" id="backupNow">立即匯出</button></div></div>
+
+  <div class="hero">
+    <div class="label">目前體重</div><div class="big"><span id="currentWeight">85.0</span> kg</div>
+    <div class="sub">起始 <span id="startWeightTxt">85.0</span> kg → 目標 <span id="goalWeightTxt">70.0</span> kg｜已減 <b id="lossPct">0.0%</b></div>
+    <div class="progress"><div class="bar" id="progressBar"></div></div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="label">下一針</div><div class="value" id="nextShot">尚未設定</div><div class="hint" id="nextShotSub">新增第一筆注射紀錄後自動計算</div></div>
+    <div class="card"><div class="label">最近劑量</div><div class="value" id="lastDose">—</div><div class="hint" id="lastDoseSub">每週一次紀錄</div></div>
+    <div class="card"><div class="label">本週食慾</div><div class="value" id="appetiteSummary">—</div><div class="hint">0＝完全沒胃口，10＝和平常一樣</div></div>
+    <div class="card"><div class="label">距 70 kg</div><div class="value"><span id="remainKg">15.0</span> kg</div><div class="hint">只看趨勢，不要求固定速度</div></div>
+  </div>
+
+  <div class="live-strip" id="demoStrip">
+    <div><div class="live-title" id="demoCopy">正式療程尚未啟動</div><div class="live-text" id="liveModeText">記下第一針後，猛健錄會自動開始 Day 0～6 追蹤。</div></div>
+    <div class="demo-actions"><button class="btn" id="activateLive">記第一針</button><button class="btn secondary" id="goDaily">記今天狀況</button><button class="btn secondary" id="loadDemoQuick">載入模擬療程</button><button class="btn danger" id="clearDemoQuick" style="display:none">清除模擬資料</button></div>
+  </div>
+
+  <div class="menu-home" id="menuHome">
+    <div class="menu-home-top"><div><div class="label">今天吃什麼</div><div class="menu-home-title" id="menuHomeTitle">今日菜單</div></div><button class="smallbtn" id="openMenu">打開菜單</button></div>
+    <div class="menu-home-list" id="menuHomeList"></div>
+    <div class="hint" id="menuHomeProtein" style="margin-top:8px"></div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="shot">注射</button><button class="tab" data-tab="inventory">藥物庫存</button><button class="tab" data-tab="weight">體重</button><button class="tab" data-tab="menu">每日菜單</button><button class="tab" data-tab="daily">每日狀況</button><button class="tab" data-tab="travel">旅行延後</button><button class="tab" data-tab="reminder">施打提醒</button><button class="tab" data-tab="data">備份</button>
+  </div>
+
+  <section class="panel active" id="shot">
+    <div class="section-title">新增注射紀錄</div>
+    <div class="form">
+      <div class="row"><div class="field"><label>日期</label><input id="shotDate" type="date"></div><div class="field"><label>時間</label><input id="shotTime" type="time" value="20:00"></div></div>
+      <div class="row"><div class="field"><label>劑量</label><select id="shotDose"><option>2.5 mg</option><option>5 mg</option><option>7.5 mg</option><option>10 mg</option><option>12.5 mg</option><option>15 mg</option></select></div><div class="field"><label>施打部位</label><select id="shotSite"><option>腹部</option><option>左大腿</option><option>右大腿</option><option>左上臂</option><option>右上臂</option><option>其他</option></select></div></div>
+      <div class="field"><label>備註</label><input id="shotNote" placeholder="例如：第一次、旅行前延後…"></div>
+      <button class="btn" id="addShot">＋ 儲存注射紀錄</button>
+    </div>
+    <div class="section-title">最近紀錄</div><div class="list" id="shotList"></div>
+  </section>
+
+  <section class="panel" id="inventory">
+    <div class="section-title">藥物庫存與成本</div>
+    <div class="grid">
+      <div class="card"><div class="label">剩餘總劑數</div><div class="value"><span id="stockRemaining">0</span> 劑</div><div class="hint" id="stockCurrentDose">尚無庫存</div></div>
+      <div class="card"><div class="label">目前庫存價值</div><div class="value">$<span id="stockValue">0</span></div><div class="hint">依剩餘劑數 × 單劑成本</div></div>
+      <div class="card"><div class="label">累積購藥</div><div class="value">$<span id="totalPurchased">0</span></div><div class="hint">所有購入批次總價</div></div>
+      <div class="card"><div class="label">已施打成本</div><div class="value">$<span id="totalUsedCost">0</span></div><div class="hint">只計有成功扣庫存的注射</div></div>
+    </div>
+    <div class="section-title">新增購入批次</div>
+    <div class="form">
+      <div class="row"><div class="field"><label>購入日期</label><input id="stockDate" type="date"></div><div class="field"><label>劑量規格</label><select id="stockDose"><option>2.5 mg</option><option>5 mg</option><option>7.5 mg</option><option>10 mg</option><option>12.5 mg</option><option>15 mg</option></select></div></div>
+      <div class="row"><div class="field"><label>購入劑數</label><input id="stockQty" type="number" min="1" step="1" value="4"></div><div class="field"><label>這批總價 NT$</label><input id="stockCost" type="number" min="0" step="1" placeholder="例如 12000"></div></div>
+      <div class="row"><div class="field"><label>來源／診所</label><input id="stockSource" placeholder="可留白"></div><div class="field"><label>效期</label><input id="stockExpiry" type="date"></div></div>
+      <button class="btn" id="addStock">＋ 加入庫存</button>
+      <div class="hint">新增注射紀錄時，只會扣除「購入日不晚於注射日」且劑量相同的庫存，依 FIFO 使用。若之後才補登較早購入的庫存，系統會自動回溯配對尚未扣庫存的歷史注射。</div>
+    </div>
+    <div class="section-title">庫存批次</div><div class="list" id="stockList"></div>
+  </section>
+
+  <section class="panel" id="weight">
+    <div class="section-title">新增體重</div>
+    <div class="form"><div class="row"><div class="field"><label>日期</label><input id="weightDate" type="date"></div><div class="field"><label>體重 kg</label><input id="weightValue" type="number" step="0.1" value="85.0"></div></div><button class="btn" id="addWeight">＋ 儲存體重</button></div>
+    <div class="section-title">里程碑</div><div class="milestones" id="milestones"></div>
+    <div class="section-title">最近體重</div><div class="list" id="weightList"></div>
+  </section>
+
+  <section class="panel" id="menu">
+    <div class="section-title">每日菜單</div>
+    <div class="card"><div class="hint">預設是 5 個工作日＋2 個休假日的 7 日循環。「臨時換餐」改的是今天的計畫；「實際執行」記最後真的吃了什麼，會以 toast 浮層開啟。</div></div>
+    <div class="form" style="margin-top:10px">
+      <div class="row"><div class="field"><label>查看日期</label><input id="menuDate" type="date"></div><div class="field"><label>當日類型</label><input id="menuDayType" disabled></div></div>
+      <div class="card"><div class="label">今日營養總覽</div><div class="hint">前面的數字＝已勾選吃完；後面的數字＝整日菜單預估。營養值依食材與份量粗估。</div><div class="nutrition-grid" id="nutritionGrid"></div><div class="gap-box" id="nutritionGap"></div></div>
+      <div class="list" id="menuMealList"></div>
+      <div class="actions"><button class="btn secondary" id="resetTodayMenu">還原今天預設</button><button class="btn danger" id="clearTodayMenu">清空今天菜單</button></div>
+    </div>
+    <div class="section-title">本週 7 日菜單</div>
+    <div class="menu-week" id="menuWeek"></div>
+    <div class="section-title">常吃食物庫</div>
+    <div class="card"><div class="hint">實際執行時可直接選食物＋份數，猛健錄會現場加總營養。內建常用食物不用維護；自己常吃的品牌或固定份量可加在下面。</div>
+      <details style="margin-top:10px"><summary style="cursor:pointer;font-weight:850">＋ 新增我的常吃食物</summary>
+        <div class="form" style="margin-top:10px">
+          <div class="row"><div class="field"><label>食物名稱</label><input id="libFoodName" placeholder="例如：我的高蛋白飲"></div><div class="field"><label>1 份是</label><input id="libFoodServing" placeholder="例如：1 瓶 / 300 ml"></div></div>
+          <div class="temp-grid"><div class="field"><label>熱量 kcal</label><input id="libKcal" type="number" min="0" step="1"></div><div class="field"><label>蛋白質 g</label><input id="libProtein" type="number" min="0" step="0.1"></div><div class="field"><label>碳水 g</label><input id="libCarbs" type="number" min="0" step="0.1"></div><div class="field"><label>脂肪 g</label><input id="libFat" type="number" min="0" step="0.1"></div><div class="field"><label>纖維 g</label><input id="libFiber" type="number" min="0" step="0.1"></div><div class="field"><label>鈣 mg</label><input id="libCalcium" type="number" min="0" step="1"></div><div class="field"><label>鐵 mg</label><input id="libIron" type="number" min="0" step="0.1"></div><div class="field"><label>鋅 mg</label><input id="libZinc" type="number" min="0" step="0.1"></div></div>
+          <button class="btn secondary" id="addLibraryFood">加入常吃食物庫</button>
+        </div>
+      </details>
+      <div class="food-lib-list" id="foodLibraryList"></div>
+    </div>
+  </section>
+
+  <section class="panel" id="daily">
+    <div class="section-title">本次施打週 <span class="today-day-badge" id="cycleBadge">尚未開始</span></div>
+    <div class="card"><div class="hint">Day 0＝施打當天。食慾、噁心與飽脹分開記；累積至少 4 週後，才適合判讀妳自己的規律。</div><div class="week-cycle" id="cycleWeekGrid"></div></div>
+    <div class="section-title">今天感覺如何？</div>
+    <div class="form">
+      <div class="row"><div class="field"><label>日期</label><input id="dailyDate" type="date"></div><div class="field"><label>食慾 0～10</label><input id="appetite" type="number" min="0" max="10" step="1" value="5"></div></div>
+      <div class="row"><div class="field"><label>噁心 0～10</label><input id="nausea" type="number" min="0" max="10" step="1" value="0"></div><div class="field"><label>飽脹 0～10</label><input id="fullness" type="number" min="0" max="10" step="1" value="0"></div></div>
+      <div class="field"><label>其他症狀</label><div class="symptom-checks"><label><input id="symVomiting" type="checkbox">嘔吐</label><label><input id="symConstipation" type="checkbox">便祕</label><label><input id="symDiarrhea" type="checkbox">腹瀉</label><label><input id="symFatigue" type="checkbox">疲倦</label><label><input id="symDizzy" type="checkbox">頭暈</label><label><input id="symOther" type="checkbox">其他</label></div></div>
+      <div class="row"><div class="field"><label>今日飲水 ml</label><input id="waterMl" type="number" min="0" step="100" placeholder="例如 2000"></div><div class="field"><label>蛋白質達標</label><select id="protein"><option value="yes">有</option><option value="no">沒有</option><option value="unknown">尚未確認</option></select></div></div>
+      <div class="field"><label>備註</label><textarea id="dailyNote" placeholder="例如：第 2 天胃脹、吃半份便當就飽…"></textarea></div>
+      <button class="btn" id="addDaily">＋ 儲存今日狀況</button>
+    </div>
+    <div class="section-title">最近狀況</div><div class="list" id="dailyList"></div>
+  </section>
+
+  <section class="panel" id="travel">
+    <div class="section-title">旅行延後這一針</div>
+    <div class="card"><div class="hint">只調整「下一針日期」，不會自動改藥物劑量。超過原本日期 4 天以上時，畫面會提醒你依醫師／仿單確認處理方式。</div></div>
+    <div class="form" style="margin-top:10px">
+      <div class="field"><label>原本下一針</label><input id="travelOriginal" type="date" disabled></div>
+      <div class="field"><label>想延後幾天</label><input id="delayDays" type="number" min="1" max="14" value="3"></div>
+      <button class="btn pink" id="applyDelay">套用這次延後</button>
+      <button class="btn secondary" id="clearDelay">取消旅行延後</button>
+      <div class="card" id="travelPreview"><div class="label">預覽</div><div class="value" id="travelNewDate">—</div><div class="hint" id="travelHint"></div></div>
+    </div>
+  </section>
+
+  <section class="panel" id="reminder">
+    <div class="section-title">施打提醒</div>
+    <div class="card"><div class="hint">提醒日期會自動跟著「下一針」走；旅行延後後也會同步改。PWA 版會在開啟 App 時補檢查提醒；瀏覽器完全關閉時，背景通知仍受瀏覽器限制。要做到 Android 上完全準時的背景排程，仍需原生 APK。</div></div>
+    <div class="form" style="margin-top:10px">
+      <div class="row"><div class="field"><label>提前幾天提醒</label><select id="reminderDays"><option value="0">當天</option><option value="1">前 1 天</option><option value="2">前 2 天</option></select></div><div class="field"><label>提醒時間</label><input id="reminderTime" type="time" value="09:00"></div></div>
+      <div class="actions"><button class="btn" id="enableReminder">開啟通知</button><button class="btn secondary" id="testReminder">測試通知</button><button class="btn danger" id="disableReminder">關閉提醒</button></div>
+      <div class="card"><div class="label">目前狀態</div><div class="value" id="reminderStatus">未開啟</div><div class="hint" id="reminderNext">尚未設定下一針</div></div>
+    </div>
+  </section>
+
+  <section class="panel" id="data">
+    <div class="section-title">資料與設定</div>
+    <div class="form">
+      <div class="row"><div class="field"><label>起始體重</label><input id="startWeight" type="number" step="0.1" value="85"></div><div class="field"><label>目標體重</label><input id="goalWeight" type="number" step="0.1" value="70"></div></div>
+      <div class="section-title" style="margin-top:6px">營養參考值</div>
+      <div class="hint">只用於「今日可能缺口」提示；不是醫療處方，可依營養師或醫師建議自行修改。</div>
+      <div class="target-grid">
+        <div class="field"><label>每日攝取參考值（kcal）</label><input id="targetKcal" type="number" min="0" step="50" value="1400"></div>
+        <div class="field"><label>蛋白質（g）</label><input id="targetProtein" type="number" min="0" step="1" value="80"></div>
+        <div class="field"><label>膳食纖維（g）</label><input id="targetFiber" type="number" min="0" step="1" value="25"></div>
+        <div class="field"><label>鈣（mg）</label><input id="targetCalcium" type="number" min="0" step="10" value="1000"></div>
+        <div class="field"><label>鐵（mg）</label><input id="targetIron" type="number" min="0" step="0.5" value="10"></div>
+        <div class="field"><label>鋅（mg）</label><input id="targetZinc" type="number" min="0" step="0.5" value="8"></div>
+      </div>
+      <button class="btn" id="saveSettings">儲存設定</button>
+      <div class="card"><div class="label">測試模式</div><div class="hint" style="margin:5px 0 10px">還沒買針也能測。假資料只用來試操作，不代表建議劑量或減重速度。</div><div class="actions"><button class="btn pink" id="loadDemo">載入 5 週模擬療程</button><button class="btn danger" id="clearDemo" style="display:none">清除模擬資料</button></div></div>
+      <div class="actions"><button class="btn secondary" id="exportJson">匯出 JSON 備份</button><label class="btn secondary" style="display:inline-block;cursor:pointer">匯入完整備份<input id="importJson" type="file" accept=".json,application/json" hidden></label></div>
+      <div class="card"><b>飲食紀錄合併匯入</b><div class="hint" style="margin:5px 0 10px">只更新 JSON 指定日期／餐次的「實際執行」，不會改動注射、體重、藥物庫存、設定或每日症狀。重複匯入相同內容會自動略過；若該餐已有紀錄，匯入前會先提示衝突數量。</div><div class="actions"><label class="btn secondary" style="display:inline-block;cursor:pointer">選擇飲食紀錄 JSON<input id="importMealsPatch" type="file" accept=".json,application/json" hidden></label><button class="btn secondary" id="undoMealsPatch" style="display:none">復原上次飲食合併</button><a class="btn secondary" href="./飲食匯入格式範例.json" download style="display:inline-block;text-decoration:none">下載格式範例</a></div></div>
+      <div class="card" id="storageModeCard"><b>本機資料保存</b><div class="hint" id="storageModeHint" style="margin-top:5px"></div></div>
+      <div class="card" id="pwaModeCard"><b>PWA 狀態</b><div class="hint" id="pwaModeHint" style="margin-top:5px"></div></div>
+      <div class="card" id="backupStatusCard"><b>完整備份</b><div class="hint" id="backupStatusHint" style="margin-top:5px"></div></div>
+      <button class="btn danger" id="resetAll">清空全部資料</button>
+    </div>
+    <div class="bottom-note">這是個人紀錄工具，不會替你判斷是否升劑量、停藥或補打。營養數字為菜單或食物庫估算，品牌、實際份量與烹調方式都會造成差異；涉及用藥調整時，仍以醫師與藥品仿單為準。</div>
+  </section>
+</div>
+
+<div class="toast-backdrop" id="shotEditBackdrop"></div>
+<div class="actual-toast" id="shotEditToast" role="dialog" aria-modal="true" aria-labelledby="shotEditTitle">
+  <div class="toast-head"><div><div class="label">編輯注射紀錄</div><div class="toast-title" id="shotEditTitle">修改這一針</div></div><button class="toast-close" id="closeShotEdit" aria-label="關閉">×</button></div>
+  <div class="toast-form">
+    <div class="row"><div class="field"><label>日期</label><input id="editShotDate" type="date"></div><div class="field"><label>時間</label><input id="editShotTime" type="time"></div></div>
+    <div class="row"><div class="field"><label>劑量</label><select id="editShotDose"><option>2.5 mg</option><option>5 mg</option><option>7.5 mg</option><option>10 mg</option><option>12.5 mg</option><option>15 mg</option></select></div><div class="field"><label>部位</label><select id="editShotSite"><option>腹部</option><option>左大腿</option><option>右大腿</option><option>左上臂</option><option>右上臂</option><option>其他</option></select></div></div>
+    <div class="field"><label>備註</label><textarea id="editShotNote" placeholder="可留白"></textarea></div>
+    <div class="toast-note" id="editShotStockHint">只有改變劑量時，才會重新計算這一針的庫存與成本。</div>
+  </div>
+  <div class="toast-actions"><button class="btn" id="saveShotEdit">儲存修改</button><button class="btn secondary" id="cancelShotEdit">取消</button></div>
+</div>
+<div class="toast-backdrop" id="toastBackdrop"></div>
+<div class="actual-toast" id="actualToast" role="dialog" aria-modal="true" aria-labelledby="actualToastTitle">
+  <div class="toast-head"><div><div class="label">實際執行</div><div class="toast-title" id="actualToastTitle">這餐最後吃了什麼？</div></div><button class="toast-close" id="closeActualToast" aria-label="關閉">×</button></div>
+  <div class="toast-plan" id="actualPlanText"></div>
+  <div class="toast-presets">
+    <button class="toast-preset" data-actual-mode="same">照原菜單</button>
+    <button class="toast-preset" data-actual-mode="half">約半份</button>
+    <button class="toast-preset" data-actual-mode="none">沒吃</button>
+    <button class="toast-preset" data-actual-mode="changed">有變動</button>
+  </div>
+  <div class="toast-form">
+    <div class="field"><label>實際吃了什麼</label><textarea id="actualFood" placeholder="例如：原本雞胸改成蝦仁＋毛豆，飯只吃半碗"></textarea></div>
+    <div class="food-calc">
+      <b>現場計算實際營養</b><div class="toast-note">從常吃食物庫選食物與份數。只要這裡有加入食物，今日統計就會優先使用實際計算結果，不再拿原菜單比例估算。</div>
+      <div class="food-picker" style="margin-top:8px"><div class="field"><label>食物</label><select id="actualFoodSelect"></select></div><div class="field"><label>份數</label><input id="actualFoodQty" type="number" min="0.1" step="0.25" value="1"></div><button class="smallbtn actual" id="addActualFood">＋ 加入這餐</button></div>
+      <div class="calc-list" id="actualCalcList"></div>
+      <div class="calc-total" id="actualCalcTotal">尚未加入食物。</div>
+      <div class="compare-box" id="actualCompare">加入食物後，這裡會顯示「實際 vs 原菜單」。</div>
+      <div class="suggest-box" id="actualSuggestion">若有明顯缺口，猛健錄會列出後續可補的常吃食物。</div>
+      <details class="temp-food"><summary style="cursor:pointer;font-weight:800">找不到食物？臨時輸入營養</summary>
+        <div class="form" style="margin-top:8px">
+          <div class="row"><div class="field"><label>食物名稱</label><input id="tempFoodName" placeholder="例如：便利商店雞胸"></div><div class="field"><label>這次份量</label><input id="tempFoodServing" placeholder="例如：1 包"></div></div>
+          <div class="temp-grid"><div class="field"><label>熱量</label><input id="tempKcal" type="number" min="0" step="1"></div><div class="field"><label>蛋白質 g</label><input id="tempProtein" type="number" min="0" step="0.1"></div><div class="field"><label>碳水 g</label><input id="tempCarbs" type="number" min="0" step="0.1"></div><div class="field"><label>脂肪 g</label><input id="tempFat" type="number" min="0" step="0.1"></div><div class="field"><label>纖維 g</label><input id="tempFiber" type="number" min="0" step="0.1"></div><div class="field"><label>鈣 mg</label><input id="tempCalcium" type="number" min="0" step="1"></div><div class="field"><label>鐵 mg</label><input id="tempIron" type="number" min="0" step="0.1"></div><div class="field"><label>鋅 mg</label><input id="tempZinc" type="number" min="0" step="0.1"></div></div>
+          <label class="switch"><input id="saveTempToLibrary" type="checkbox"> 同時存進我的常吃食物庫</label>
+          <button class="smallbtn" id="addTempFood">＋ 加入這餐</button>
+        </div>
+      </details>
+    </div>
+    <div class="field"><label>沒有細算時，這餐營養如何計入今日統計</label><select id="actualFactor"><option value="1">約等於原餐 100%</option><option value="0.75">約 75%</option><option value="0.5">約 50%</option><option value="0.25">約 25%</option><option value="0">沒吃／0%</option><option value="skip">內容差很多，營養先不計</option></select></div>
+    <div class="field"><label>備註（可留白）</label><input id="actualNote" placeholder="例如：太飽、外食臨時更換、只吃幾口"></div>
+    <div class="toast-note">營養資料來自內建估值、妳輸入的包裝標示或自訂食物；品牌、烹調與份量仍會造成誤差。</div>
+  </div>
+  <div class="toast-actions"><button class="btn" id="saveActual">儲存實際執行</button><button class="btn danger" id="clearActual">清除這筆</button></div>
+</div>
+
+<div class="footer"><div class="footer-inner"><button class="btn secondary" id="installBtn" style="display:none">安裝猛健錄</button><button class="btn" id="quickShot">記一針</button></div></div>
+<script>
+const APP_VERSION='0.3.1';
+const KEY='mengjianlu_v030';
+const PREV_KEYS=['mengjianlu_v024','mengjianlu_v023','mengjianlu_v022','mengjianlu_v021','mengjianlu_v020','mengjianlu_v016','mengjianlu_v015','mengjianlu_v014','mengjianlu_v013','mengjianlu_v012','mengjianlu_v011'];
+const LEGACY_KEY='mj_helper_v010';
+const DEMO_BACKUP_KEY='mengjianlu_demo_backup_v030';
+const PREV_DEMO_BACKUP_KEYS=['mengjianlu_demo_backup_v024','mengjianlu_demo_backup_v023','mengjianlu_demo_backup_v022','mengjianlu_demo_backup_v020'];
+const MEALS_PATCH_UNDO_KEY='mengjianlu_meals_patch_undo_v030';
+const defaultMenu=[
+  {label:'週一',kind:'工作日',meals:[
+    {key:'breakfast',name:'早餐',text:'水煮蛋 2 顆＋無糖豆漿 400 ml＋全麥吐司 1 片＋香蕉 1 根',protein:27,starch:'全麥吐司',kcal:450,carbs:50,fat:16,fiber:7,calcium:180,iron:4,zinc:2},
+    {key:'lunch',name:'午餐',text:'雞胸／去皮雞腿 120 g＋半碗飯＋青菜',protein:28,starch:'半碗飯',kcal:390,carbs:45,fat:9,fiber:5,calcium:100,iron:2,zinc:2.5},
+    {key:'snack',name:'加餐',text:'無糖希臘優格 1 杯',protein:10,starch:'—',kcal:120,carbs:12,fat:3,fiber:0,calcium:180,iron:0.2,zinc:1},
+    {key:'dinner',name:'晚餐',text:'板豆腐 150 g＋毛豆 50 g＋杏鮑菇＋小地瓜 1 條',protein:18,starch:'小地瓜',kcal:400,carbs:55,fat:11,fiber:10,calcium:300,iron:5,zinc:3}]},
+  {label:'週二',kind:'工作日',meals:[
+    {key:'breakfast',name:'早餐',text:'即食燕麥 35 g＋鮮奶 300 ml＋半根香蕉＋蛋 1 顆',protein:20,starch:'燕麥',kcal:480,carbs:58,fat:18,fiber:7,calcium:350,iron:3,zinc:2.5},
+    {key:'lunch',name:'午餐',text:'瘦豬肉 120 g＋半碗飯＋青菜',protein:26,starch:'半碗飯',kcal:420,carbs:45,fat:12,fiber:5,calcium:100,iron:3,zinc:4},
+    {key:'snack',name:'加餐',text:'高蛋白飲 1 份',protein:20,starch:'—',kcal:160,carbs:12,fat:3,fiber:2,calcium:250,iron:1,zinc:1.5},
+    {key:'dinner',name:'晚餐',text:'蝦仁 100 g＋馬鈴薯 1 顆＋青菜',protein:22,starch:'馬鈴薯',kcal:360,carbs:45,fat:8,fiber:7,calcium:130,iron:2.5,zinc:2}]},
+  {label:'週三',kind:'工作日',meals:[
+    {key:'breakfast',name:'早餐',text:'水煮蛋 2 顆＋無糖豆漿 400 ml＋全麥吐司 1 片',protein:27,starch:'全麥吐司',kcal:350,carbs:25,fat:16,fiber:4,calcium:170,iron:3.5,zinc:2},
+    {key:'lunch',name:'午餐',text:'水煮鮪魚 1 罐＋豆腐 100 g＋半碗飯＋青菜',protein:23,starch:'半碗飯',kcal:420,carbs:45,fat:12,fiber:5,calcium:250,iron:4,zinc:2.5},
+    {key:'snack',name:'加餐',text:'無糖優格 1 杯',protein:10,starch:'—',kcal:120,carbs:12,fat:3,fiber:0,calcium:180,iron:0.2,zinc:1},
+    {key:'dinner',name:'晚餐',text:'雞肉 120 g＋玉米 1 份＋青菜',protein:28,starch:'玉米',kcal:420,carbs:45,fat:12,fiber:7,calcium:100,iron:2.5,zinc:2.5}]},
+  {label:'週四',kind:'工作日',meals:[
+    {key:'breakfast',name:'早餐',text:'即食燕麥 35 g＋鮮奶 300 ml＋蛋 1 顆',protein:20,starch:'燕麥',kcal:400,carbs:39,fat:17,fiber:5,calcium:350,iron:3,zinc:2.5},
+    {key:'lunch',name:'午餐',text:'蝦仁 100 g＋毛豆 50 g＋半碗飯＋青菜',protein:28,starch:'半碗飯',kcal:430,carbs:48,fat:12,fiber:8,calcium:160,iron:3.5,zinc:2.5},
+    {key:'snack',name:'加餐',text:'無糖豆漿 300 ml',protein:9,starch:'—',kcal:100,carbs:6,fat:4,fiber:1.5,calcium:75,iron:1.5,zinc:1},
+    {key:'dinner',name:'晚餐',text:'豆腐 200 g＋瘦肉 60 g＋馬鈴薯＋杏鮑菇',protein:28,starch:'馬鈴薯',kcal:430,carbs:45,fat:15,fiber:8,calcium:350,iron:5,zinc:4}]},
+  {label:'週五',kind:'工作日',meals:[
+    {key:'breakfast',name:'早餐',text:'水煮蛋 2 顆＋無糖豆漿 400 ml＋香蕉 1 根',protein:24,starch:'香蕉',kcal:380,carbs:35,fat:16,fiber:5,calcium:150,iron:3,zinc:1.8},
+    {key:'lunch',name:'午餐',text:'雞肉 120 g＋半碗飯＋青菜',protein:28,starch:'半碗飯',kcal:390,carbs:45,fat:9,fiber:5,calcium:100,iron:2,zinc:2.5},
+    {key:'snack',name:'加餐',text:'無糖優格 1 杯＋原味堅果 1 小份',protein:13,starch:'—',kcal:200,carbs:14,fat:10,fiber:2,calcium:200,iron:1,zinc:2},
+    {key:'dinner',name:'晚餐',text:'水煮鮪魚 1 罐＋毛豆 50 g＋豆腐 100 g＋小地瓜',protein:29,starch:'小地瓜',kcal:460,carbs:50,fat:15,fiber:9,calcium:300,iron:5,zinc:3.5}]},
+  {label:'週六',kind:'休假日',meals:[
+    {key:'breakfast',name:'早餐／早午餐',text:'蛋 2 顆＋全麥吐司 2 片＋鮮奶 300 ml',protein:27,starch:'全麥吐司',kcal:480,carbs:42,fat:22,fiber:4,calcium:400,iron:3.5,zinc:3},
+    {key:'lunch',name:'午餐',text:'蝦仁 120 g＋馬鈴薯＋杏鮑菇＋青菜',protein:26,starch:'馬鈴薯',kcal:390,carbs:45,fat:8,fiber:8,calcium:130,iron:2.5,zinc:2},
+    {key:'snack',name:'加餐',text:'無糖優格 1 杯',protein:10,starch:'—',kcal:120,carbs:12,fat:3,fiber:0,calcium:180,iron:0.2,zinc:1},
+    {key:'dinner',name:'晚餐',text:'瘦肉 120 g＋半碗飯＋青菜',protein:26,starch:'半碗飯',kcal:420,carbs:45,fat:12,fiber:5,calcium:100,iron:3,zinc:4}]},
+  {label:'週日',kind:'休假日',meals:[
+    {key:'breakfast',name:'早餐',text:'即食燕麥 35 g＋鮮奶 300 ml＋半根香蕉＋蛋 1 顆',protein:20,starch:'燕麥',kcal:480,carbs:58,fat:18,fiber:7,calcium:350,iron:3,zinc:2.5},
+    {key:'lunch',name:'午餐',text:'雞肉 120 g＋半碗飯＋青菜',protein:28,starch:'半碗飯',kcal:390,carbs:45,fat:9,fiber:5,calcium:100,iron:2,zinc:2.5},
+    {key:'snack',name:'加餐',text:'高蛋白飲 1 份',protein:20,starch:'—',kcal:160,carbs:12,fat:3,fiber:2,calcium:250,iron:1,zinc:1.5},
+    {key:'dinner',name:'晚餐',text:'豆腐 150 g＋毛豆 50 g＋杏鮑菇＋小地瓜',protein:18,starch:'小地瓜',kcal:400,carbs:55,fat:11,fiber:10,calcium:300,iron:5,zinc:3}]}
+];
+const baseFoods=[
+  {id:'egg',name:'雞蛋',serving:'1 顆',kcal:72,protein:6.3,carbs:0.4,fat:4.8,fiber:0,calcium:28,iron:0.9,zinc:0.6},
+  {id:'soy300',name:'無糖豆漿',serving:'300 ml',kcal:100,protein:9,carbs:6,fat:4,fiber:1.5,calcium:75,iron:1.5,zinc:1},
+  {id:'milk300',name:'鮮奶',serving:'300 ml',kcal:190,protein:10,carbs:15,fat:10,fiber:0,calcium:330,iron:0.1,zinc:1.2},
+  {id:'yogurt',name:'無糖／希臘優格',serving:'1 杯',kcal:120,protein:10,carbs:12,fat:3,fiber:0,calcium:180,iron:0.2,zinc:1},
+  {id:'tofu100',name:'板豆腐',serving:'100 g',kcal:88,protein:8,carbs:3,fat:5,fiber:1,calcium:200,iron:2.5,zinc:1},
+  {id:'edamame50',name:'毛豆',serving:'50 g',kcal:70,protein:6,carbs:5,fat:3,fiber:2.5,calcium:35,iron:1.3,zinc:0.7},
+  {id:'shrimp100',name:'蝦仁',serving:'100 g',kcal:100,protein:21,carbs:0,fat:1,fiber:0,calcium:70,iron:0.8,zinc:1.5},
+  {id:'tuna',name:'水煮鮪魚',serving:'1 罐',kcal:120,protein:25,carbs:0,fat:1,fiber:0,calcium:15,iron:1.2,zinc:0.8},
+  {id:'chicken120',name:'雞胸／去皮雞腿',serving:'120 g',kcal:200,protein:28,carbs:0,fat:8,fiber:0,calcium:20,iron:1.2,zinc:1.8},
+  {id:'pork120',name:'瘦豬肉',serving:'120 g',kcal:230,protein:26,carbs:0,fat:13,fiber:0,calcium:20,iron:1.5,zinc:3.5},
+  {id:'ricehalf',name:'白飯',serving:'半碗',kcal:140,protein:3,carbs:31,fat:0.3,fiber:0.5,calcium:5,iron:0.4,zinc:0.5},
+  {id:'sweetpotato',name:'小地瓜',serving:'1 條',kcal:130,protein:2,carbs:30,fat:0.2,fiber:3,calcium:30,iron:0.8,zinc:0.3},
+  {id:'potato',name:'馬鈴薯',serving:'1 顆',kcal:150,protein:4,carbs:34,fat:0.2,fiber:3,calcium:12,iron:1.5,zinc:0.5},
+  {id:'oats35',name:'即食燕麥',serving:'35 g',kcal:135,protein:4.5,carbs:23,fat:2.5,fiber:3.5,calcium:20,iron:1.5,zinc:1},
+  {id:'banana',name:'香蕉',serving:'1 根',kcal:105,protein:1.3,carbs:27,fat:0.3,fiber:3,calcium:6,iron:0.3,zinc:0.2},
+  {id:'toast',name:'全麥吐司',serving:'1 片',kcal:75,protein:3,carbs:13,fat:1,fiber:2,calcium:35,iron:0.8,zinc:0.5},
+  {id:'nuts15',name:'原味堅果',serving:'15 g',kcal:90,protein:3,carbs:3,fat:8,fiber:1.5,calcium:20,iron:0.7,zinc:0.8},
+  {id:'proteinDrink',name:'高蛋白飲',serving:'1 份',kcal:160,protein:20,carbs:12,fat:3,fiber:2,calcium:250,iron:1,zinc:1.5},
+  {id:'mushroom100',name:'杏鮑菇',serving:'100 g',kcal:40,protein:3,carbs:7,fat:0.5,fiber:3,calcium:3,iron:0.3,zinc:0.5},
+  {id:'veg',name:'青菜',serving:'1 份',kcal:70,protein:3,carbs:10,fat:2,fiber:4,calcium:100,iron:1.5,zinc:0.5},
+  {id:'corn',name:'玉米',serving:'1 份',kcal:110,protein:3.5,carbs:25,fat:1.5,fiber:3,calcium:4,iron:0.7,zinc:0.6}
+];
+function foodLibrary(){return [...baseFoods,...(db.foodLibrary?.custom||[])]}
+const defaultData={settings:{startWeight:85,goalWeight:70,nutritionTargets:{kcal:1400,protein:80,fiber:25,calcium:1000,iron:10,zinc:8}},shots:[],weights:[],daily:[],inventory:[],menu:{template:defaultMenu,logs:{}},foodLibrary:{custom:[]},travelDelay:null,reminder:{enabled:false,daysBefore:0,time:'09:00',lastNotifiedKey:null},meta:{demo:false,appVersion:APP_VERSION}};
+let db=load(); let deferredPrompt=null;
+function upgradeMenuTemplate(tpl){if(!Array.isArray(tpl)||tpl.length!==7)return structuredClone(defaultMenu);return defaultMenu.map((baseDay,i)=>{const oldDay=tpl[i]||{};const oldMeals=Array.isArray(oldDay.meals)?oldDay.meals:[];return {...baseDay,...oldDay,meals:baseDay.meals.map(baseMeal=>{const old=oldMeals.find(m=>m.key===baseMeal.key)||{};return {...baseMeal,...old}})}})}
+function uid(prefix='id'){return prefix+'_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8)}
+function normalize(x={}){const merged={...structuredClone(defaultData),...x,settings:{...defaultData.settings,...(x.settings||{}),nutritionTargets:{...defaultData.settings.nutritionTargets,...(x.settings?.nutritionTargets||{})}},reminder:{...defaultData.reminder,...(x.reminder||{})},inventory:Array.isArray(x.inventory)?x.inventory:[],meta:{...defaultData.meta,...(x.meta||{}),appVersion:APP_VERSION}};merged.shots=(Array.isArray(x.shots)?x.shots:[]).map(s=>({...s,id:s.id||uid('shot')}));merged.menu={template:upgradeMenuTemplate(x.menu?.template),logs:(x.menu?.logs&&typeof x.menu.logs==='object')?x.menu.logs:{}};merged.foodLibrary={custom:Array.isArray(x.foodLibrary?.custom)?x.foodLibrary.custom:[]};merged.daily=(Array.isArray(x.daily)?x.daily:[]).map(d=>{if(d.scale===10)return d;const side=d.sideEffect||'無';return {...d,appetite:Math.max(0,Math.min(10,Number(d.appetite||0)*2)),nausea:side==='噁心'?Number(d.severity||0)*2:0,fullness:side==='胃脹'?Number(d.severity||0)*2:0,symptoms:{vomiting:false,constipation:side==='便祕',diarrhea:side==='腹瀉',fatigue:side==='疲倦',dizzy:side==='頭暈',other:side==='其他'},waterMl:null,scale:10}});return merged}
+function storageAvailable(){try{const k='__mjlog_storage_test__';localStorage.setItem(k,k);localStorage.removeItem(k);return true}catch(e){return false}}
+function load(){try{if(!storageAvailable())return structuredClone(defaultData);const raw=localStorage.getItem(KEY);if(raw)return normalize(JSON.parse(raw));for(const k of PREV_KEYS){const prev=localStorage.getItem(k);if(prev){const migrated=normalize(JSON.parse(prev));localStorage.setItem(KEY,JSON.stringify(migrated));return migrated}}const legacy=localStorage.getItem(LEGACY_KEY);if(legacy){const migrated=normalize(JSON.parse(legacy));localStorage.setItem(KEY,JSON.stringify(migrated));return migrated}return structuredClone(defaultData)}catch(e){return structuredClone(defaultData)}}
+function persistDb(){try{if(!storageAvailable())throw Error('localStorage 不可用');localStorage.setItem(KEY,JSON.stringify(db));return true}catch(e){alert('資料無法寫入瀏覽器本機儲存。請先匯出備份，並檢查 Firefox 的網站資料／隱私設定。');return false}}
+function save(){persistDb();render();updateBackupStatus()}
+function ymd(d=new Date()){const z=new Date(d.getTime()-d.getTimezoneOffset()*60000);return z.toISOString().slice(0,10)}
+function fmtDate(s){if(!s)return'—';const d=new Date(s+'T00:00:00');return `${d.getMonth()+1}/${d.getDate()}`}
+function addDays(s,n){const d=new Date(s+'T00:00:00');d.setDate(d.getDate()+Number(n));return ymd(d)}
+function buildDemoData(){
+  const t=ymd(); const d0=addDays(t,-31);
+  const shots=[
+    {id:uid('shot'),date:d0,time:'20:00',dose:'2.5 mg',site:'腹部',note:'模擬：第一針'},
+    {id:uid('shot'),date:addDays(d0,7),time:'20:00',dose:'2.5 mg',site:'左大腿',note:'模擬：第二週'},
+    {id:uid('shot'),date:addDays(d0,14),time:'20:00',dose:'2.5 mg',site:'右大腿',note:'模擬：第三週'},
+    {id:uid('shot'),date:addDays(d0,21),time:'20:00',dose:'2.5 mg',site:'腹部',note:'模擬：第四週'},
+    {id:uid('shot'),date:addDays(d0,28),time:'20:00',dose:'5 mg',site:'左大腿',note:'模擬：第五週'}
+  ];
+  const weights=[
+    {date:d0,value:85.0},{date:addDays(d0,6),value:84.2},{date:addDays(d0,13),value:83.7},
+    {date:addDays(d0,20),value:83.1},{date:addDays(d0,27),value:82.8},{date:addDays(d0,31),value:82.2}
+  ];
+  const daily=[
+    {date:addDays(d0,1),appetite:4,nausea:2,fullness:3,symptoms:{vomiting:false,constipation:false,diarrhea:false,fatigue:false,dizzy:false,other:false},waterMl:2000,protein:'yes',scale:10,note:'模擬：輕微噁心，半份餐就飽'},
+    {date:addDays(d0,2),appetite:4,nausea:1,fullness:3,symptoms:{vomiting:false,constipation:false,diarrhea:false,fatigue:false,dizzy:false,other:false},waterMl:1800,protein:'no',scale:10,note:'模擬：胃脹'},
+    {date:addDays(d0,5),appetite:8,nausea:0,fullness:1,symptoms:{},waterMl:2100,protein:'yes',scale:10,note:'模擬：食慾開始回來'},
+    {date:addDays(d0,8),appetite:4,nausea:0,fullness:2,symptoms:{},waterMl:2000,protein:'yes',scale:10,note:'模擬：第二週'},
+    {date:addDays(d0,15),appetite:6,nausea:0,fullness:2,symptoms:{constipation:true},waterMl:1200,protein:'yes',scale:10,note:'模擬：喝水不足'},
+    {date:addDays(d0,22),appetite:6,nausea:0,fullness:1,symptoms:{},waterMl:2000,protein:'yes',scale:10,note:'模擬：狀況穩定'},
+    {date:addDays(d0,29),appetite:2,nausea:2,fullness:4,symptoms:{},waterMl:1900,protein:'yes',scale:10,note:'模擬：第五週'}
+  ];
+  const baseNext=addDays(shots[shots.length-1].date,7);
+  const inventory=[
+    {id:'demo-a',date:addDays(d0,-2),dose:'2.5 mg',qty:4,remaining:0,totalCost:9800,source:'模擬診所 A',expiry:addDays(t,240)},
+    {id:'demo-b',date:addDays(d0,24),dose:'5 mg',qty:4,remaining:3,totalCost:11200,source:'模擬診所 B',expiry:addDays(t,300)}
+  ];
+  shots.forEach((s,i)=>{s.cost=i<4?2450:2800;s.inventoryLotId=i<4?'demo-a':'demo-b'});
+  return {settings:{startWeight:85,goalWeight:70,nutritionTargets:{kcal:1400,protein:80,fiber:25,calcium:1000,iron:10,zinc:8}},shots,weights,daily,inventory,menu:{template:structuredClone(defaultMenu),logs:{}},foodLibrary:{custom:[]},travelDelay:{original:baseNext,newDate:addDays(baseNext,3),days:3},reminder:{enabled:false,daysBefore:1,time:'09:00',lastNotifiedKey:null},meta:{demo:true}};
+}
+function loadDemoData(){
+  if(db.meta?.demo)return alert('現在已經是模擬療程。');
+  localStorage.setItem(DEMO_BACKUP_KEY,JSON.stringify(db));
+  db=buildDemoData();save();
+}
+function clearDemoData(){
+  if(!db.meta?.demo)return alert('目前不是模擬療程。');
+  if(!confirm('清除模擬資料並回到原本資料？'))return;
+  try{let backup=localStorage.getItem(DEMO_BACKUP_KEY);if(!backup){for(const k of PREV_DEMO_BACKUP_KEYS){backup=localStorage.getItem(k);if(backup)break}}db=backup?normalize(JSON.parse(backup)):structuredClone(defaultData)}catch(e){db=structuredClone(defaultData)}
+  localStorage.removeItem(DEMO_BACKUP_KEY);PREV_DEMO_BACKUP_KEYS.forEach(k=>localStorage.removeItem(k));save();
+}
+function latest(arr,key='date'){return [...arr].sort((a,b)=>b[key].localeCompare(a[key]))[0]}
+function getBaseNext(){const l=latest(db.shots);return l?addDays(l.date,7):null}
+function getNext(){const base=getBaseNext();if(!base)return null;return db.travelDelay?.original===base?db.travelDelay.newDate:base}
+function diffDays(a,b){return Math.round((new Date(b+'T00:00:00')-new Date(a+'T00:00:00'))/86400000)}
+function shotForDate(date){return [...db.shots].filter(x=>x.date<=date).sort((a,b)=>b.date.localeCompare(a.date))[0]||null}
+function cycleDay(date){const shot=shotForDate(date);if(!shot)return null;const d=diffDays(shot.date,date);return d>=0&&d<=6?d:null}
+function symptomNames(x){const m={vomiting:'嘔吐',constipation:'便祕',diarrhea:'腹瀉',fatigue:'疲倦',dizzy:'頭暈',other:'其他'};return Object.entries(x||{}).filter(([,v])=>v).map(([k])=>m[k]).filter(Boolean)}
+function renderCycleWeek(){const shot=latest(db.shots);if(!shot){cycleBadge.textContent='尚未開始';cycleWeekGrid.innerHTML=Array.from({length:7},(_,i)=>`<div class="cycle-day"><div class="d">Day ${i}</div><div class="s">—</div></div>`).join('');return}const today=ymd();const td=diffDays(shot.date,today);cycleBadge.textContent=td>=0&&td<=6?`Day ${td}`:`最近一針 ${fmtDate(shot.date)}`;cycleWeekGrid.innerHTML=Array.from({length:7},(_,i)=>{const d=addDays(shot.date,i),log=[...db.daily].filter(x=>x.date===d).sort((a,b)=>(b.updatedAt||'').localeCompare(a.updatedAt||''))[0];return `<div class="cycle-day ${d===today?'current':''} ${log?'haslog':''}"><div class="d">Day ${i}</div><div class="s">${fmtDate(d)}${log?`<br>食慾 ${Number(log.appetite)}/10<br>噁心 ${Number(log.nausea||0)}/10`:''}</div></div>`}).join('')}
+
+function esc(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function menuIndexForDate(s){const d=new Date(s+'T00:00:00').getDay();return d===0?6:d-1}
+function getMenuDay(s){return db.menu.template[menuIndexForDate(s)]||db.menu.template[0]}
+function getMenuLog(s){if(!db.menu.logs[s])db.menu.logs[s]={done:{},swaps:{},actual:{},deleted:{}};const x=db.menu.logs[s];if(!x.done)x.done={};if(!x.swaps)x.swaps={};if(!x.actual)x.actual={};if(!x.deleted)x.deleted={};return x}
+function menuMealText(date,meal){const log=db.menu.logs[date];return log?.swaps?.[meal.key]?.trim()||meal.text}
+function editMenuMeal(date,key){const day=getMenuDay(date),meal=day.meals.find(x=>x.key===key);if(!meal)return;const log=getMenuLog(date);const now=log.swaps?.[key]||'';const v=prompt(`${meal.name}臨時改吃什麼？\n留白＝恢復預設`,now);if(v===null)return;log.swaps[key]=v.trim();save()}
+function deleteMenuMeal(date,key){const day=getMenuDay(date),meal=day.meals.find(x=>x.key===key);if(!meal)return;if(!confirm(`刪除「${meal.name}」的今日計畫？\n實際執行紀錄會保留。`))return;const log=getMenuLog(date);log.deleted[key]=true;delete log.done[key];delete log.swaps[key];save()}
+function clearTodayMenuPlan(date){const day=getMenuDay(date);if(!confirm(`清空 ${fmtDate(date)} 的整天計畫菜單？\n實際執行紀錄會保留。`))return;const log=getMenuLog(date);day.meals.forEach(m=>{log.deleted[m.key]=true;delete log.done[m.key];delete log.swaps[m.key]});save()}
+function resetTodayMenuPlan(date){const log=getMenuLog(date);log.deleted={};log.swaps={};log.done={};save()}
+let actualContext=null; let actualCalcItems=[];
+function actualLabel(a){if(!a)return'';return a.mode==='same'?'照原菜單':a.mode==='half'?'約半份':a.mode==='none'?'沒吃':'有變動'}
+function closeActual(){actualToast.classList.remove('show');toastBackdrop.classList.remove('show');actualContext=null;actualCalcItems=[]}
+function zeroNutrients(){return {kcal:0,protein:0,carbs:0,fat:0,fiber:0,calcium:0,iron:0,zinc:0}}
+function calcItemsTotal(items=actualCalcItems){const out=zeroNutrients();items.forEach(it=>nutrientMeta.forEach(n=>out[n.key]+=Number(it[n.key]||0)*Number(it.qty||1)));return out}
+function describeCalcItems(){return actualCalcItems.map(x=>`${x.name} ${Number(x.qty||1).toFixed(2).replace(/\.00$/,'').replace(/(\.\d)0$/,'$1')}份（${x.serving}）`).join('＋')}
+function fillFoodSelect(){const all=foodLibrary();actualFoodSelect.innerHTML=all.map(f=>`<option value="${esc(f.id)}">${esc(f.name)}｜${esc(f.serving)}</option>`).join('')}
+function formatDiff(v,d=0,unit=''){const x=Number(v||0);const cls=x>0.05?'diff-pos':x<-0.05?'diff-neg':'diff-zero';const sign=x>0?'+':'';return `<span class="${cls}">${sign}${nfmt(x,d)}${unit}</span>`}
+function foodSuggestions(plan,actual){const deficits={protein:plan.protein-actual.protein,fiber:plan.fiber-actual.fiber,calcium:plan.calcium-actual.calcium,iron:plan.iron-actual.iron,zinc:plan.zinc-actual.zinc};const picks=[];if(deficits.protein>5)picks.push(baseFoods.find(x=>x.id==='soy300'));if(deficits.fiber>2)picks.push(baseFoods.find(x=>x.id==='edamame50'));if(deficits.calcium>120)picks.push(baseFoods.find(x=>x.id==='yogurt'));if(deficits.iron>1.2)picks.push(baseFoods.find(x=>x.id==='tofu100'));if(deficits.zinc>1)picks.push(baseFoods.find(x=>x.id==='egg'));const uniq=[...new Map(picks.filter(Boolean).map(x=>[x.id,x])).values()].slice(0,3);if(!uniq.length)return '這餐和原計畫差距不大，不需要特別補。';return '如果今天後面要補，可優先考慮：'+uniq.map(x=>`${x.name} ${x.serving}（蛋白 ${nfmt(x.protein,1)}g、纖維 ${nfmt(x.fiber,1)}g、鈣 ${nfmt(x.calcium)}mg）`).join('；')+'。這只是營養缺口提示，不是一定要加吃。'}
+function renderActualCalculator(){if(!actualContext)return;const day=getMenuDay(actualContext.date),meal=day.meals.find(x=>x.key===actualContext.key);const total=calcItemsTotal();actualCalcList.innerHTML=actualCalcItems.length?actualCalcItems.map((x,i)=>`<div class="calc-item"><div><b>${esc(x.name)}</b> × ${nfmt(x.qty,2)}｜${esc(x.serving)}<div class="food-lib-meta">${nfmt(x.kcal*x.qty)} kcal・P ${nfmt(x.protein*x.qty,1)}g・纖維 ${nfmt(x.fiber*x.qty,1)}g</div></div><button class="calc-remove" data-remove-calc="${i}">×</button></div>`).join(''):'<div class="hint">尚未加入食物。</div>';actualCalcList.querySelectorAll('[data-remove-calc]').forEach(b=>b.onclick=()=>{actualCalcItems.splice(Number(b.dataset.removeCalc),1);renderActualCalculator()});actualCalcTotal.innerHTML=actualCalcItems.length?`<b>實際加總</b>｜${nfmt(total.kcal)} kcal・蛋白 ${nfmt(total.protein,1)}g・碳水 ${nfmt(total.carbs,1)}g・脂肪 ${nfmt(total.fat,1)}g・纖維 ${nfmt(total.fiber,1)}g<br>鈣 ${nfmt(total.calcium)}mg・鐵 ${nfmt(total.iron,1)}mg・鋅 ${nfmt(total.zinc,1)}mg`:'尚未加入食物。';if(actualCalcItems.length&&meal){actualCompare.innerHTML=`<b>和原菜單相比</b>｜熱量 ${formatDiff(total.kcal-meal.kcal,0,' kcal')}・蛋白 ${formatDiff(total.protein-meal.protein,1,'g')}・碳水 ${formatDiff(total.carbs-meal.carbs,1,'g')}・脂肪 ${formatDiff(total.fat-meal.fat,1,'g')}・纖維 ${formatDiff(total.fiber-meal.fiber,1,'g')}<br>鈣 ${formatDiff(total.calcium-meal.calcium,0,'mg')}・鐵 ${formatDiff(total.iron-meal.iron,1,'mg')}・鋅 ${formatDiff(total.zinc-meal.zinc,1,'mg')}`;actualSuggestion.textContent=foodSuggestions(meal,total)}else{actualCompare.textContent='加入食物後，這裡會顯示「實際 vs 原菜單」。';actualSuggestion.textContent='若有明顯缺口，猛健錄會列出後續可補的常吃食物。'}}
+function openActual(date,key){const day=getMenuDay(date),meal=day.meals.find(x=>x.key===key);if(!meal)return;const log=getMenuLog(date),a=log.actual?.[key];actualContext={date,key};actualCalcItems=Array.isArray(a?.foods)?structuredClone(a.foods):[];actualToastTitle.textContent=`${meal.name}・${fmtDate(date)}`;actualPlanText.innerHTML=`<b>今天的計畫：</b>${esc(menuMealText(date,meal))}`;document.querySelectorAll('[data-actual-mode]').forEach(b=>b.classList.toggle('active',b.dataset.actualMode===(a?.mode||'')));actualFood.value=a?.text||'';actualNote.value=a?.note||'';actualFactor.value=a?.nutritionFactor===null?'skip':String(a?.nutritionFactor??1);fillFoodSelect();actualFoodQty.value='1';renderActualCalculator();actualToast.classList.add('show');toastBackdrop.classList.add('show');setTimeout(()=>actualFood.focus(),120)}
+function setActualPreset(mode){if(!actualContext)return;const day=getMenuDay(actualContext.date),meal=day.meals.find(x=>x.key===actualContext.key);if(!meal)return;document.querySelectorAll('[data-actual-mode]').forEach(b=>b.classList.toggle('active',b.dataset.actualMode===mode));const plan=menuMealText(actualContext.date,meal);if(mode==='same'){actualFood.value=plan;actualFactor.value='1';actualCalcItems=[]}else if(mode==='half'){actualFood.value=plan;actualFactor.value='0.5';actualCalcItems=[]}else if(mode==='none'){actualFood.value='未吃';actualFactor.value='0';actualCalcItems=[]}else{if(actualFood.value===plan||actualFood.value==='未吃')actualFood.value='';actualFactor.value='skip';actualFood.focus()}actualContext.mode=mode;renderActualCalculator()}
+function addCalcFood(food,qty=1){if(!food||!(qty>0))return;const old=actualCalcItems.find(x=>x.id===food.id&&x.serving===food.serving);if(old)old.qty=Number(old.qty)+Number(qty);else actualCalcItems.push({...structuredClone(food),qty:Number(qty)});actualContext.mode='changed';document.querySelectorAll('[data-actual-mode]').forEach(b=>b.classList.toggle('active',b.dataset.actualMode==='changed'));actualFactor.value='skip';actualFood.value=describeCalcItems();renderActualCalculator()}
+function saveActualExecution(){if(!actualContext)return;const log=getMenuLog(actualContext.date);let mode=actualContext.mode||log.actual?.[actualContext.key]?.mode||'changed';const text=actualFood.value.trim();if(mode==='changed'&&!text&&!actualCalcItems.length)return alert('請寫下實際吃了什麼，或用食物庫加入這餐');const f=actualFactor.value==='skip'?null:Number(actualFactor.value);const nutrients=actualCalcItems.length?calcItemsTotal():null;log.actual[actualContext.key]={mode,text:text||describeCalcItems()||'—',nutritionFactor:nutrients?null:f,nutrients,foods:structuredClone(actualCalcItems),note:actualNote.value.trim(),updatedAt:new Date().toISOString()};log.done[actualContext.key]=mode!=='none';save();closeActual()}
+function clearActualExecution(){if(!actualContext)return;const log=getMenuLog(actualContext.date);delete log.actual[actualContext.key];log.done[actualContext.key]=false;save();closeActual()}
+const nutrientMeta=[
+  {key:'kcal',label:'熱量',unit:'kcal',digits:0},{key:'protein',label:'蛋白質',unit:'g',digits:0},{key:'carbs',label:'碳水',unit:'g',digits:0},{key:'fat',label:'脂肪',unit:'g',digits:0},{key:'fiber',label:'膳食纖維',unit:'g',digits:1},{key:'calcium',label:'鈣',unit:'mg',digits:0},{key:'iron',label:'鐵',unit:'mg',digits:1},{key:'zinc',label:'鋅',unit:'mg',digits:1}
+];
+function sumNutrients(day,log,doneOnly=false){const out={};nutrientMeta.forEach(n=>out[n.key]=0);day.meals.forEach(m=>{const deleted=!!log.deleted?.[m.key];if(!doneOnly&&deleted)return;if(doneOnly&&deleted&&!log.actual?.[m.key])return;let factor=1;if(doneOnly){const a=log.actual?.[m.key];if(a?.nutrients){nutrientMeta.forEach(n=>out[n.key]+=Number(a.nutrients[n.key]||0));return}if(a){if(a.nutritionFactor===null)return;factor=Number(a.nutritionFactor||0)}else{if(!log.done?.[m.key])return;factor=1}}nutrientMeta.forEach(n=>out[n.key]+=Number(m[n.key]||0)*factor)});return out}
+function nfmt(v,d=0){return Number(v||0).toFixed(d).replace(/\.0$/,'')}
+function nutrientStatus(total,key){const t=Number(db.settings.nutritionTargets?.[key]||0);if(!t)return null;const r=total/t;if(r>=1)return {cls:'gap-good',text:'✅ 足夠'};if(r>=.8)return {cls:'gap-near',text:'🟡 接近'};return {cls:'gap-low',text:'🔴 偏低'}}
+function renderMenu(){
+  const date=menuDate.value||ymd(); const day=getMenuDay(date); const log=getMenuLog(date); const planned=sumNutrients(day,log,false); const eaten=sumNutrients(day,log,true);
+  menuDayType.value=`${day.label}・${day.kind}`;
+  nutritionGrid.innerHTML=nutrientMeta.map(n=>`<div class="nutrition-card"><div class="nutrition-name">${n.label}</div><div class="nutrition-value">${nfmt(eaten[n.key],n.digits)} / ${nfmt(planned[n.key],n.digits)} <small>${n.unit}</small></div><div class="nutrition-sub">已吃 / 整日菜單</div></div>`).join('');
+  const gapKeys=['protein','fiber','calcium','iron','zinc']; const gapNames={protein:'蛋白質',fiber:'膳食纖維',calcium:'鈣',iron:'鐵',zinc:'鋅'}; const targetUnits={protein:'g',fiber:'g',calcium:'mg',iron:'mg',zinc:'mg'};
+  const kt=Number(db.settings.nutritionTargets.kcal||0),kgap=Math.max(0,kt-eaten.kcal),pgap=Math.max(0,Number(db.settings.nutritionTargets.protein||0)-eaten.protein);const deletedCount=Object.values(log.deleted||{}).filter(Boolean).length;nutritionGap.innerHTML=`<b>${date===ymd()?'目前尚差':'當日尚差'}（相對個人參考值）</b><br>熱量：${nfmt(kgap)} kcal・蛋白質：${nfmt(pgap,1)} g<br>`+gapKeys.filter(k=>k!=='protein').map(k=>{const t=Number(db.settings.nutritionTargets[k]||0),g=Math.max(0,t-eaten[k]);return `${gapNames[k]}：尚差 ${nfmt(g,k==='fiber'||k==='iron'||k==='zinc'?1:0)} ${targetUnits[k]}`}).join('・')+`<br><span class="hint">未到一天結束前，這裡只表示「目前尚差」，不等於判定今日營養不足。</span>`+(deletedCount?`<br><span class="gap-near">※ 今日已刪除 ${deletedCount} 筆計畫菜單；實際執行紀錄不受影響。</span>`:'')+(Object.keys(log.swaps||{}).some(k=>log.swaps[k])?'<br><span class="gap-near">※ 今日有換餐；計畫營養仍沿用原餐估算。</span>':'')+(Object.values(log.actual||{}).some(a=>a&&a.nutritionFactor===null&&!a.nutrients)?'<br><span class="gap-near">※ 有實際執行內容未計入營養；紀錄仍完整保留。</span>':'')+(Object.values(log.actual||{}).some(a=>a?.nutrients)?'<br><span class="gap-good">※ 有餐次使用「實際營養計算」，今日已攝取優先採實際值。</span>':'');
+  const activeMeals=day.meals.filter(m=>!log.deleted?.[m.key]);
+  menuMealList.innerHTML=activeMeals.length?activeMeals.map(m=>{const a=log.actual?.[m.key];const checked=a?a.mode!=='none':!!log.done?.[m.key];const actualTag=a?`<span class="actual-badge">實際已記：${esc(actualLabel(a))}${a.nutrients?'・已計算':''}</span>`:'';return `<div class="meal-card"><div class="meal-row"><input class="meal-check" type="checkbox" data-meal-done="${m.key}" ${checked?'checked':''} ${a?'disabled':''}><div class="meal-main"><div class="meal-name">${esc(m.name)}${actualTag}</div><div class="meal-text">${esc(menuMealText(date,m))}</div><div class="meal-meta"><span class="meal-chip">${Number(m.kcal)} kcal</span><span class="meal-chip">蛋白 ${Number(m.protein)}g</span><span class="meal-chip">碳水 ${Number(m.carbs)}g</span><span class="meal-chip">脂肪 ${Number(m.fat)}g</span><span class="meal-chip">纖維 ${nfmt(m.fiber,1)}g</span></div><div class="nutri-line">鈣 ${nfmt(m.calcium)} mg・鐵 ${nfmt(m.iron,1)} mg・鋅 ${nfmt(m.zinc,1)} mg｜澱粉：${esc(m.starch||'—')}${log.swaps?.[m.key]?'｜今日已換餐（營養沿用原餐估算）':''}</div><div class="meal-actions"><button class="smallbtn meal-swap" data-meal-edit="${m.key}">臨時換餐</button><button class="smallbtn actual" data-meal-actual="${m.key}">實際執行</button><button class="smallbtn delete-shot" data-meal-delete="${m.key}">刪除菜單</button></div></div></div></div>`}).join(''):`<div class="empty">今天的計畫菜單已清空。<br><span class="hint">「實際執行」紀錄仍保留；按「還原今天預設」即可恢復。</span></div>`;
+  menuMealList.querySelectorAll('[data-meal-done]').forEach(el=>el.onchange=()=>{const lg=getMenuLog(date);lg.done[el.dataset.mealDone]=el.checked;save()});
+  menuMealList.querySelectorAll('[data-meal-edit]').forEach(el=>el.onclick=()=>editMenuMeal(date,el.dataset.mealEdit));
+  menuMealList.querySelectorAll('[data-meal-actual]').forEach(el=>el.onclick=()=>openActual(date,el.dataset.mealActual));
+  menuMealList.querySelectorAll('[data-meal-delete]').forEach(el=>el.onclick=()=>deleteMenuMeal(date,el.dataset.mealDelete));
+  menuWeek.innerHTML=db.menu.template.map(d=>{const totals=sumNutrients(d,{done:{}},false);return `<details class="week-day"><summary>${esc(d.label)}・${esc(d.kind)}｜${nfmt(totals.kcal)} kcal・蛋白 ${nfmt(totals.protein)}g・纖維 ${nfmt(totals.fiber,1)}g</summary><div class="week-meals">${d.meals.map(m=>`<div><b>${esc(m.name)}：</b>${esc(m.text)} <span class="badge">${Number(m.kcal)} kcal / P${Number(m.protein)}g</span></div>`).join('')}</div></details>`}).join('');  renderFoodLibrary();
+}
+function renderFoodLibrary(){const custom=db.foodLibrary?.custom||[];foodLibraryList.innerHTML=custom.length?custom.map(f=>`<div class="food-lib-row"><div><b>${esc(f.name)}</b>｜${esc(f.serving)}<div class="food-lib-meta">${nfmt(f.kcal)} kcal・P ${nfmt(f.protein,1)}g・碳水 ${nfmt(f.carbs,1)}g・脂肪 ${nfmt(f.fat,1)}g・纖維 ${nfmt(f.fiber,1)}g</div></div><button class="smallbtn" data-delete-food="${esc(f.id)}">刪除</button></div>`).join(''):`<div class="hint">內建已有 ${baseFoods.length} 種常用食物；妳自己新增的品牌／固定份量會顯示在這裡。</div>`;foodLibraryList.querySelectorAll('[data-delete-food]').forEach(b=>b.onclick=()=>{db.foodLibrary.custom=db.foodLibrary.custom.filter(x=>x.id!==b.dataset.deleteFood);save()})}
+
+function money(n){return Math.round(Number(n)||0).toLocaleString('zh-TW')}
+function unitCost(lot){return Number(lot.qty)>0?Number(lot.totalCost||0)/Number(lot.qty):0}
+function makeId(){return 'lot_'+Date.now()+'_'+Math.random().toString(36).slice(2,7)}
+function eligibleInventoryLots(dose,shotDate){return db.inventory.filter(x=>x.dose===dose&&Number(x.remaining)>0&&(!shotDate||!x.date||x.date<=shotDate)).sort((a,b)=>((a.date||'').localeCompare(b.date||''))||String(a.id||'').localeCompare(String(b.id||'')))}
+function deductInventory(dose,shotDate){const lots=eligibleInventoryLots(dose,shotDate);if(!lots.length)return null;const lot=lots[0];lot.remaining=Number(lot.remaining)-1;return {lotId:lot.id,cost:unitCost(lot)} }
+function restoreShotInventory(shot){if(!shot?.inventoryLotId)return false;const lot=db.inventory.find(x=>x.id===shot.inventoryLotId);if(!lot)return false;lot.remaining=Math.min(Number(lot.qty||0),Number(lot.remaining||0)+1);return true}
+function reconcileUnlinkedShots(){let matched=0;const shots=[...db.shots].filter(s=>!s.inventoryLotId).sort((a,b)=>(String(a.date||'')+String(a.time||'')).localeCompare(String(b.date||'')+String(b.time||'')));for(const shot of shots){const used=deductInventory(shot.dose,shot.date);if(!used)continue;shot.inventoryLotId=used.lotId;shot.cost=used.cost;matched++}return matched}
+function repairInventoryAssignments(){let repaired=0;for(const shot of db.shots){if(!shot.inventoryLotId)continue;const lot=db.inventory.find(x=>x.id===shot.inventoryLotId);const invalid=!lot||lot.dose!==shot.dose||(lot.date&&shot.date&&lot.date>shot.date);if(!invalid)continue;if(lot)lot.remaining=Math.min(Number(lot.qty||0),Number(lot.remaining||0)+1);shot.inventoryLotId=null;shot.cost=0;repaired++}const matched=reconcileUnlinkedShots();return {repaired,matched,changed:repaired>0||matched>0}}
+let editShotId=null;
+function openShotEdit(id){const shot=db.shots.find(x=>x.id===id);if(!shot)return;editShotId=id;editShotDate.value=shot.date||ymd();editShotTime.value=shot.time||'';editShotDose.value=shot.dose||'2.5 mg';editShotSite.value=shot.site||'腹部';editShotNote.value=shot.note||'';editShotStockHint.textContent=shot.inventoryLotId?`目前這一針已連結庫存，成本 $${money(shot.cost||0)}。改變日期或劑量時會重新檢查庫存。`:'這一針目前沒有連結庫存；改變日期或劑量時會嘗試配對符合日期的庫存。';shotEditToast.classList.add('show');shotEditBackdrop.classList.add('show')}
+function closeShotEditor(){shotEditToast.classList.remove('show');shotEditBackdrop.classList.remove('show');editShotId=null}
+function saveShotEditRecord(){const shot=db.shots.find(x=>x.id===editShotId);if(!shot)return closeShotEditor();if(!editShotDate.value)return alert('請選日期');const oldDose=shot.dose,oldDate=shot.date,newDose=editShotDose.value,newDate=editShotDate.value;let stockWarning='';if(oldDose!==newDose||oldDate!==newDate){restoreShotInventory(shot);shot.inventoryLotId=null;shot.cost=0;const used=deductInventory(newDose,newDate);shot.inventoryLotId=used?.lotId||null;shot.cost=used?.cost||0;if(!used)stockWarning='日期／劑量已修改，但找不到「購入日不晚於注射日」且劑量相同的庫存，所以這一針目前沒有扣庫存／計成本。'}shot.date=newDate;shot.time=editShotTime.value;shot.dose=newDose;shot.site=editShotSite.value;shot.note=editShotNote.value.trim();db.travelDelay=null;db.reminder.lastNotifiedKey=null;save();closeShotEditor();if(stockWarning)alert(stockWarning)}
+function deleteShotRecord(id){const shot=db.shots.find(x=>x.id===id);if(!shot)return;const cost=Number(shot.cost||0);const linked=!!shot.inventoryLotId;const msg=`確定刪除 ${fmtDate(shot.date)}・${shot.dose} 這筆注射紀錄？${linked?`\n會同步回補 1 劑庫存${cost?`，並扣回已施打成本 $${money(cost)}`:''}。`:''}\n這個動作無法復原。`;if(!confirm(msg))return;restoreShotInventory(shot);db.shots=db.shots.filter(x=>x.id!==id);db.travelDelay=null;db.reminder.lastNotifiedKey=null;db.meta.live=db.shots.length>0;save()}
+async function showSystemNotification(title,body){
+  if(!('Notification'in window))return false;
+  if(Notification.permission!=='granted')return false;
+  try{if('serviceWorker'in navigator){const reg=await navigator.serviceWorker.ready;await reg.showNotification(title,{body,icon:'./icon.svg',badge:'./icon.svg',tag:'mengjianlu-shot',renotify:true});return true}new Notification(title,{body});return true}catch(e){return false}
+}
+function reminderTarget(){const ns=getNext();if(!ns)return null;const days=Number(db.reminder.daysBefore||0);return addDays(ns,-days)}
+async function checkReminder(force=false){
+  if(!db.reminder.enabled&&!force)return;
+  const ns=getNext();if(!ns)return;
+  const rd=reminderTarget();const now=new Date();const today=ymd(now);const hhmm=now.toTimeString().slice(0,5);const targetTime=db.reminder.time||'09:00';
+  const key=`${ns}|${db.reminder.daysBefore}|${targetTime}`;
+  if(!force && db.reminder.lastNotifiedKey===key)return;
+  const due=(today>rd)||(today===rd&&hhmm>=targetTime);
+  if(!due&&!force)return;
+  const dd=diffDays(today,ns);const body=force?'這是一則測試通知。':dd>0?`${dd} 天後（${fmtDate(ns)}）是下一針。`:dd===0?`今天（${fmtDate(ns)}）是下一針。`:`原定施打日已過 ${Math.abs(dd)} 天，請確認紀錄。`;
+  const ok=await showSystemNotification('猛健錄・施打提醒',body);if(ok&&!force){db.reminder.lastNotifiedKey=key;localStorage.setItem(KEY,JSON.stringify(db));render()}
+}
+function render(){
+  const sw=Number(db.settings.startWeight||85), gw=Number(db.settings.goalWeight||70); const lw=latest(db.weights); const cw=lw?Number(lw.value):sw; const total=Math.max(.1,sw-gw); const prog=Math.max(0,Math.min(100,(sw-cw)/total*100));
+  currentWeight.textContent=cw.toFixed(1); startWeightTxt.textContent=sw.toFixed(1); goalWeightTxt.textContent=gw.toFixed(1); lossPct.textContent=((sw-cw)/sw*100).toFixed(1)+'%'; progressBar.style.width=prog+'%'; remainKg.textContent=Math.max(0,cw-gw).toFixed(1);
+  const ns=getNext(); const today=ymd();
+  if(ns){const dd=diffDays(today,ns);nextShot.textContent=fmtDate(ns);nextShotSub.textContent=dd>0?`還有 ${dd} 天`:dd===0?'就是今天':`已過 ${Math.abs(dd)} 天`;}else{nextShot.textContent='尚未設定';nextShotSub.textContent='新增第一筆注射紀錄後自動計算'}
+  const ls=latest(db.shots); lastDose.textContent=ls?ls.dose:'—';lastDoseSub.textContent=ls?`${fmtDate(ls.date)}・${ls.site}`:'每週一次紀錄';
+  const recent=[...db.daily].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,7); appetiteSummary.textContent=recent.length?(recent.reduce((s,x)=>s+Number(x.appetite),0)/recent.length).toFixed(1)+'/10':'—';
+  const md=ymd();const mday=getMenuDay(md);const mlog=getMenuLog(md);const mplan=sumNutrients(mday,mlog,false);const meat=sumNutrients(mday,mlog,true);const mactive=mday.meals.filter(m=>!mlog.deleted?.[m.key]);const mdone=mactive.filter(m=>mlog.actual?.[m.key]?mlog.actual[m.key].mode!=='none':mlog.done?.[m.key]).length;menuHomeTitle.textContent=mactive.length?`${mday.label}・${mday.kind}｜完成 ${mdone}/${mactive.length}`:`${mday.label}・${mday.kind}｜今日菜單已清空`;menuHomeList.innerHTML=mactive.length?mactive.map(m=>{const a=mlog.actual?.[m.key];const done=a?a.mode!=='none':mlog.done?.[m.key];return `<div>${done?'✓':'○'} <b>${esc(m.name)}</b> ${esc(menuMealText(md,m))}${a?' <span class="actual-badge">已記實際</span>':''}</div>`}).join(''):'<div>今天沒有計畫菜單；實際執行紀錄仍會保留。</div>';const homeKgap=Math.max(0,Number(db.settings.nutritionTargets.kcal||0)-meat.kcal),homePgap=Math.max(0,Number(db.settings.nutritionTargets.protein||0)-meat.protein);menuHomeProtein.textContent=`已攝取：${nfmt(meat.kcal)} kcal・蛋白 ${nfmt(meat.protein)}g・纖維 ${nfmt(meat.fiber,1)}g｜目前尚差：${nfmt(homeKgap)} kcal・蛋白 ${nfmt(homePgap,1)}g。`;
+  shotList.innerHTML=db.shots.length?[...db.shots].sort((a,b)=>(b.date+(b.time||'')).localeCompare(a.date+(a.time||''))).slice(0,12).map(x=>`<div class="item"><div class="item-top"><div class="item-title">${fmtDate(x.date)}・${esc(x.dose)}</div><span class="badge">${esc(x.site)}</span></div><div class="item-meta">${esc(x.time||'')} ${x.note?'｜'+esc(x.note):''}${Number(x.cost||0)>0?'｜成本 $'+money(x.cost):''}</div><div class="shot-actions"><button class="smallbtn edit-shot" data-shot-edit="${esc(x.id)}">編輯</button><button class="smallbtn delete-shot" data-shot-delete="${esc(x.id)}">刪除</button></div></div>`).join(''):'<div class="empty">還沒有注射紀錄</div>';
+  weightList.innerHTML=db.weights.length?[...db.weights].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,15).map(x=>`<div class="item"><div class="item-top"><div class="item-title">${fmtDate(x.date)}</div><b>${Number(x.value).toFixed(1)} kg</b></div></div>`).join(''):'<div class="empty">還沒有體重紀錄</div>';
+  const marks=[80.8,76.5,70];milestones.innerHTML=marks.map(m=>`<div class="mile ${cw<=m?'done':''}"><span>${m===80.8?'−5%':m===76.5?'−10%':'主要目標'}</span><b>${m.toFixed(1)} kg ${cw<=m?'✓':''}</b></div>`).join('');
+  dailyList.innerHTML=db.daily.length?[...db.daily].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,14).map(x=>{const cd=cycleDay(x.date),sy=symptomNames(x.symptoms);return `<div class="item"><div class="item-top"><div class="item-title">${fmtDate(x.date)}${cd!==null?'・Day '+cd:''}・食慾 ${Number(x.appetite)}/10</div><span class="badge">噁心 ${Number(x.nausea||0)}/10・飽脹 ${Number(x.fullness||0)}/10</span></div><div class="item-meta">飲水：${x.waterMl?Number(x.waterMl)+' ml':'未記'}　蛋白質：${x.protein==='yes'?'✓':x.protein==='no'?'未達':'未確認'}${sy.length?'｜'+sy.join('、'):''}${x.note?'｜'+esc(x.note):''}</div></div>`}).join(''):'<div class="empty">還沒有每日狀況</div>';
+  const remaining=db.inventory.reduce((s,x)=>s+Number(x.remaining||0),0);const value=db.inventory.reduce((s,x)=>s+Number(x.remaining||0)*unitCost(x),0);const purchased=db.inventory.reduce((s,x)=>s+Number(x.totalCost||0),0);const used=db.shots.reduce((s,x)=>s+Number(x.cost||0),0);
+  stockRemaining.textContent=remaining;stockValue.textContent=money(value);totalPurchased.textContent=money(purchased);totalUsedCost.textContent=money(used);
+  const currentDose=ls?.dose;const currentCount=currentDose?db.inventory.filter(x=>x.dose===currentDose).reduce((s,x)=>s+Number(x.remaining||0),0):0;stockCurrentDose.textContent=currentDose?`${currentDose} 還有 ${currentCount} 劑`:'尚無目前劑量';
+  stockList.innerHTML=db.inventory.length?[...db.inventory].sort((a,b)=>(b.date||'').localeCompare(a.date||'')).map(x=>`<div class="item"><div class="item-top"><div class="item-title">${fmtDate(x.date)}・${esc(x.dose)}</div><span class="badge">剩 ${Number(x.remaining)}/${Number(x.qty)} 劑</span></div><div class="item-meta">單劑 $${money(unitCost(x))}｜總價 $${money(x.totalCost)}${x.source?'｜'+esc(x.source):''}${x.expiry?'｜效期 '+fmtDate(x.expiry):''}</div></div>`).join(''):'<div class="empty">還沒有藥物庫存</div>';
+  reminderDays.value=String(db.reminder.daysBefore??0);reminderTime.value=db.reminder.time||'09:00';const ns2=getNext();const rt=reminderTarget();reminderStatus.textContent=db.reminder.enabled?'已開啟':'未開啟';reminderNext.textContent=ns2?(db.reminder.enabled?`預計 ${fmtDate(rt)} ${db.reminder.time} 提醒；下一針 ${fmtDate(ns2)}`:`下一針 ${fmtDate(ns2)}`):'尚未設定下一針';
+  startWeight.value=sw;goalWeight.value=gw;targetKcal.value=db.settings.nutritionTargets.kcal;targetProtein.value=db.settings.nutritionTargets.protein;targetFiber.value=db.settings.nutritionTargets.fiber;targetCalcium.value=db.settings.nutritionTargets.calcium;targetIron.value=db.settings.nutritionTargets.iron;targetZinc.value=db.settings.nutritionTargets.zinc;travelOriginal.value=getBaseNext()||'';previewDelay();renderMenu();renderCycleWeek();
+  const demo=!!db.meta?.demo, realShots=db.shots.length>0&&!demo;demoStrip.classList.toggle('demo',demo);demoStrip.classList.toggle('active',realShots);if(demo){demoCopy.innerHTML='目前是模擬療程 <span class="demo-tag">TEST</span>';liveModeText.textContent='正式開打前請先退出模擬資料，再記錄第一針。'}else if(realShots){const ld=cycleDay(today);demoCopy.textContent='正式療程進行中';liveModeText.textContent=ld!==null?`今天是 Day ${ld}｜最近一針 ${fmtDate(ls.date)}・${ls.dose}`:`最近一針 ${fmtDate(ls.date)}・${ls.dose}`;}else{demoCopy.textContent='正式療程尚未啟動';liveModeText.textContent='記下第一針後，猛健錄會自動開始 Day 0～6 追蹤。'}activateLive.style.display=demo?'none':'inline-block';activateLive.textContent=realShots?'記下一針':'記第一針';goDaily.style.display=realShots?'inline-block':'none';loadDemoQuick.style.display=(demo||realShots)?'none':'inline-block';clearDemoQuick.style.display=demo?'inline-block':'none';
+  loadDemo.style.display=demo?'none':'inline-block';clearDemo.style.display=demo?'inline-block':'none';
+}
+function previewDelay(){const base=getBaseNext();if(!base){travelNewDate.textContent='—';travelHint.textContent='先新增一筆注射紀錄';return}const n=Number(delayDays.value||0);const nd=addDays(base,n);travelNewDate.textContent=fmtDate(nd);travelHint.textContent=n<=4?`比原定日期晚 ${n} 天`:`比原定日期晚 ${n} 天；已超過 4 天，請依仿單／醫師確認這次是否應跳過。`;}
+addShot.onclick=()=>{if(db.meta?.demo)return alert('目前是模擬療程。請先清除模擬資料，再記正式注射。');const date=shotDate.value;if(!date)return alert('請選日期');const used=deductInventory(shotDose.value,date);db.shots.push({id:uid('shot'),date,time:shotTime.value,dose:shotDose.value,site:shotSite.value,note:shotNote.value.trim(),inventoryLotId:used?.lotId||null,cost:used?.cost||0});db.meta.live=true;db.travelDelay=null;db.reminder.lastNotifiedKey=null;save();shotNote.value='';if(!used)alert('注射紀錄已儲存，但找不到「購入日不晚於注射日」且相同劑量的庫存，所以這一針沒有扣庫存／計成本。')};
+shotList.onclick=e=>{const eb=e.target.closest('[data-shot-edit]');if(eb)return openShotEdit(eb.dataset.shotEdit);const dbtn=e.target.closest('[data-shot-delete]');if(dbtn)return deleteShotRecord(dbtn.dataset.shotDelete)};closeShotEdit.onclick=closeShotEditor;cancelShotEdit.onclick=closeShotEditor;shotEditBackdrop.onclick=closeShotEditor;saveShotEdit.onclick=saveShotEditRecord;
+addWeight.onclick=()=>{const v=Number(weightValue.value);if(!weightDate.value||!v)return alert('請輸入日期與體重');db.weights.push({date:weightDate.value,value:v});save()};
+addDaily.onclick=()=>{if(!dailyDate.value)return alert('請選日期');db.daily=db.daily.filter(x=>x.date!==dailyDate.value);db.daily.push({date:dailyDate.value,appetite:Number(appetite.value),nausea:Number(nausea.value),fullness:Number(fullness.value),symptoms:{vomiting:symVomiting.checked,constipation:symConstipation.checked,diarrhea:symDiarrhea.checked,fatigue:symFatigue.checked,dizzy:symDizzy.checked,other:symOther.checked},waterMl:waterMl.value===''?null:Number(waterMl.value),protein:protein.value,scale:10,note:dailyNote.value.trim(),updatedAt:new Date().toISOString()});save();dailyNote.value=''};
+document.querySelectorAll('[data-actual-mode]').forEach(b=>b.onclick=()=>setActualPreset(b.dataset.actualMode));
+addActualFood.onclick=()=>{const f=foodLibrary().find(x=>x.id===actualFoodSelect.value);const q=Number(actualFoodQty.value||0);if(!f||q<=0)return alert('請選食物並輸入份數');addCalcFood(f,q);actualFoodQty.value='1'};
+addTempFood.onclick=()=>{const name=tempFoodName.value.trim();if(!name)return alert('請輸入食物名稱');const f={id:'temp_'+Date.now(),name,serving:tempFoodServing.value.trim()||'這次份量',kcal:Number(tempKcal.value||0),protein:Number(tempProtein.value||0),carbs:Number(tempCarbs.value||0),fat:Number(tempFat.value||0),fiber:Number(tempFiber.value||0),calcium:Number(tempCalcium.value||0),iron:Number(tempIron.value||0),zinc:Number(tempZinc.value||0)};addCalcFood(f,1);if(saveTempToLibrary.checked){const saved={...f,id:'custom_'+Date.now()};db.foodLibrary.custom.push(saved)};[tempFoodName,tempFoodServing,tempKcal,tempProtein,tempCarbs,tempFat,tempFiber,tempCalcium,tempIron,tempZinc].forEach(x=>x.value='');saveTempToLibrary.checked=false};
+addLibraryFood.onclick=()=>{const name=libFoodName.value.trim(),serving=libFoodServing.value.trim();if(!name||!serving)return alert('請輸入食物名稱與 1 份的定義');db.foodLibrary.custom.push({id:'custom_'+Date.now(),name,serving,kcal:Number(libKcal.value||0),protein:Number(libProtein.value||0),carbs:Number(libCarbs.value||0),fat:Number(libFat.value||0),fiber:Number(libFiber.value||0),calcium:Number(libCalcium.value||0),iron:Number(libIron.value||0),zinc:Number(libZinc.value||0)});[libFoodName,libFoodServing,libKcal,libProtein,libCarbs,libFat,libFiber,libCalcium,libIron,libZinc].forEach(x=>x.value='');save()};
+closeActualToast.onclick=closeActual;toastBackdrop.onclick=closeActual;saveActual.onclick=saveActualExecution;clearActual.onclick=clearActualExecution;document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;if(actualToast.classList.contains('show'))closeActual();if(shotEditToast.classList.contains('show'))closeShotEditor()});
+menuDate.onchange=()=>render();
+resetTodayMenu.onclick=()=>{const d=menuDate.value||ymd();if(!confirm(`還原 ${fmtDate(d)} 的預設菜單？\n臨時換餐與勾選狀態會清除，但實際執行紀錄會保留。`))return;resetTodayMenuPlan(d)};
+clearTodayMenu.onclick=()=>clearTodayMenuPlan(menuDate.value||ymd());
+openMenu.onclick=()=>{document.querySelector('[data-tab="menu"]').click();menuDate.value=ymd();render()};
+delayDays.oninput=previewDelay;applyDelay.onclick=()=>{const base=getBaseNext();if(!base)return alert('請先新增一筆注射紀錄');const n=Number(delayDays.value||0);if(n<1||n>14)return alert('請輸入 1～14 天');db.travelDelay={original:base,newDate:addDays(base,n),days:n};db.reminder.lastNotifiedKey=null;save()};clearDelay.onclick=()=>{db.travelDelay=null;db.reminder.lastNotifiedKey=null;save()};
+addStock.onclick=()=>{const qty=Number(stockQty.value),cost=Number(stockCost.value);if(!stockDate.value||qty<1||cost<0||stockCost.value==='')return alert('請輸入購入日期、劑數與總價');db.inventory.push({id:makeId(),date:stockDate.value,dose:stockDose.value,qty,remaining:qty,totalCost:cost,source:stockSource.value.trim(),expiry:stockExpiry.value||''});const matched=reconcileUnlinkedShots();save();stockSource.value='';stockCost.value='';if(matched>0)alert(`庫存已加入，並依購入日期＋劑量回溯補扣 ${matched} 筆尚未連結庫存的歷史注射。`)};
+reminderDays.onchange=()=>{db.reminder.daysBefore=Number(reminderDays.value);db.reminder.lastNotifiedKey=null;save()};reminderTime.onchange=()=>{db.reminder.time=reminderTime.value||'09:00';db.reminder.lastNotifiedKey=null;save()};
+enableReminder.onclick=async()=>{if(!('Notification'in window))return alert('這個瀏覽器不支援系統通知。');const p=await Notification.requestPermission();if(p!=='granted')return alert('通知權限沒有開啟。請到瀏覽器／手機設定允許「猛健錄」通知。');db.reminder.enabled=true;db.reminder.daysBefore=Number(reminderDays.value);db.reminder.time=reminderTime.value||'09:00';db.reminder.lastNotifiedKey=null;save();await checkReminder()};
+disableReminder.onclick=()=>{db.reminder.enabled=false;db.reminder.lastNotifiedKey=null;save()};
+testReminder.onclick=async()=>{if(!('Notification'in window))return alert('這個瀏覽器不支援系統通知。');if(Notification.permission!=='granted'){const p=await Notification.requestPermission();if(p!=='granted')return alert('通知權限沒有開啟。')}const ok=await showSystemNotification('猛健錄・測試通知','通知成功。之後會依「下一針」日期提醒妳。');if(!ok)alert('這次沒有成功送出通知。')};
+
+function validateFullBackup(raw){if(!raw||typeof raw!=='object'||Array.isArray(raw))throw Error('備份根節點必須是物件');if(raw.format==='mengjianlu_meals_patch_v1')throw Error('這是飲食合併檔，不是完整備份');if(!raw.settings||typeof raw.settings!=='object'||Array.isArray(raw.settings))throw Error('缺少 settings');for(const k of ['shots','weights','daily','inventory'])if(!Array.isArray(raw[k]))throw Error(`缺少或無效的 ${k}`);if(!raw.menu||typeof raw.menu!=='object'||Array.isArray(raw.menu))throw Error('缺少 menu');return true}
+function validYmdStrict(v){if(!/^\d{4}-\d{2}-\d{2}$/.test(String(v||'')))return false;const d=new Date(v+'T00:00:00');return !Number.isNaN(d.getTime())&&ymd(d)===v}
+function mealKeysAllowed(){return new Set(db.menu.template.flatMap(d=>d.meals.map(m=>m.key)))}
+function safeNum(v,label,max=100000){if(v===null||v===undefined||v==='')throw Error(label+' 不可留白');const n=Number(v);if(!Number.isFinite(n)||n<0||n>max)throw Error(label+' 必須是合理的非負數');return n}
+function normalizePatchFood(x,day,key,i){if(!x||typeof x!=='object'||Array.isArray(x))throw Error(`${day} ${key} 第 ${i+1} 項食物格式錯誤`);const name=String(x.name||'').trim();if(!name||name.length>120)throw Error(`${day} ${key} 第 ${i+1} 項缺少食物名稱`);const qty=x.qty===undefined?1:safeNum(x.qty,`${day} ${key} ${name} 份數`,100);if(!(qty>0))throw Error(`${day} ${key} ${name} 份數必須大於 0`);return {id:String(x.id||`import_${day}_${key}_${i}`),name,serving:String(x.serving||'1 份').slice(0,120),qty,kcal:safeNum(x.kcal,`${name} 熱量`,10000),protein:safeNum(x.protein,`${name} 蛋白質`,1000),carbs:safeNum(x.carbs,`${name} 碳水`,1000),fat:safeNum(x.fat,`${name} 脂肪`,1000),fiber:safeNum(x.fiber,`${name} 纖維`,1000),calcium:safeNum(x.calcium,`${name} 鈣`,100000),iron:safeNum(x.iron,`${name} 鐵`,10000),zinc:safeNum(x.zinc,`${name} 鋅`,10000)} }
+function validateMealsPatch(raw){if(!raw||typeof raw!=='object'||raw.format!=='mengjianlu_meals_patch_v1')throw Error('不是猛健錄飲食合併檔（format 應為 mengjianlu_meals_patch_v1）');if(!Array.isArray(raw.days)||raw.days.length<1||raw.days.length>366)throw Error('days 必須包含 1～366 天');const allowed=mealKeysAllowed(),seenDates=new Set();const days=raw.days.map(day=>{if(!day||typeof day!=='object'||!validYmdStrict(day.date))throw Error('日期格式錯誤，需為有效的 YYYY-MM-DD');if(seenDates.has(day.date))throw Error(`日期 ${day.date} 重複出現`);seenDates.add(day.date);if(!day.meals||typeof day.meals!=='object'||Array.isArray(day.meals))throw Error(`${day.date} 缺少 meals`);const entries=Object.entries(day.meals);if(!entries.length)throw Error(`${day.date} 沒有任何餐次`);const meals={};for(const [key,m] of entries){if(!allowed.has(key))throw Error(`${day.date} 不支援餐次 ${key}`);if(!m||typeof m!=='object'||Array.isArray(m))throw Error(`${day.date} ${key} 格式錯誤`);const mode=String(m.mode||'changed');if(!['same','half','none','changed'].includes(mode))throw Error(`${day.date} ${key} mode 不支援`);const foods=Array.isArray(m.foods)?m.foods.map((x,i)=>normalizePatchFood(x,day.date,key,i)):[];if(mode!=='none'&&!foods.length)throw Error(`${day.date} ${key} 必須至少有一項 foods；若未吃請用 mode: none`);const text=String(m.text||foods.map(x=>x.name).join('＋')||(mode==='none'?'未吃':'')).trim().slice(0,1200);const note=String(m.note||'').trim().slice(0,1200);meals[key]={mode,text,note,foods}}return {date:day.date,meals}});return {format:'mengjianlu_meals_patch_v1',days}}
+function actualComparable(a){if(!a)return null;return {mode:a.mode||'changed',text:String(a.text||''),note:String(a.note||''),nutritionFactor:a.nutritionFactor===null?null:Number(a.nutritionFactor??0),nutrients:a.nutrients?Object.fromEntries(nutrientMeta.map(n=>[n.key,Number(a.nutrients[n.key]||0)])):null,foods:Array.isArray(a.foods)?a.foods.map(x=>({name:String(x.name||''),serving:String(x.serving||''),qty:Number(x.qty||1),...Object.fromEntries(nutrientMeta.map(n=>[n.key,Number(x[n.key]||0)]))})):[]}}
+function patchMealToActual(m){if(m.mode==='none')return {mode:'none',text:m.text||'未吃',nutritionFactor:0,nutrients:zeroNutrients(),foods:[],note:m.note,updatedAt:new Date().toISOString(),source:'meals_patch_v1'};const nutrients=calcItemsTotal(m.foods);return {mode:m.mode,text:m.text,nutritionFactor:null,nutrients,foods:structuredClone(m.foods),note:m.note,updatedAt:new Date().toISOString(),source:'meals_patch_v1'}}
+function saveMealsPatchUndo(entries){try{localStorage.setItem(MEALS_PATCH_UNDO_KEY,JSON.stringify({format:'mengjianlu_meals_patch_undo_v1',createdAt:new Date().toISOString(),entries}));return true}catch(e){return false}}
+function refreshUndoMealsPatchButton(){undoMealsPatch.style.display=storageAvailable()&&localStorage.getItem(MEALS_PATCH_UNDO_KEY)?'inline-block':'none'}
+function importMealsPatch(raw,fileName=''){const patch=validateMealsPatch(raw);let changes=[],identical=0,conflicts=0;for(const day of patch.days){const log=getMenuLog(day.date);for(const [key,m] of Object.entries(day.meals)){const next=patchMealToActual(m),prev=log.actual?.[key]||null;if(JSON.stringify(actualComparable(prev))===JSON.stringify(actualComparable(next))){identical++;continue}if(prev)conflicts++;changes.push({date:day.date,key,next,prev:prev?structuredClone(prev):null,hadDone:Object.prototype.hasOwnProperty.call(log.done,key),prevDone:log.done?.[key]})}}if(!changes.length){alert(`沒有需要更新的餐次。${identical?` 已有 ${identical} 筆內容相同，已略過。`:''}`);return}const dates=[...new Set(changes.map(x=>x.date))];const msg=`將更新 ${changes.length} 筆飲食實際執行，涉及 ${dates.length} 天：\n${dates.join('、')}\n\n${conflicts?`其中 ${conflicts} 筆會取代既有的同日同餐紀錄。\n`:''}${identical?`${identical} 筆內容完全相同會略過。\n`:''}\n注射、體重、庫存、設定、每日症狀不會被修改。確定匯入？`;if(!confirm(msg))return;const undo=changes.map(x=>({date:x.date,key:x.key,prev:x.prev,hadDone:x.hadDone,prevDone:x.prevDone}));if(!saveMealsPatchUndo(undo))return alert('無法建立匯入前回復點，因此已取消匯入。請先確認本機儲存可用。');for(const c of changes){const log=getMenuLog(c.date);log.actual[c.key]=c.next;log.done[c.key]=c.next.mode!=='none'}db.meta.lastMealsPatchImport={at:new Date().toISOString(),fileName:String(fileName||''),dates,count:changes.length};if(!persistDb())return;menuDate.value=dates[0];render();refreshUndoMealsPatchButton();document.querySelector('[data-tab="menu"]').click();alert(`飲食合併完成：更新 ${changes.length} 筆${identical?`，略過相同 ${identical} 筆`:''}。`)}
+function undoLastMealsPatch(){let raw;try{raw=localStorage.getItem(MEALS_PATCH_UNDO_KEY)}catch(e){}if(!raw)return alert('沒有可復原的飲食合併');let b;try{b=JSON.parse(raw)}catch(e){return alert('回復點已損壞')};if(!Array.isArray(b.entries)||!confirm(`復原上次飲食合併的 ${b.entries.length} 筆餐次？\n只復原這些餐次，不影響之後新增的注射、體重或庫存。`))return;for(const x of b.entries){if(!validYmdStrict(x.date))continue;const log=getMenuLog(x.date);if(x.prev)log.actual[x.key]=x.prev;else delete log.actual[x.key];if(x.hadDone)log.done[x.key]=x.prevDone;else delete log.done[x.key]}localStorage.removeItem(MEALS_PATCH_UNDO_KEY);persistDb();render();refreshUndoMealsPatchButton();alert('已復原上次飲食合併')}
+function isStandaloneMode(){return window.matchMedia?.('(display-mode: standalone)').matches===true}
+const OFFICIAL_SITE='https://virbunny.github.io/mjlog/';
+function isOfficialPagesOrigin(){return location.hostname==='virbunny.github.io'&&location.pathname.startsWith('/mjlog')}
+function updateStorageModeHint(){const ok=storageAvailable(),fileMode=location.protocol==='file:';if(!ok){storageModeHint.innerHTML='<b style="color:var(--danger)">localStorage 目前不可用，請勿繼續正式記錄；先匯出可取得的資料並檢查 Firefox 隱私／網站資料設定。</b>';storageModeCard.style.borderColor='var(--danger)';return}storageModeCard.style.borderColor='var(--line)';if(fileMode){storageModeHint.innerHTML='<b>目前是 file:// 緊急相容模式。</b>資料仍可存，但 Service Worker／離線 PWA 不會啟用。正式使用請開啟 <b>'+OFFICIAL_SITE+'</b>。'}else if(isOfficialPagesOrigin()){storageModeHint.innerHTML='目前是 <b>GitHub Pages・Local-first PWA</b>。程式由 GitHub Pages 提供，但注射、體重、飲食、庫存等紀錄只存在這個瀏覽器的 localStorage，不會自動上傳到 GitHub；跨裝置請使用完整 JSON 匯出／匯入。'}else{storageModeHint.innerHTML='目前透過其他網站來源執行；猛健錄仍只把紀錄存在這個來源的瀏覽器 localStorage，不會自動雲端同步。正式主線網址：<b>'+OFFICIAL_SITE+'</b>'}}
+function hasMeaningfulData(){return !!(db.shots?.length||db.weights?.length||db.daily?.length||db.inventory?.length||Object.keys(db.menu?.logs||{}).length||db.foodLibrary?.custom?.length)}
+function backupAgeDays(){const iso=db.meta?.lastFullBackupAt;if(!iso)return null;const t=new Date(iso).getTime();return Number.isFinite(t)?Math.floor((Date.now()-t)/86400000):null}
+function updateBackupStatus(){const age=backupAgeDays(),has=hasMeaningfulData();if(age===null){backupStatusHint.innerHTML=has?'尚未記錄完整 JSON 備份。<b>正式療程資料已存在，建議現在先備份一次。</b>':'尚未建立完整備份；目前也還沒有需要保護的正式紀錄。'}else backupStatusHint.textContent=`上次完整備份：${new Date(db.meta.lastFullBackupAt).toLocaleString('zh-TW')}（約 ${Math.max(0,age)} 天前）`;const warn=has&&(age===null||age>=7);backupStrip.hidden=!warn;if(warn)backupStripText.innerHTML=age===null?'<b>正式資料尚未做過完整備份</b><br>建議匯出一份 JSON，之後換電腦或清除瀏覽器資料時才能還原。':`<b>距離上次完整備份約 ${age} 天</b><br>建議再留一份最新 JSON。`}
+function updatePwaStatus(){const fileMode=location.protocol==='file:',sw='serviceWorker'in navigator,standalone=isStandaloneMode();let html='';if(fileMode)html='<span class="pwa-dot bad"></span><b>PWA 未啟用。</b> 請從 GitHub Pages 正式網址開啟猛健錄。';else if(!sw)html='<span class="pwa-dot bad"></span>這個瀏覽器不支援 Service Worker，僅能當一般網頁使用。';else if(standalone)html='<span class="pwa-dot ok"></span><b>已以獨立 App 視窗執行。</b> 離線快取可用。';else html='<span class="pwa-dot warn"></span>PWA 環境已可用，但目前仍在一般瀏覽器分頁。Firefox Windows 可用網址列的「網路應用程式」按鈕安裝到工作列。';pwaModeHint.innerHTML=html;installBtn.style.display=(!fileMode&&!standalone)?'block':'none'}
+saveSettings.onclick=()=>{db.settings.startWeight=Number(startWeight.value);db.settings.goalWeight=Number(goalWeight.value);db.settings.nutritionTargets={kcal:Number(targetKcal.value||0),protein:Number(targetProtein.value||0),fiber:Number(targetFiber.value||0),calcium:Number(targetCalcium.value||0),iron:Number(targetIron.value||0),zinc:Number(targetZinc.value||0)};save()};
+function exportFullBackup(){db.meta.lastFullBackupAt=new Date().toISOString();persistDb();const blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`猛健錄_完整備份_${ymd()}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);updateBackupStatus()}
+exportJson.onclick=exportFullBackup;backupNow.onclick=exportFullBackup;
+importJson.onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const raw=JSON.parse(r.result);validateFullBackup(raw);if(!confirm('匯入「完整備份」會以備份內容取代目前猛健錄全部資料。確定？'))return;db=normalize(raw);save();alert('完整備份匯入完成')}catch(err){alert('完整備份匯入失敗：'+err.message)}finally{e.target.value=''}};r.readAsText(f)};
+importMealsPatch.onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{importMealsPatch(JSON.parse(r.result),f.name)}catch(err){alert('飲食合併匯入失敗：'+err.message)}finally{e.target.value=''}};r.readAsText(f)};
+undoMealsPatch.onclick=undoLastMealsPatch;
+loadDemo.onclick=loadDemoData;loadDemoQuick.onclick=loadDemoData;clearDemo.onclick=clearDemoData;clearDemoQuick.onclick=clearDemoData;
+resetAll.onclick=()=>{if(confirm('確定清空全部紀錄？這個動作無法復原。')){db=structuredClone(defaultData);save()}};
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.tab).classList.add('active')});
+quickShot.onclick=()=>document.querySelector('[data-tab="shot"]').click();activateLive.onclick=()=>document.querySelector('[data-tab="shot"]').click();goDaily.onclick=()=>document.querySelector('[data-tab="daily"]').click();
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;updatePwaStatus()});
+window.addEventListener('appinstalled',()=>{deferredPrompt=null;updatePwaStatus()});
+installBtn.onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;updatePwaStatus();return}alert('Firefox Windows：請從 GitHub Pages 正式網址開啟猛健錄，再點網址列右側的「網路應用程式」圖示，把猛健錄加入工作列／開始功能表。')};
+let updateRegistration=null, reloadingForUpdate=false;
+function offerAppUpdate(reg){updateRegistration=reg;updateStrip.hidden=false}
+applyUpdate.onclick=()=>{const w=updateRegistration?.waiting;if(w)w.postMessage({type:'SKIP_WAITING'});else location.reload()};
+async function registerPwa(){if(!('serviceWorker'in navigator)||location.protocol==='file:')return;try{const reg=await navigator.serviceWorker.register('./sw.js',{scope:'./'});if(reg.waiting&&navigator.serviceWorker.controller)offerAppUpdate(reg);reg.addEventListener('updatefound',()=>{const w=reg.installing;if(!w)return;w.addEventListener('statechange',()=>{if(w.state==='installed'&&navigator.serviceWorker.controller)offerAppUpdate(reg)})});navigator.serviceWorker.addEventListener('controllerchange',()=>{if(reloadingForUpdate)return;reloadingForUpdate=true;location.reload()});reg.update().catch(()=>{})}catch(e){pwaModeHint.innerHTML='<span class="pwa-dot bad"></span>Service Worker 註冊失敗：'+String(e.message||e)}}
+registerPwa();
+const t=ymd();todayPill.textContent=t;shotDate.value=t;weightDate.value=t;dailyDate.value=t;stockDate.value=t;menuDate.value=t;const stockRepair=repairInventoryAssignments();if(stockRepair.changed)persistDb();render();updateStorageModeHint();updatePwaStatus();updateBackupStatus();refreshUndoMealsPatchButton();setTimeout(()=>checkReminder(),1200);setInterval(()=>checkReminder(),60000);
+</script>
+</body></html>
