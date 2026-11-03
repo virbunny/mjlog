@@ -1,0 +1,43 @@
+{
+  "format": "mengjianlu_meals_patch_v1",
+  "days": [
+    {
+      "date": "2026-11-02",
+      "meals": {
+        "breakfast": {
+          "mode": "changed",
+          "text": "高纖豆漿 300 ml＋茶葉蛋 1 顆",
+          "note": "範例資料，請改成實際內容",
+          "foods": [
+            {
+              "name": "高纖豆漿",
+              "serving": "300 ml",
+              "qty": 1,
+              "kcal": 123,
+              "protein": 9.6,
+              "carbs": 10.5,
+              "fat": 5.2,
+              "fiber": 5.5,
+              "calcium": 75,
+              "iron": 1.8,
+              "zinc": 0.9
+            },
+            {
+              "name": "茶葉蛋",
+              "serving": "1 顆",
+              "qty": 1,
+              "kcal": 78,
+              "protein": 6.3,
+              "carbs": 1.1,
+              "fat": 5.3,
+              "fiber": 0,
+              "calcium": 28,
+              "iron": 0.9,
+              "zinc": 0.6
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
