@@ -1,0 +1,18 @@
+{
+  "id": "./",
+  "name": "猛健錄",
+  "short_name": "猛健錄",
+  "description": "猛健樂療程、注射、體重、症狀、營養、每日菜單、實際攝取、藥物庫存與成本的本機優先紀錄工具",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "background_color": "#f7fbff",
+  "theme_color": "#e8f6ff",
+  "lang": "zh-Hant-TW",
+  "categories": ["health", "lifestyle"],
+  "prefer_related_applications": false,
+  "icons": [
+    {"src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any"}
+  ]
+}
