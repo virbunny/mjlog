@@ -11,7 +11,7 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml" />
 <link rel="apple-touch-icon" href="icons/icon-192.png" />
 <link rel="stylesheet" href="chatgpt-paste.css" />
-<title>猛健錄 V0.3.5</title>
+<title>猛健錄 V0.3.6</title>
 <style>
 :root{--bg:#f7fbff;--card:#fff;--ink:#203040;--muted:#718096;--blue:#bfe8ff;--blue2:#e8f6ff;--pink:#ffd7e5;--green:#dff5de;--yellow:#fff1b8;--line:#dbe8f0;--accent:#4d9fd1;--danger:#d95f76}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#eef9ff,#fff8fb);font-family:system-ui,-apple-system,"Segoe UI","Noto Sans TC",sans-serif;color:var(--ink)}
@@ -39,7 +39,7 @@
 </head>
 <body>
 <div class="app">
-  <div class="top"><div><div class="title">🐰 猛健錄</div><div class="ver">V0.3.5｜PWA 正式版・Local-first</div></div><span class="pill" id="todayPill"></span></div>
+  <div class="top"><div><div class="title">🐰 猛健錄</div><div class="ver">V0.3.6｜PWA 正式版・Local-first</div></div><span class="pill" id="todayPill"></span></div>
   <div class="system-strip update" id="updateStrip" hidden><div class="system-copy"><b>猛健錄有新版程式</b><br>資料仍留在本機；重新載入只更新程式，不會清空紀錄。</div><div class="system-actions"><button class="smallbtn actual" id="applyUpdate">重新載入更新</button></div></div>
   <div class="system-strip backup" id="backupStrip" hidden><div class="system-copy" id="backupStripText"><b>建議做一次完整備份</b></div><div class="system-actions"><button class="smallbtn" id="backupNow">立即匯出</button></div></div>
 
@@ -253,6 +253,7 @@
       <div class="paste-summary" id="chatgptPasteSummary"></div>
       <div class="paste-bulk" id="chatgptConflictBulk" hidden><button class="smallbtn" id="chatgptSkipAll">衝突全部略過</button><button class="smallbtn edit-shot" id="chatgptOverwriteAll">衝突全部覆蓋</button></div>
       <div class="paste-preview" id="chatgptPastePreviewList"></div>
+      <div class="libsync-section" id="chatgptLibrarySyncSection" hidden><div class="libsync-title">同步常吃食物庫</div><div class="paste-summary" id="chatgptLibrarySummary"></div><div class="libsync-list" id="chatgptLibraryPreview"></div></div>
       <div class="toast-actions"><button class="btn" id="applyChatgptPaste">確認匯入</button><button class="btn secondary" id="cancelChatgptPaste">取消</button></div>
       <div class="toast-note">匯入只會改動上方列出的飲食「實際執行」餐次；注射、體重、藥物庫存、設定與每日症狀不會被修改。成功後可用「復原上次飲食匯入」還原。</div>
     </div>
@@ -261,7 +262,7 @@
 
 <div class="footer"><div class="footer-inner"><button class="btn secondary" id="installBtn" style="display:none">安裝猛健錄</button><button class="btn" id="quickShot">記一針</button></div></div>
 <script>
-const APP_VERSION='0.3.5';
+const APP_VERSION='0.3.6';
 const KEY='mengjianlu_v030';
 const PREV_KEYS=['mengjianlu_v024','mengjianlu_v023','mengjianlu_v022','mengjianlu_v021','mengjianlu_v020','mengjianlu_v016','mengjianlu_v015','mengjianlu_v014','mengjianlu_v013','mengjianlu_v012','mengjianlu_v011'];
 const LEGACY_KEY='mj_helper_v010';
@@ -487,7 +488,7 @@ function validateFullBackup(raw){if(!raw||typeof raw!=='object'||Array.isArray(r
 function validYmdStrict(v){if(!/^\d{4}-\d{2}-\d{2}$/.test(String(v||'')))return false;const d=new Date(v+'T00:00:00');return !Number.isNaN(d.getTime())&&ymd(d)===v}
 function mealKeysAllowed(){return new Set(db.menu.template.flatMap(d=>d.meals.map(m=>m.key)))}
 function safeNum(v,label,max=100000){if(v===null||v===undefined||v==='')throw Error(label+' 不可留白');const n=Number(v);if(!Number.isFinite(n)||n<0||n>max)throw Error(label+' 必須是合理的非負數');return n}
-function normalizePatchFood(x,day,key,i){if(!x||typeof x!=='object'||Array.isArray(x))throw Error(`${day} ${key} 第 ${i+1} 項食物格式錯誤`);const name=String(x.name||'').trim();if(!name||name.length>120)throw Error(`${day} ${key} 第 ${i+1} 項缺少食物名稱`);const qty=x.qty===undefined?1:safeNum(x.qty,`${day} ${key} ${name} 份數`,100);if(!(qty>0))throw Error(`${day} ${key} ${name} 份數必須大於 0`);return {id:String(x.id||`import_${day}_${key}_${i}`),name,serving:String(x.serving||'1 份').slice(0,120),qty,kcal:safeNum(x.kcal,`${name} 熱量`,10000),protein:safeNum(x.protein,`${name} 蛋白質`,1000),carbs:safeNum(x.carbs,`${name} 碳水`,1000),fat:safeNum(x.fat,`${name} 脂肪`,1000),fiber:safeNum(x.fiber,`${name} 纖維`,1000),calcium:safeNum(x.calcium,`${name} 鈣`,100000),iron:safeNum(x.iron,`${name} 鐵`,10000),zinc:safeNum(x.zinc,`${name} 鋅`,10000),sodium:safeNum(x.sodium,`${name} 鈉`,100000)} }
+function normalizePatchFood(x,day,key,i){if(!x||typeof x!=='object'||Array.isArray(x))throw Error(`${day} ${key} 第 ${i+1} 項食物格式錯誤`);const name=String(x.name||'').trim();if(!name||name.length>120)throw Error(`${day} ${key} 第 ${i+1} 項缺少食物名稱`);const qty=x.qty===undefined?1:safeNum(x.qty,`${day} ${key} ${name} 份數`,100);if(!(qty>0))throw Error(`${day} ${key} ${name} 份數必須大於 0`);const source=String(x.source||'').trim().toLowerCase();if(source&&!['label','estimated','unknown','package','packaging','estimate'].includes(source))throw Error(`${day} ${key} ${name} source 不支援`);return {id:String(x.id||`import_${day}_${key}_${i}`),name,serving:String(x.serving||'1 份').slice(0,120),qty,kcal:safeNum(x.kcal,`${name} 熱量`,10000),protein:safeNum(x.protein,`${name} 蛋白質`,1000),carbs:safeNum(x.carbs,`${name} 碳水`,1000),fat:safeNum(x.fat,`${name} 脂肪`,1000),fiber:safeNum(x.fiber,`${name} 纖維`,1000),calcium:safeNum(x.calcium,`${name} 鈣`,100000),iron:safeNum(x.iron,`${name} 鐵`,10000),zinc:safeNum(x.zinc,`${name} 鋅`,10000),sodium:safeNum(x.sodium,`${name} 鈉`,100000),source,sourceNote:String(x.sourceNote||'').trim().slice(0,800)} }
 function validateMealsPatch(raw){if(!raw||typeof raw!=='object'||raw.format!=='mengjianlu_meals_patch_v1')throw Error('不是猛健錄飲食合併檔（format 應為 mengjianlu_meals_patch_v1）');if(!Array.isArray(raw.days)||raw.days.length<1||raw.days.length>366)throw Error('days 必須包含 1～366 天');const allowed=mealKeysAllowed(),seenDates=new Set();const days=raw.days.map(day=>{if(!day||typeof day!=='object'||!validYmdStrict(day.date))throw Error('日期格式錯誤，需為有效的 YYYY-MM-DD');if(seenDates.has(day.date))throw Error(`日期 ${day.date} 重複出現`);seenDates.add(day.date);if(!day.meals||typeof day.meals!=='object'||Array.isArray(day.meals))throw Error(`${day.date} 缺少 meals`);const entries=Object.entries(day.meals);if(!entries.length)throw Error(`${day.date} 沒有任何餐次`);const meals={};for(const [key,m] of entries){if(!allowed.has(key))throw Error(`${day.date} 不支援餐次 ${key}`);if(!m||typeof m!=='object'||Array.isArray(m))throw Error(`${day.date} ${key} 格式錯誤`);const mode=String(m.mode||'changed');if(!['same','half','none','changed'].includes(mode))throw Error(`${day.date} ${key} mode 不支援`);const foods=Array.isArray(m.foods)?m.foods.map((x,i)=>normalizePatchFood(x,day.date,key,i)):[];if(mode!=='none'&&!foods.length)throw Error(`${day.date} ${key} 必須至少有一項 foods；若未吃請用 mode: none`);const text=String(m.text||foods.map(x=>x.name).join('＋')||(mode==='none'?'未吃':'')).trim().slice(0,1200);const note=String(m.note||'').trim().slice(0,1200);meals[key]={mode,text,note,foods}}return {date:day.date,meals}});return {format:'mengjianlu_meals_patch_v1',days}}
 function actualComparable(a){if(!a)return null;const norm=(src,n)=>n.key==='sodium'?(hasSodiumValue(src?.sodium)?Number(src.sodium):null):Number(src?.[n.key]||0);return {mode:a.mode||'changed',text:String(a.text||''),note:String(a.note||''),nutritionFactor:a.nutritionFactor===null?null:Number(a.nutritionFactor??0),nutrients:a.nutrients?Object.fromEntries(nutrientMeta.map(n=>[n.key,norm(a.nutrients,n)])):null,foods:Array.isArray(a.foods)?a.foods.map(x=>({name:String(x.name||''),serving:String(x.serving||''),qty:Number(x.qty||1),...Object.fromEntries(nutrientMeta.map(n=>[n.key,norm(x,n)]))})):[]}}
 function patchMealToActual(m){if(m.mode==='none')return {mode:'none',text:m.text||'未吃',nutritionFactor:0,nutrients:zeroNutrients(),foods:[],note:m.note,updatedAt:new Date().toISOString(),source:'meals_patch_v1'};const nutrients=calcItemsTotal(m.foods);return {mode:m.mode,text:m.text,nutritionFactor:null,nutrients,foods:structuredClone(m.foods),note:m.note,updatedAt:new Date().toISOString(),source:'meals_patch_v1'}}
