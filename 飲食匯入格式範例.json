@@ -7,7 +7,7 @@
         "breakfast": {
           "mode": "changed",
           "text": "高纖豆漿 300 ml＋茶葉蛋 1 顆",
-          "note": "範例資料，請改成實際內容",
+          "note": "範例資料，營養數值僅示意，請改成實際內容",
           "foods": [
             {
               "name": "高纖豆漿",
@@ -20,7 +20,8 @@
               "fiber": 5.5,
               "calcium": 75,
               "iron": 1.8,
-              "zinc": 0.9
+              "zinc": 0.9,
+              "sodium": 100
             },
             {
               "name": "茶葉蛋",
@@ -33,7 +34,8 @@
               "fiber": 0,
               "calcium": 28,
               "iron": 0.9,
-              "zinc": 0.6
+              "zinc": 0.6,
+              "sodium": 200
             }
           ]
         }

@@ -1,5 +1,7 @@
 # 猛健錄｜ChatGPT 飲食紀錄輸出格式規格 V1
 
+> 修訂：猛健錄 V0.3.4 起，`sodium`（鈉，mg）為每項食物必填欄位。
+
 用途：ChatGPT 整理使用者每日實際飲食後，輸出可直接貼入「猛健錄 → 每日菜單 → 貼上 ChatGPT 紀錄」的固定 JSON。
 
 ## 1. 輸出原則
@@ -11,6 +13,7 @@
 - 餐次 key 只允許：`breakfast`（早餐）、`lunch`（午餐）、`snack`（加餐）、`dinner`（晚餐）。
 - 不得輸出注射、體重、藥物庫存、每日症狀或其他非飲食資料。
 - 所有數字必須是 JSON number，不可寫成字串，不可使用 `null`、`約 20`、`20g` 這類格式。
+- `sodium` 單位固定為 mg；若資料只能估算，請填合理估算值並在餐次 `note` 註明「估算」。
 - 某營養素確定為零時填 `0`；若只能估算，請填合理估算值，並可在餐次 `note` 註明「估算」。
 - **每個食物的營養欄位是「1 個 serving」的數值，猛健錄會再乘上 `qty`。** 不要先乘過一次又填 `qty > 1`，否則會重複計算。
 
@@ -39,7 +42,8 @@
               "fiber": 5.5,
               "calcium": 75,
               "iron": 1.8,
-              "zinc": 0.9
+              "zinc": 0.9,
+              "sodium": 100
             },
             {
               "name": "茶葉蛋",
@@ -52,7 +56,8 @@
               "fiber": 0,
               "calcium": 28,
               "iron": 0.9,
-              "zinc": 0.6
+              "zinc": 0.6,
+              "sodium": 200
             }
           ]
         }
@@ -88,6 +93,7 @@
 | `calcium` | 每 1 serving 鈣 mg |
 | `iron` | 每 1 serving 鐵 mg |
 | `zinc` | 每 1 serving 鋅 mg |
+| `sodium` | 每 1 serving 鈉 mg |
 
 ## 5. 完全沒吃的餐次
 
@@ -108,7 +114,7 @@
 
 可把下面這段附在飲食討論最後：
 
-> 請依「猛健錄 ChatGPT 飲食紀錄輸出格式規格 V1」整理本次已確認的實際飲食。只輸出一個 JSON 程式碼區塊，format 固定為 mengjianlu_meals_patch_v1。每項食物都必須填 name、serving、qty、kcal、protein、carbs、fat、fiber、calcium、iron、zinc；營養值填每 1 serving 的數值，由 qty 表示實際份數。不要輸出任何 JSON 以外的文字，也不要加入注射、體重、庫存或症狀資料。
+> 請依「猛健錄 ChatGPT 飲食紀錄輸出格式規格 V1」整理本次已確認的實際飲食。只輸出一個 JSON 程式碼區塊，format 固定為 mengjianlu_meals_patch_v1。每項食物都必須填 name、serving、qty、kcal、protein、carbs、fat、fiber、calcium、iron、zinc、sodium；營養值填每 1 serving 的數值，由 qty 表示實際份數。不要輸出任何 JSON 以外的文字，也不要加入注射、體重、庫存或症狀資料。
 
 ## 8. 猛健錄匯入行為
 

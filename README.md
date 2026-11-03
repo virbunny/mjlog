@@ -24,7 +24,7 @@ https://virbunny.github.io/mjlog/
 
 ## 版本
 
-V0.3.3 — 修正「貼上 ChatGPT 紀錄」預覽函式命名錯誤。
+V0.3.4 — 鈉（sodium, mg）納入營養資料結構、飲食匯入驗證、ChatGPT 貼上格式與每日營養統計；舊資料缺鈉時顯示未記錄，不當作 0。
 
 
 ## ChatGPT 飲食紀錄
