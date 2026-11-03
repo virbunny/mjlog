@@ -10,7 +10,8 @@
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" href="icon.svg" type="image/svg+xml" />
 <link rel="apple-touch-icon" href="icons/icon-192.png" />
-<title>猛健錄 V0.3.1</title>
+<link rel="stylesheet" href="chatgpt-paste.css" />
+<title>猛健錄 V0.3.2</title>
 <style>
 :root{--bg:#f7fbff;--card:#fff;--ink:#203040;--muted:#718096;--blue:#bfe8ff;--blue2:#e8f6ff;--pink:#ffd7e5;--green:#dff5de;--yellow:#fff1b8;--line:#dbe8f0;--accent:#4d9fd1;--danger:#d95f76}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#eef9ff,#fff8fb);font-family:system-ui,-apple-system,"Segoe UI","Noto Sans TC",sans-serif;color:var(--ink)}
@@ -38,7 +39,7 @@
 </head>
 <body>
 <div class="app">
-  <div class="top"><div><div class="title">🐰 猛健錄</div><div class="ver">V0.3.1｜PWA 正式版・Local-first</div></div><span class="pill" id="todayPill"></span></div>
+  <div class="top"><div><div class="title">🐰 猛健錄</div><div class="ver">V0.3.2｜PWA 正式版・Local-first</div></div><span class="pill" id="todayPill"></span></div>
   <div class="system-strip update" id="updateStrip" hidden><div class="system-copy"><b>猛健錄有新版程式</b><br>資料仍留在本機；重新載入只更新程式，不會清空紀錄。</div><div class="system-actions"><button class="smallbtn actual" id="applyUpdate">重新載入更新</button></div></div>
   <div class="system-strip backup" id="backupStrip" hidden><div class="system-copy" id="backupStripText"><b>建議做一次完整備份</b></div><div class="system-actions"><button class="smallbtn" id="backupNow">立即匯出</button></div></div>
 
@@ -114,7 +115,7 @@
       <div class="row"><div class="field"><label>查看日期</label><input id="menuDate" type="date"></div><div class="field"><label>當日類型</label><input id="menuDayType" disabled></div></div>
       <div class="card"><div class="label">今日營養總覽</div><div class="hint">前面的數字＝已勾選吃完；後面的數字＝整日菜單預估。營養值依食材與份量粗估。</div><div class="nutrition-grid" id="nutritionGrid"></div><div class="gap-box" id="nutritionGap"></div></div>
       <div class="list" id="menuMealList"></div>
-      <div class="actions"><button class="btn secondary" id="resetTodayMenu">還原今天預設</button><button class="btn danger" id="clearTodayMenu">清空今天菜單</button></div>
+      <div class="actions"><button class="btn" id="openChatgptPaste">貼上 ChatGPT 紀錄</button><button class="btn secondary" id="undoMealsPatchMenu" style="display:none">復原上次飲食匯入</button><button class="btn secondary" id="resetTodayMenu">還原今天預設</button><button class="btn danger" id="clearTodayMenu">清空今天菜單</button></div>
     </div>
     <div class="section-title">本週 7 日菜單</div>
     <div class="menu-week" id="menuWeek"></div>
@@ -241,9 +242,27 @@
   <div class="toast-actions"><button class="btn" id="saveActual">儲存實際執行</button><button class="btn danger" id="clearActual">清除這筆</button></div>
 </div>
 
+<div class="toast-backdrop" id="chatgptPasteBackdrop"></div>
+<div class="actual-toast" id="chatgptPasteToast" role="dialog" aria-modal="true" aria-labelledby="chatgptPasteTitle">
+  <div class="toast-head"><div><div class="label">飲食紀錄合併匯入</div><div class="toast-title" id="chatgptPasteTitle">貼上 ChatGPT 紀錄</div></div><button class="toast-close" id="closeChatgptPaste" aria-label="關閉">×</button></div>
+  <div class="toast-form">
+    <div class="toast-note">只接受固定的 <b>mengjianlu_meals_patch_v1</b> JSON。可以貼純 JSON，或完整的 <code>```json ... ```</code> 程式碼區塊；不會使用 AI 猜格式。</div>
+    <textarea id="chatgptPasteInput" class="chatgpt-paste-text" spellcheck="false" placeholder="貼上 ChatGPT 產生的 JSON…"></textarea>
+    <div class="actions"><button class="btn" id="previewChatgptPaste">解析並預覽</button><button class="btn secondary" id="clearChatgptPaste">清空</button><a class="btn secondary" href="./猛健錄_ChatGPT飲食紀錄輸出格式規格_V1.md" download style="display:inline-block;text-decoration:none">下載輸出格式規格</a></div>
+    <div class="paste-error" id="chatgptPasteError" hidden></div>
+    <div id="chatgptPastePreview" hidden>
+      <div class="paste-summary" id="chatgptPasteSummary"></div>
+      <div class="paste-bulk" id="chatgptConflictBulk" hidden><button class="smallbtn" id="chatgptSkipAll">衝突全部略過</button><button class="smallbtn edit-shot" id="chatgptOverwriteAll">衝突全部覆蓋</button></div>
+      <div class="paste-preview" id="chatgptPastePreviewList"></div>
+      <div class="toast-actions"><button class="btn" id="applyChatgptPaste">確認匯入</button><button class="btn secondary" id="cancelChatgptPaste">取消</button></div>
+      <div class="toast-note">匯入只會改動上方列出的飲食「實際執行」餐次；注射、體重、藥物庫存、設定與每日症狀不會被修改。成功後可用「復原上次飲食匯入」還原。</div>
+    </div>
+  </div>
+</div>
+
 <div class="footer"><div class="footer-inner"><button class="btn secondary" id="installBtn" style="display:none">安裝猛健錄</button><button class="btn" id="quickShot">記一針</button></div></div>
 <script>
-const APP_VERSION='0.3.1';
+const APP_VERSION='0.3.2';
 const KEY='mengjianlu_v030';
 const PREV_KEYS=['mengjianlu_v024','mengjianlu_v023','mengjianlu_v022','mengjianlu_v021','mengjianlu_v020','mengjianlu_v016','mengjianlu_v015','mengjianlu_v014','mengjianlu_v013','mengjianlu_v012','mengjianlu_v011'];
 const LEGACY_KEY='mj_helper_v010';
@@ -531,4 +550,5 @@ async function registerPwa(){if(!('serviceWorker'in navigator)||location.protoco
 registerPwa();
 const t=ymd();todayPill.textContent=t;shotDate.value=t;weightDate.value=t;dailyDate.value=t;stockDate.value=t;menuDate.value=t;const stockRepair=repairInventoryAssignments();if(stockRepair.changed)persistDb();render();updateStorageModeHint();updatePwaStatus();updateBackupStatus();refreshUndoMealsPatchButton();setTimeout(()=>checkReminder(),1200);setInterval(()=>checkReminder(),60000);
 </script>
+<script src="chatgpt-paste.js"></script>
 </body></html>

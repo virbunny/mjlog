@@ -1,4 +1,4 @@
-const CACHE_NAME='mengjianlu-pwa-v031';
+const CACHE_NAME='mengjianlu-pwa-v032';
 const PRECACHE=[
   './',
   './index.html',
@@ -6,7 +6,10 @@ const PRECACHE=[
   './icon.svg',
   './icons/icon-192.png',
   './icons/icon-512.png',
-  './飲食匯入格式範例.json'
+  './飲食匯入格式範例.json',
+  './chatgpt-paste.css',
+  './chatgpt-paste.js',
+  './猛健錄_ChatGPT飲食紀錄輸出格式規格_V1.md'
 ];
 
 self.addEventListener('install',event=>{
