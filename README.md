@@ -24,7 +24,7 @@ https://virbunny.github.io/mjlog/
 
 ## 版本
 
-V0.3.2 — 新增「貼上 ChatGPT 紀錄」：沿用飲食合併 JSON 格式，提供完整驗證、預覽、逐餐衝突處理與復原。
+V0.3.3 — 修正「貼上 ChatGPT 紀錄」預覽函式命名錯誤。
 
 
 ## ChatGPT 飲食紀錄

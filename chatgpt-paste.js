@@ -50,7 +50,7 @@ function setChatgptConflictDecision(value){if(!chatgptPatchPreview)return;chatgp
 function resetChatgptPreview(){chatgptPatchPreview=null;chatgptPastePreview.hidden=true;chatgptPastePreviewList.innerHTML='';chatgptPasteError.hidden=true;chatgptPasteError.textContent=''}
 function openChatgptPasteDialog(){resetChatgptPreview();chatgptPasteToast.classList.add('show');chatgptPasteBackdrop.classList.add('show');setTimeout(()=>chatgptPasteInput.focus(),120)}
 function closeChatgptPasteDialog(){chatgptPasteToast.classList.remove('show');chatgptPasteBackdrop.classList.remove('show');resetChatgptPreview()}
-function previewChatgptPasteText(){resetChatgptPreview();try{const patch=parseChatgptMealsText(chatgptPasteInput.value);chatgptPatchPreview=buildChatgptPastePreview(patch,chatgptPasteInput.value);renderChatgptPastePreview()}catch(e){chatgptPasteError.textContent='無法匯入：'+String(e.message||e);chatgptPasteError.hidden=false}}
+function previewChatgptPasteText(){resetChatgptPreview();try{const patch=parseChatgptMealsText(chatgptPasteInput.value);chatgptPatchPreview=buildChatgptPatchPreview(patch,chatgptPasteInput.value);renderChatgptPastePreview()}catch(e){chatgptPasteError.textContent='無法匯入：'+String(e.message||e);chatgptPasteError.hidden=false}}
 function ensureMenuLogOn(target,date){if(!target.menu.logs[date])target.menu.logs[date]={done:{},swaps:{},actual:{},deleted:{}};const x=target.menu.logs[date];if(!x.done)x.done={};if(!x.swaps)x.swaps={};if(!x.actual)x.actual={};if(!x.deleted)x.deleted={};return x}
 function applyChatgptPastePreview(){
   if(!chatgptPatchPreview)return alert('請先解析並預覽');if(chatgptPatchPreview.sourceText!==chatgptPasteInput.value)return alert('貼上的內容已變更，請重新按「解析並預覽」。');
