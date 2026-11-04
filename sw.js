@@ -1,4 +1,4 @@
-const CACHE_NAME='mengjianlu-pwa-v039';
+const CACHE_NAME='mengjianlu-pwa-v040';
 const PRECACHE=[
   './',
   './index.html',
@@ -9,6 +9,7 @@ const PRECACHE=[
   './飲食匯入格式範例.json',
   './chatgpt-paste.css',
   './chatgpt-paste.js',
+  './supplements.js',
   './猛健錄_ChatGPT飲食紀錄輸出格式規格_V1.md'
 ];
 
