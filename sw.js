@@ -1,4 +1,4 @@
-const CACHE_NAME='mengjianlu-pwa-v041b';
+const CACHE_NAME='mengjianlu-pwa-v042';
 const PRECACHE=[
   './',
   './index.html',

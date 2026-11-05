@@ -39,7 +39,19 @@
             }
           ]
         }
-      }
+      },
+      "supplements": [
+        {
+          "name": "鋅",
+          "dose": "15 mg",
+          "timing": "午餐後",
+          "ingredients": "鋅 15 mg",
+          "note": "範例補充劑",
+          "nutrition": {
+            "zinc": 15
+          }
+        }
+      ]
     }
   ]
 }
