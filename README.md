@@ -24,7 +24,7 @@ https://virbunny.github.io/mjlog/
 
 ## 版本
 
-V0.4.2 — ChatGPT 貼上匯入支援 days[].supplements：補充劑單獨／混合預覽、衝突略過或覆蓋、相同內容略過、原子寫入與共同復原；不改動固定補充劑清單。
+V0.4.3 — 修正 PWA 更新時新版 index 與舊版外部 JS 混用：外部資源加入版本參數，並新增 ChatGPT 匯入模組版本一致性檢查；版本不一致時禁止匯入，避免 supplements 被靜默忽略。
 
 
 ## ChatGPT 飲食紀錄

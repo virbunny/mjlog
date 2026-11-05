@@ -10,8 +10,8 @@
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" href="icon.svg" type="image/svg+xml" />
 <link rel="apple-touch-icon" href="icons/icon-192.png" />
-<link rel="stylesheet" href="chatgpt-paste.css" />
-<title>猛健錄 V0.4.2</title>
+<link rel="stylesheet" href="chatgpt-paste.css?v=0.4.3" />
+<title>猛健錄 V0.4.3</title>
 <style>
 :root{--bg:#f7fbff;--card:#fff;--ink:#203040;--muted:#718096;--blue:#bfe8ff;--blue2:#e8f6ff;--pink:#ffd7e5;--green:#dff5de;--yellow:#fff1b8;--line:#dbe8f0;--accent:#4d9fd1;--danger:#d95f76}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#eef9ff,#fff8fb);font-family:system-ui,-apple-system,"Segoe UI","Noto Sans TC",sans-serif;color:var(--ink)}
@@ -40,7 +40,7 @@
 </head>
 <body>
 <div class="app">
-  <div class="top"><div><div class="title">🐰 猛健錄</div><div class="ver">V0.4.2｜PWA 正式版・Local-first</div></div><span class="pill" id="todayPill"></span></div>
+  <div class="top"><div><div class="title">🐰 猛健錄</div><div class="ver">V0.4.3｜PWA 正式版・Local-first</div></div><span class="pill" id="todayPill"></span></div>
   <div class="system-strip update" id="updateStrip" hidden><div class="system-copy"><b>猛健錄有新版程式</b><br>資料仍留在本機；重新載入只更新程式，不會清空紀錄。</div><div class="system-actions"><button class="smallbtn actual" id="applyUpdate">重新載入更新</button></div></div>
   <div class="system-strip backup" id="backupStrip" hidden><div class="system-copy" id="backupStripText"><b>建議做一次完整備份</b></div><div class="system-actions"><button class="smallbtn" id="backupNow">立即匯出</button></div></div>
 
@@ -293,9 +293,9 @@
 </div>
 
 <div class="footer"><div class="footer-inner"><button class="btn secondary" id="installBtn" style="display:none">安裝猛健錄</button><button class="btn" id="quickShot">記一針</button></div></div>
-<script src="supplements.js"></script>
+<script src="supplements.js?v=0.4.3"></script>
 <script>
-const APP_VERSION='0.4.2';
+const APP_VERSION='0.4.3';
 const KEY='mengjianlu_v030';
 const PREV_KEYS=['mengjianlu_v024','mengjianlu_v023','mengjianlu_v022','mengjianlu_v021','mengjianlu_v020','mengjianlu_v016','mengjianlu_v015','mengjianlu_v014','mengjianlu_v013','mengjianlu_v012','mengjianlu_v011'];
 const LEGACY_KEY='mj_helper_v010';
@@ -621,5 +621,6 @@ async function registerPwa(){if(!('serviceWorker'in navigator)||location.protoco
 registerPwa();
 const t=ymd();todayPill.textContent=t;shotDate.value=t;weightDate.value=t;dailyDate.value=t;stockDate.value=t;menuDate.value=t;supplementDate.value=t;initSupplementsUI();const stockRepair=repairInventoryAssignments();if(stockRepair.changed)persistDb();render();updateStorageModeHint();updatePwaStatus();updateBackupStatus();refreshUndoMealsPatchButton();setTimeout(()=>checkReminder(),1200);setInterval(()=>checkReminder(),60000);
 </script>
-<script src="chatgpt-paste.js"></script>
+<script src="chatgpt-paste.js?v=0.4.3"></script>
+<script>if(window.CHATGPT_PASTE_APP_VERSION!==APP_VERSION){console.error("匯入模組版本不一致",window.CHATGPT_PASTE_APP_VERSION,APP_VERSION);const b=document.getElementById("openChatgptPaste");if(b){b.disabled=true;b.title="匯入模組版本不一致，請重新整理更新";}setTimeout(()=>alert("猛健錄偵測到匯入模組版本不一致。請重新整理頁面後再匯入；這次不會寫入任何資料。"),0)}</script>
 </body></html>
