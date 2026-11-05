@@ -1,4 +1,5 @@
-/* 猛健錄 V0.4.0｜每日固定補充劑 */
+window.SUPPLEMENTS_MODULE_VERSION='0.5.0';
+/* 猛健錄 V0.5.0｜每日固定補充劑 */
 let supplementEditId=null;
 
 function supplementNullableNumber(v){
@@ -8,23 +9,7 @@ function supplementNullableNumber(v){
 }
 function normalizeSupplementItem(x){
   const nutrition=x&&typeof x.nutrition==='object'&&!Array.isArray(x.nutrition)?x.nutrition:{};
-  return {
-    id:String(x?.id||('supp_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8))),
-    name:String(x?.name||'').trim().slice(0,120),
-    dose:String(x?.dose||'').trim().slice(0,120),
-    timing:String(x?.timing||'任意時間').trim().slice(0,60),
-    ingredients:String(x?.ingredients||'').trim().slice(0,500),
-    note:String(x?.note||'').trim().slice(0,500),
-    active:x?.active!==false,
-    nutrition:{
-      calcium:supplementNullableNumber(nutrition.calcium),
-      iron:supplementNullableNumber(nutrition.iron),
-      zinc:supplementNullableNumber(nutrition.zinc),
-      sodium:supplementNullableNumber(nutrition.sodium)
-    },
-    createdAt:String(x?.createdAt||new Date().toISOString()),
-    updatedAt:String(x?.updatedAt||x?.createdAt||new Date().toISOString())
-  };
+  return {id:String(x?.id||('supp_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8))),name:String(x?.name||'').trim().slice(0,120),dose:String(x?.dose||'').trim().slice(0,120),timing:String(x?.timing||'任意時間').trim().slice(0,60),ingredients:String(x?.ingredients||'').trim().slice(0,500),note:String(x?.note||'').trim().slice(0,500),active:x?.active!==false,nutrition:normalizeFullNutritionObject(nutrition,'補充劑營養'),createdAt:String(x?.createdAt||new Date().toISOString()),updatedAt:String(x?.updatedAt||x?.createdAt||new Date().toISOString())};
 }
 function normalizeSupplementsData(raw){
   const src=raw&&typeof raw==='object'&&!Array.isArray(raw)?raw:{};
@@ -48,17 +33,9 @@ function supplementSnapshot(item){
   return {id:x.id,name:x.name,dose:x.dose,timing:x.timing,ingredients:x.ingredients,note:x.note,active:x.active,nutrition:structuredClone(x.nutrition),createdAt:x.createdAt,updatedAt:x.updatedAt};
 }
 function supplementNutrientsForDate(date){
-  const out={calcium:0,iron:0,zinc:0,sodium:0,count:0,details:[]};
+  const out={count:0,details:[]};FULL_NUTRIENT_META.forEach(m=>out[m.key]=0);
   const logs=db?.supplements?.logs?.[date]||{};
-  for(const entry of Object.values(logs)){
-    if(!entry?.snapshot)continue;
-    out.count++;
-    const n=entry.snapshot.nutrition||{};
-    for(const k of ['calcium','iron','zinc','sodium']){
-      if(n[k]!==null&&n[k]!==undefined&&n[k]!==''&&Number.isFinite(Number(n[k])))out[k]+=Number(n[k]);
-    }
-    out.details.push(entry.snapshot.name||'補充劑');
-  }
+  for(const entry of Object.values(logs)){if(!entry?.snapshot)continue;out.count++;const n=entry.snapshot.nutrition||{};for(const meta of FULL_NUTRIENT_META){if(Object.prototype.hasOwnProperty.call(n,meta.key)&&fullFiniteNumber(n[meta.key])!==null)out[meta.key]+=Number(n[meta.key])}out.details.push(entry.snapshot.name||'補充劑')}
   return out;
 }
 function mergeSupplementNutrientsInto(total,date){
@@ -72,12 +49,11 @@ function mergeSupplementNutrientsInto(total,date){
   return total;
 }
 function supplementNutritionText(item){
-  const n=item?.nutrition||{},parts=[];
-  if(n.calcium!==null&&n.calcium!==undefined)parts.push('鈣 '+n.calcium+' mg');
-  if(n.iron!==null&&n.iron!==undefined)parts.push('鐵 '+n.iron+' mg');
-  if(n.zinc!==null&&n.zinc!==undefined)parts.push('鋅 '+n.zinc+' mg');
-  if(n.sodium!==null&&n.sodium!==undefined)parts.push('鈉 '+n.sodium+' mg');
-  return parts.join('・');
+  const direct=fullNutritionCompactText(item?.nutrition||{});if(direct)return direct;
+  const parsed=parseIngredientNutrition(item?.ingredients||'',{}),parts=[];
+  for(const [k,v] of Object.entries(parsed.standard)){const m=FULL_NUTRIENT_BY_KEY[k];parts.push(m.label+' '+fullFormat(m,v))}
+  parsed.custom.forEach(c=>parts.push(c.name+' '+c.value+' '+c.unit));
+  return parts.length>6?parts.slice(0,6).join('・')+'・另 '+(parts.length-6)+' 項':parts.join('・');
 }
 function supplementTodayRows(date){
   const items=db.supplements?.items||[],logs=db.supplements?.logs?.[date]||{},rows=[];
@@ -129,34 +105,12 @@ function toggleSupplementTaken(date,id,checked){
   save();
 }
 function readSupplementForm(){
-  const name=supplementName.value.trim();
-  if(!name){alert('請輸入補充劑名稱');return null}
+  const name=supplementName.value.trim();if(!name){alert('請輸入補充劑名稱');return null}
   const existing=supplementEditId?db.supplements.items.find(x=>x.id===supplementEditId):null;
-  return normalizeSupplementItem({
-    ...(existing||{}),
-    id:existing?.id||uid('supp'),
-    name,
-    dose:supplementDose.value.trim(),
-    timing:supplementTiming.value||'任意時間',
-    ingredients:supplementIngredients.value.trim(),
-    note:supplementNote.value.trim(),
-    active:existing?.active!==false,
-    nutrition:{
-      calcium:supplementCalcium.value===''?null:Number(supplementCalcium.value),
-      iron:supplementIron.value===''?null:Number(supplementIron.value),
-      zinc:supplementZinc.value===''?null:Number(supplementZinc.value),
-      sodium:supplementSodium.value===''?null:Number(supplementSodium.value)
-    },
-    createdAt:existing?.createdAt||new Date().toISOString(),
-    updatedAt:new Date().toISOString()
-  });
+  return normalizeSupplementItem({...(existing||{}),id:existing?.id||uid('supp'),name,dose:supplementDose.value.trim(),timing:supplementTiming.value||'任意時間',ingredients:supplementIngredients.value.trim(),note:supplementNote.value.trim(),active:existing?.active!==false,nutrition:{calcium:supplementCalcium.value===''?null:Number(supplementCalcium.value),iron:supplementIron.value===''?null:Number(supplementIron.value),zinc:supplementZinc.value===''?null:Number(supplementZinc.value),sodium:supplementSodium.value===''?null:Number(supplementSodium.value),...readSupplementExtendedNutrition()},createdAt:existing?.createdAt||new Date().toISOString(),updatedAt:new Date().toISOString()});
 }
 function clearSupplementForm(){
-  supplementEditId=null;
-  [supplementName,supplementDose,supplementIngredients,supplementCalcium,supplementIron,supplementZinc,supplementSodium,supplementNote].forEach(x=>x.value='');
-  supplementTiming.value='早餐後';
-  saveSupplementItem.textContent='加入固定補充劑';
-  cancelSupplementEdit.style.display='none';
+  supplementEditId=null;[supplementName,supplementDose,supplementIngredients,supplementCalcium,supplementIron,supplementZinc,supplementSodium,supplementNote].forEach(x=>x.value='');supplementTiming.value='早餐後';clearSupplementExtendedNutritionFields();saveSupplementItem.textContent='加入固定補充劑';cancelSupplementEdit.style.display='none';
 }
 function saveSupplementItemRecord(){
   const item=readSupplementForm();if(!item)return;
@@ -165,11 +119,7 @@ function saveSupplementItemRecord(){
   clearSupplementForm();supplementEditorDetails.open=false;save();
 }
 function openSupplementEdit(id){
-  const item=db.supplements.items.find(x=>x.id===id);if(!item)return;
-  supplementEditId=id;supplementEditorDetails.open=true;
-  supplementName.value=item.name||'';supplementDose.value=item.dose||'';supplementTiming.value=item.timing||'任意時間';supplementIngredients.value=item.ingredients||'';supplementNote.value=item.note||'';
-  supplementCalcium.value=item.nutrition?.calcium??'';supplementIron.value=item.nutrition?.iron??'';supplementZinc.value=item.nutrition?.zinc??'';supplementSodium.value=item.nutrition?.sodium??'';
-  saveSupplementItem.textContent='儲存修改';cancelSupplementEdit.style.display='inline-block';supplementName.focus();
+  const item=db.supplements.items.find(x=>x.id===id);if(!item)return;supplementEditId=id;supplementEditorDetails.open=true;supplementName.value=item.name||'';supplementDose.value=item.dose||'';supplementTiming.value=item.timing||'任意時間';supplementIngredients.value=item.ingredients||'';supplementNote.value=item.note||'';supplementCalcium.value=item.nutrition?.calcium??'';supplementIron.value=item.nutrition?.iron??'';supplementZinc.value=item.nutrition?.zinc??'';supplementSodium.value=item.nutrition?.sodium??'';fillSupplementExtendedNutritionFields(item.nutrition||{});saveSupplementItem.textContent='儲存修改';cancelSupplementEdit.style.display='inline-block';supplementName.focus();
 }
 function toggleSupplementActive(id){
   const item=db.supplements.items.find(x=>x.id===id);if(!item)return;
@@ -185,7 +135,5 @@ function deleteSupplementItem(id){
   save();
 }
 function initSupplementsUI(){
-  saveSupplementItem.onclick=saveSupplementItemRecord;
-  cancelSupplementEdit.onclick=clearSupplementForm;
-  supplementDate.onchange=()=>renderSupplements();
+  renderSupplementExtendedFields();saveSupplementItem.onclick=saveSupplementItemRecord;cancelSupplementEdit.onclick=clearSupplementForm;supplementDate.onchange=()=>renderSupplements();
 }

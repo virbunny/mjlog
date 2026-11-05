@@ -1,6 +1,6 @@
 # 猛健錄｜ChatGPT 飲食紀錄輸出格式規格 V1
 
-> 修訂：猛健錄 V0.3.4 起，`sodium`（鈉，mg）為每項食物必填欄位；V0.4.2 起，同一格式支援 `days[].supplements`。
+> 修訂：猛健錄 V0.3.4 起，`sodium`（鈉，mg）為每項食物必填；V0.4.2 起支援 `days[].supplements`；V0.5.0 起支援完整維生素／礦物質與其他營養成分。
 
 用途：ChatGPT 整理使用者每日實際飲食與已服用補充劑後，輸出可直接貼入「猛健錄 → 每日菜單 → 貼上 ChatGPT 紀錄」的固定 JSON。
 
@@ -185,3 +185,48 @@
 - 補充劑名稱會以 Unicode 標準化、大小寫與多餘空白消除後比對；同一天不得有重複名稱。
 - 餐次、常吃食物庫與補充劑在「確認匯入」時一起寫入；任一寫入失敗，不留下部分資料。
 - 「復原上次匯入」會一起復原該次餐次、常吃食物庫與補充劑變更；若匯入後某筆資料已被手動修改，復原會保留後續修改並提示略過。
+
+
+## 11. 完整營養成分（V0.5.0 起）
+
+### 食物
+
+既有必填欄位維持不變。若有額外營養資料，可在 food 加上 `extraNutrition`：
+
+```json
+"extraNutrition": {
+  "sugar": 5.2,
+  "saturatedFat": 1.1,
+  "vitaminC": 12,
+  "potassium": 260
+}
+```
+
+支援鍵：`sugar`、`saturatedFat`、`transFat`、`cholesterol`、`vitaminA`、`vitaminB1`、`vitaminB2`、`vitaminB3`、`vitaminB5`、`vitaminB6`、`biotin`、`folate`、`vitaminB12`、`vitaminC`、`vitaminD`、`vitaminE`、`vitaminK`、`choline`、`magnesium`、`potassium`、`phosphorus`、`copper`、`selenium`、`manganese`、`iodine`、`omega3`、`epa`、`dha`。
+
+### 補充劑
+
+`nutrition` 可使用上述完整營養鍵，也可繼續使用 `calcium`、`iron`、`zinc`、`sodium`。例如：
+
+```json
+{
+  "name": "維生素C",
+  "dose": "500mg",
+  "ingredients": "維生素C 500mg",
+  "nutrition": {
+    "vitaminC": 500
+  }
+}
+```
+
+無法安全換算成標準營養素的成分，可使用：
+
+```json
+"nutrition": {
+  "custom": [
+    {"name":"γ-穀維素","value":6.7,"unit":"mg"}
+  ]
+}
+```
+
+猛健錄的完整營養表會顯示「飲食／補充劑／合計」。**未提供的營養素顯示「—」，不會自動當成 0。** 補充劑 `ingredients` 內能直接辨識的簡單成分（例如維生素 C、生物素、B12）可作為顯示備援；衍生物或化合物名稱會保留原文，不擅自換算元素量或維生素當量。

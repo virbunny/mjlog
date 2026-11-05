@@ -50,6 +50,15 @@
           "nutrition": {
             "zinc": 15
           }
+        },
+        {
+          "name": "維生素C",
+          "dose": "500 mg",
+          "timing": "晚餐後",
+          "ingredients": "維生素C 500mg",
+          "nutrition": {
+            "vitaminC": 500
+          }
         }
       ]
     }
