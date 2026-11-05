@@ -81,7 +81,7 @@ const INGREDIENT_ALIASES={
   '維生素a':'vitaminA','維生素e':'vitaminE','維生素k':'vitaminK',
   '維生素b1':'vitaminB1','維生素b2':'vitaminB2','維生素b3':'vitaminB3','菸鹼素':'vitaminB3',
   '維生素b5':'vitaminB5','泛酸':'vitaminB5','維生素b6':'vitaminB6','葉酸':'folate','維生素b9':'folate',
-  '鎂':'magnesium','鉀':'potassium','磷':'phosphorus','銅':'copper','硒':'selenium','錳':'manganese','碘':'iodine',
+  '鈣':'calcium','鐵':'iron','鋅':'zinc','鈉':'sodium','鎂':'magnesium','鉀':'potassium','磷':'phosphorus','銅':'copper','硒':'selenium','錳':'manganese','碘':'iodine',
   'omega-3':'omega3','omega3':'omega3','epa':'epa','dha':'dha','膽鹼':'choline'
 };
 function fullNormalizeUnit(u){const s=String(u||'').trim();if(/^(μg|ug|mcg)$/i.test(s))return 'µg';if(/^mg$/i.test(s))return 'mg';if(/^g$/i.test(s))return 'g';if(/^iu$/i.test(s))return 'IU';if(/^kcal$/i.test(s))return 'kcal';return s}
@@ -92,7 +92,7 @@ function parseIngredientNutrition(text,structured){
     const m=part.match(/^(.+?)\s*(?:約)?\s*(\d+(?:\.\d+)?)\s*(µg|μg|ug|mcg|mg|g|IU|kcal)$/i);if(!m)return;
     const rawName=m[1].trim(),value=Number(m[2]),unit=fullNormalizeUnit(m[3]),norm=rawName.normalize('NFKC').toLowerCase().replace(/\s+/g,'');
     const key=INGREDIENT_ALIASES[norm];
-    if(key&&!Object.prototype.hasOwnProperty.call(seen,key)&&FULL_NUTRIENT_BY_KEY[key]&&FULL_NUTRIENT_BY_KEY[key].unit===unit){standard[key]=value;return}
+    if(key&&FULL_NUTRIENT_BY_KEY[key]&&FULL_NUTRIENT_BY_KEY[key].unit===unit){if(!Object.prototype.hasOwnProperty.call(seen,key))standard[key]=value;return}
     const cid=norm+'|'+unit;if(!seenCustom.has(cid)){custom.push({name:rawName,value,unit});seenCustom.add(cid)}
   });
   return {standard,custom};
