@@ -40,7 +40,7 @@ const FULL_NUTRIENT_META=[
 ];
 const FULL_NUTRIENT_BY_KEY=Object.fromEntries(FULL_NUTRIENT_META.map(x=>[x.key,x]));
 const FULL_CORE_KEYS=new Set(['kcal','protein','carbs','fat','fiber','calcium','iron','zinc','sodium']);
-const FULL_SUPPLEMENT_EDIT_KEYS=FULL_NUTRIENT_META.filter(x=>!FULL_CORE_KEYS.has(x.key)&&!['sugar','saturatedFat','transFat','cholesterol'].includes(x.key)).map(x=>x.key);
+const FULL_SUPPLEMENT_EDIT_KEYS=FULL_NUTRIENT_META.filter(x=>!['calcium','iron','zinc','sodium'].includes(x.key)).map(x=>x.key);
 function fullFiniteNumber(v){if(v===null||v===undefined||v==='')return null;const n=Number(v);return Number.isFinite(n)&&n>=0?n:null}
 function normalizeFullNutritionObject(raw,label){
   if(raw===undefined||raw===null||raw==='')return {};
@@ -81,7 +81,7 @@ const INGREDIENT_ALIASES={
   '維生素a':'vitaminA','維生素e':'vitaminE','維生素k':'vitaminK',
   '維生素b1':'vitaminB1','維生素b2':'vitaminB2','維生素b3':'vitaminB3','菸鹼素':'vitaminB3',
   '維生素b5':'vitaminB5','泛酸':'vitaminB5','維生素b6':'vitaminB6','葉酸':'folate','維生素b9':'folate',
-  '鈣':'calcium','鐵':'iron','鋅':'zinc','鈉':'sodium','鎂':'magnesium','鉀':'potassium','磷':'phosphorus','銅':'copper','硒':'selenium','錳':'manganese','碘':'iodine',
+  '熱量':'kcal','蛋白質':'protein','碳水化合物':'carbs','脂肪':'fat','膳食纖維':'fiber','糖':'sugar','飽和脂肪':'saturatedFat','反式脂肪':'transFat','膽固醇':'cholesterol','鈣':'calcium','鐵':'iron','鋅':'zinc','鈉':'sodium','鎂':'magnesium','鉀':'potassium','磷':'phosphorus','銅':'copper','硒':'selenium','錳':'manganese','碘':'iodine',
   'omega-3':'omega3','omega3':'omega3','epa':'epa','dha':'dha','膽鹼':'choline'
 };
 function fullNormalizeUnit(u){const s=String(u||'').trim();if(/^(μg|ug|mcg)$/i.test(s))return 'µg';if(/^mg$/i.test(s))return 'mg';if(/^g$/i.test(s))return 'g';if(/^iu$/i.test(s))return 'IU';if(/^kcal$/i.test(s))return 'kcal';return s}
@@ -147,7 +147,14 @@ function fullTargetText(key){
   if(['kcal','protein','fiber','calcium','iron','zinc'].includes(key)&&Number(t[key]||0)>0){const m=FULL_NUTRIENT_BY_KEY[key];return fullFormat(m,t[key])}
   return '—';
 }
-function fullMergeCustom(a,b){const out={};for(const src of [a||{},b||{}])for(const [id,x] of Object.entries(src)){if(!out[id])out[id]={name:x.name,unit:x.unit,value:0};out[id].value+=Number(x.value||0)}return out}
+function fullCustomRows(dietCustom,supCustom){
+  const ids=new Set([...Object.keys(dietCustom||{}),...Object.keys(supCustom||{})]),rows=[];
+  for(const id of ids){
+    const d=dietCustom?.[id]||null,s=supCustom?.[id]||null,base=d||s;if(!base)continue;
+    rows.push({name:base.name,unit:base.unit,diet:d?Number(d.value):null,supplement:s?Number(s.value):null,total:Number(d?.value||0)+Number(s?.value||0)});
+  }
+  return rows.sort((a,b)=>a.name.localeCompare(b.name,'zh-Hant'));
+}
 function renderFullNutrition(date){
   const host=document.getElementById('fullNutritionTable'),customHost=document.getElementById('fullNutritionCustom');if(!host||!customHost)return;
   const diet=fullCollectDiet(date),sup=fullCollectSupplements(date);
@@ -158,8 +165,8 @@ function renderFullNutrition(date){
     return '<tr><th>'+meta.label+'</th><td>'+fullFormat(meta,dv)+'</td><td>'+fullFormat(meta,sv)+'</td><td><b>'+fullFormat(meta,tv)+'</b></td><td>'+fullTargetText(meta.key)+'</td></tr>';
   }).join('');
   host.innerHTML='<div class="full-nutrition-scroll"><table class="full-nutrition-table"><thead><tr><th>營養素</th><th>飲食</th><th>補充劑</th><th>合計</th><th>目標／上限</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
-  const custom=fullMergeCustom(diet.custom,sup.custom),list=Object.values(custom);
-  customHost.innerHTML=list.length?'<div class="full-custom-title">其他已記錄成分</div><div class="full-custom-grid">'+list.sort((a,b)=>a.name.localeCompare(b.name,'zh-Hant')).map(x=>'<div><b>'+esc(x.name)+'</b><span>'+Number(x.value).toLocaleString('zh-TW',{maximumFractionDigits:2})+' '+esc(x.unit)+'</span></div>').join('')+'</div>':'';
+  const custom=fullCustomRows(diet.custom,sup.custom);
+  customHost.innerHTML=custom.length?'<div class="full-custom-title">其他已記錄成分</div><div class="full-nutrition-scroll"><table class="full-nutrition-table"><thead><tr><th>成分</th><th>飲食</th><th>補充劑</th><th>合計</th></tr></thead><tbody>'+custom.map(x=>'<tr><th>'+esc(x.name)+'</th><td>'+(x.diet===null?'—':x.diet.toLocaleString('zh-TW',{maximumFractionDigits:2})+' '+esc(x.unit))+'</td><td>'+(x.supplement===null?'—':x.supplement.toLocaleString('zh-TW',{maximumFractionDigits:2})+' '+esc(x.unit))+'</td><td><b>'+x.total.toLocaleString('zh-TW',{maximumFractionDigits:2})+' '+esc(x.unit)+'</b></td></tr>').join('')+'</tbody></table></div>':'';
 }
 function renderSupplementExtendedFields(){
   const host=document.getElementById('supplementExtendedFields');if(!host)return;

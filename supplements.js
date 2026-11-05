@@ -41,10 +41,7 @@ function supplementNutrientsForDate(date){
 function mergeSupplementNutrientsInto(total,date){
   if(!total||!date)return total;
   const s=supplementNutrientsForDate(date);
-  total.calcium=Number(total.calcium||0)+s.calcium;
-  total.iron=Number(total.iron||0)+s.iron;
-  total.zinc=Number(total.zinc||0)+s.zinc;
-  total.sodium=Number(total.sodium||0)+s.sodium;
+  for(const k of ['kcal','protein','carbs','fat','fiber','calcium','iron','zinc','sodium'])total[k]=Number(total[k]||0)+Number(s[k]||0);
   total._supplementCount=s.count;
   return total;
 }
