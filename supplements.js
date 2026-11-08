@@ -1,4 +1,4 @@
-window.SUPPLEMENTS_MODULE_VERSION='0.5.0';
+window.SUPPLEMENTS_MODULE_VERSION='0.6.0';
 /* 猛健錄 V0.5.0｜每日固定補充劑 */
 let supplementEditId=null;
 

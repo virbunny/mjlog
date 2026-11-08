@@ -1,4 +1,4 @@
-window.NUTRITION_FULL_VERSION='0.5.0';
+window.NUTRITION_FULL_VERSION='0.6.0';
 const FULL_NUTRIENT_META=[
   {key:'kcal',label:'熱量',unit:'kcal',digits:0,group:'macro'},
   {key:'protein',label:'蛋白質',unit:'g',digits:1,group:'macro'},

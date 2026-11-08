@@ -10,9 +10,9 @@
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="icon" href="icon.svg" type="image/svg+xml" />
 <link rel="apple-touch-icon" href="icons/icon-192.png" />
-<link rel="stylesheet" href="chatgpt-paste.css?v=0.5.0" />
-<link rel="stylesheet" href="nutrition-full.css?v=0.5.0" />
-<title>猛健錄 V0.5.0</title>
+<link rel="stylesheet" href="chatgpt-paste.css?v=0.6.0" />
+<link rel="stylesheet" href="nutrition-full.css?v=0.6.0" />
+<title>猛健錄 V0.6.0</title>
 <style>
 :root{--bg:#f7fbff;--card:#fff;--ink:#203040;--muted:#718096;--blue:#bfe8ff;--blue2:#e8f6ff;--pink:#ffd7e5;--green:#dff5de;--yellow:#fff1b8;--line:#dbe8f0;--accent:#4d9fd1;--danger:#d95f76}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#eef9ff,#fff8fb);font-family:system-ui,-apple-system,"Segoe UI","Noto Sans TC",sans-serif;color:var(--ink)}
@@ -37,43 +37,67 @@
 
 .supplement-list{display:grid;gap:8px;margin-top:10px}.supplement-row{border:1px solid var(--line);background:#fff;border-radius:14px;padding:10px}.supplement-row.inactive{opacity:.72;background:#f7f9fa}.supplement-check{display:flex;gap:9px;align-items:flex-start}.supplement-check input{width:auto;margin-top:4px}.supplement-name{font-weight:850}.supplement-meta{font-size:11px;color:var(--muted);line-height:1.55;margin-top:3px}.supplement-tools{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.supplement-summary{margin-top:10px;background:#eef9ff;border:1px solid #d5e9f4;border-radius:12px;padding:9px 10px;font-size:12px;line-height:1.6}.supplement-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.supplement-grid .field:first-child,.supplement-grid .field:nth-child(2){grid-column:span 2}@media(max-width:620px){.supplement-grid{grid-template-columns:repeat(2,1fr)}.supplement-grid .field:first-child,.supplement-grid .field:nth-child(2){grid-column:span 1}}
 .system-strip{margin-top:10px;border:1px solid var(--line);border-radius:15px;padding:11px 12px;background:#fff;display:flex;align-items:center;justify-content:space-between;gap:10px}.system-strip[hidden]{display:none}.system-strip.update{background:#eef9ff;border-color:#b7dff3}.system-strip.backup{background:#fffaf0;border-color:#ead7a1}.system-copy{font-size:12px;line-height:1.5;color:#526c7b}.system-copy b{color:#245f83}.system-actions{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.pwa-dot{display:inline-block;width:9px;height:9px;border-radius:999px;background:#9fb0bb;margin-right:6px}.pwa-dot.ok{background:#56a36d}.pwa-dot.warn{background:#d69c35}.pwa-dot.bad{background:#d95f76}
+
+.main-tabs{position:sticky;top:0;z-index:35;background:rgba(247,251,255,.94);backdrop-filter:blur(8px);padding-top:8px}
+.today-hero{margin-top:4px;background:linear-gradient(135deg,#e8f7ff,#fff0f5);border:1px solid #d6e8f1;border-radius:22px;padding:16px;box-shadow:0 6px 22px rgba(58,103,130,.08)}
+.today-hero-top,.today-section-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.today-title{font-size:22px;font-weight:900;margin:3px 0}
+.today-quick{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}.today-quick>div{background:rgba(255,255,255,.82);border:1px solid #dce9f0;border-radius:14px;padding:9px}.today-quick span,.today-quick small{display:block;font-size:10px;color:var(--muted)}.today-quick b{font-size:17px}
+.today-section{margin-top:13px}.today-section .section-title{margin:0 0 8px}.today-meal-list,.today-supp-list{display:grid;gap:7px}.today-meal{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;border:1px solid #e1ebf0;border-radius:13px;padding:10px}.today-meal-main{min-width:0;flex:1}.today-meal-name{font-weight:850}.today-meal-text{font-size:12px;color:#526c7b;margin-top:2px;line-height:1.5}.today-meal-meta{font-size:10px;color:var(--muted);margin-top:3px}.today-status{display:inline-block;margin-left:5px;padding:2px 6px;border-radius:999px;font-size:10px;background:#eef5f9;color:#6d7f89}.today-status.done{background:#e8f7ee;color:#397257}.today-actions{margin-top:8px}
+.today-supp{display:flex;gap:8px;align-items:flex-start;padding:7px 2px;border-bottom:1px solid #edf2f4}.today-supp:last-child{border-bottom:0}.today-supp input{width:auto;margin-top:3px}.today-supp b{font-size:13px}.today-supp .meta{font-size:10px;color:var(--muted);margin-top:2px}.today-supp-summary{font-size:11px;color:var(--muted);margin-top:7px}
+.today-nutri-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.today-nutri{border:1px solid var(--line);border-radius:14px;padding:10px;background:#fff}.today-nutri.nutri-green{background:#eef9f0;border-color:#9fd3aa}.today-nutri.nutri-yellow{background:#fffbea;border-color:#e8d77e}.today-nutri.nutri-orange{background:#fff3e7;border-color:#e8b27c}.today-nutri.nutri-red{background:#fff0f2;border-color:#e5a0ad}.today-nutri.nutri-neutral{background:#f7f9fa}.today-nutri .k{font-size:11px;color:var(--muted)}.today-nutri .v{font-size:17px;font-weight:900;margin-top:2px}.today-nutri .s{font-size:10px;margin-top:3px;color:#647986}
+.today-gap-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.today-gap{background:#f8fbfd;border:1px solid #e1ebf0;border-radius:12px;padding:9px}.today-gap span{display:block;font-size:10px;color:var(--muted)}.today-gap b{font-size:13px}.today-more summary,.reference-menu summary,.shot-sub summary{cursor:pointer;font-weight:850}.today-info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:9px}.today-info-grid>div{border:1px solid var(--line);border-radius:12px;padding:9px;background:#fff}.today-info-grid span{display:block;font-size:10px;color:var(--muted)}.today-info-grid b{font-size:13px}
+.reference-menu,.shot-sub{margin-top:12px;border:1px solid var(--line);border-radius:14px;background:#fff;padding:10px}.shot-sub-body{margin-top:8px}.shot-sub-body>.section-title:first-child{margin-top:4px}
+@media(max-width:620px){.today-quick,.today-nutri-grid{grid-template-columns:repeat(2,1fr)}.today-info-grid,.today-gap-grid{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="top"><div><div class="title">🐰 猛健錄</div><div class="ver">V0.5.0｜PWA 正式版・Local-first</div></div><span class="pill" id="todayPill"></span></div>
+  <div class="top"><div><div class="title">🐰 猛健錄</div><div class="ver">V0.6.0｜PWA 正式版・Local-first</div></div><span class="pill" id="todayPill"></span></div>
   <div class="system-strip update" id="updateStrip" hidden><div class="system-copy"><b>猛健錄有新版程式</b><br>資料仍留在本機；重新載入只更新程式，不會清空紀錄。</div><div class="system-actions"><button class="smallbtn actual" id="applyUpdate">重新載入更新</button></div></div>
   <div class="system-strip backup" id="backupStrip" hidden><div class="system-copy" id="backupStripText"><b>建議做一次完整備份</b></div><div class="system-actions"><button class="smallbtn" id="backupNow">立即匯出</button></div></div>
 
-  <div class="hero">
+  <div class="hero" style="display:none">
     <div class="label">目前體重</div><div class="big"><span id="currentWeight">85.0</span> kg</div>
     <div class="sub">起始 <span id="startWeightTxt">85.0</span> kg → 目標 <span id="goalWeightTxt">70.0</span> kg｜已減 <b id="lossPct">0.0%</b></div>
     <div class="progress"><div class="bar" id="progressBar"></div></div>
   </div>
 
-  <div class="grid">
+  <div class="grid" style="display:none">
     <div class="card"><div class="label">下一針</div><div class="value" id="nextShot">尚未設定</div><div class="hint" id="nextShotSub">新增第一筆注射紀錄後自動計算</div></div>
     <div class="card"><div class="label">最近劑量</div><div class="value" id="lastDose">—</div><div class="hint" id="lastDoseSub">每週一次紀錄</div></div>
     <div class="card"><div class="label">本週食慾</div><div class="value" id="appetiteSummary">—</div><div class="hint">0＝完全沒胃口，10＝和平常一樣</div></div>
     <div class="card"><div class="label">距 70 kg</div><div class="value"><span id="remainKg">15.0</span> kg</div><div class="hint">只看趨勢，不要求固定速度</div></div>
   </div>
 
-  <div class="live-strip" id="liveStrip">
+  <div class="live-strip" id="liveStrip" style="display:none">
     <div><div class="live-title" id="liveCopy">正式療程尚未啟動</div><div class="live-text" id="liveModeText">記下第一針後，猛健錄會自動開始 Day 0～6 追蹤。</div></div>
     <div class="live-actions"><button class="btn" id="activateLive">記第一針</button><button class="btn secondary" id="goDaily">記今天狀況</button></div>
   </div>
 
-  <div class="menu-home" id="menuHome">
+  <div class="menu-home" id="menuHome" style="display:none">
     <div class="menu-home-top"><div><div class="label">今天吃什麼</div><div class="menu-home-title" id="menuHomeTitle">今日菜單</div></div><button class="smallbtn" id="openMenu" type="button">前往每日菜單</button></div>
     <div class="menu-home-list" id="menuHomeList"></div>
     <div class="hint" id="menuHomeProtein" style="margin-top:8px"></div>
   </div>
 
-  <div class="tabs">
-    <button class="tab active" data-tab="shot">注射</button><button class="tab" data-tab="inventory">藥物庫存</button><button class="tab" data-tab="weight">體重</button><button class="tab" data-tab="menu">每日菜單</button><button class="tab" data-tab="supplement">補充劑</button><button class="tab" data-tab="daily">每日狀況</button><button class="tab" data-tab="travel">旅行延後</button><button class="tab" data-tab="reminder">施打提醒</button><button class="tab" data-tab="data">備份</button>
+  <div class="tabs main-tabs">
+    <button class="tab active" data-tab="today">今天</button><button class="tab" data-tab="menu">飲食紀錄</button><button class="tab" data-tab="supplement">補充劑</button><button class="tab" data-tab="weight">體重</button><button class="tab" data-tab="shot">注射</button><button class="tab" data-tab="inventory">藥物庫存</button><button class="tab" data-tab="daily">每日狀況</button><button class="tab" data-tab="data">設定</button>
   </div>
 
-  <section class="panel active" id="shot">
+
+  <section class="panel active" id="today">
+    <div class="today-hero">
+      <div class="today-hero-top"><div><div class="label" id="todayDashboardDate">今天</div><div class="today-title">先記實際吃了什麼</div><div class="hint">不要求照菜單；營養統計以實際飲食＋已吃補充劑為主。</div></div><button class="smallbtn actual" data-go-tab="menu">＋ 記一餐</button></div>
+      <div class="today-quick"><div><span>今日熱量</span><b id="todayKcal">0</b><small>kcal</small></div><div><span>蛋白質</span><b id="todayProtein">0</b><small>g</small></div><div><span>鈉</span><b id="todaySodium">0</b><small>mg</small></div><div><span>補充劑</span><b id="todaySuppCount">0 / 0</b><small>已吃</small></div></div>
+    </div>
+    <div class="today-section"><div class="today-section-head"><div class="section-title">今天吃了什麼</div><button class="smallbtn" data-go-tab="menu">全部紀錄</button></div><div class="card today-meal-list" id="todayMealList"></div><div class="actions today-actions"><button class="btn" id="todayPasteChatgpt" type="button">貼上 ChatGPT 紀錄</button><button class="btn secondary" id="todayUndoImport" type="button">復原上次匯入</button></div></div>
+    <div class="today-section"><div class="today-section-head"><div class="section-title">今天補充劑</div><button class="smallbtn" data-go-tab="supplement">管理補充劑</button></div><div class="card"><div class="today-supp-list" id="todaySupplementList"></div><div class="today-supp-summary" id="todaySupplementSummary"></div></div></div>
+    <div class="today-section"><div class="today-section-head"><div class="section-title">今日營養</div><button class="smallbtn" data-go-tab="menu">完整營養</button></div><div class="today-nutri-grid" id="todayNutritionGrid"></div></div>
+    <div class="today-section"><div class="section-title">今天還差多少</div><div class="card today-gap-grid" id="todayGapGrid"></div></div>
+    <div class="today-section"><details class="today-more"><summary>其他今天資訊</summary><div class="today-info-grid"><div><span>體重</span><b id="todayWeightInfo">—</b></div><div><span>下一針</span><b id="todayShotInfo">—</b></div><div><span>食慾</span><b id="todayAppetiteInfo">—</b></div></div></details></div>
+  </section>
+  <section class="panel" id="shot">
     <div class="section-title">新增注射紀錄</div>
     <div class="form">
       <div class="row"><div class="field"><label>日期</label><input id="shotDate" type="date"></div><div class="field"><label>時間</label><input id="shotTime" type="time" value="20:00"></div></div>
@@ -82,7 +106,28 @@
       <button class="btn" id="addShot">＋ 儲存注射紀錄</button>
     </div>
     <div class="section-title">最近紀錄</div><div class="list" id="shotList"></div>
-  </section>
+      <div class="section-title">注射相關設定</div>
+    <details class="shot-sub"><summary>旅行／延後施打</summary><div class="shot-sub-body">
+    <div class="section-title">旅行延後這一針</div>
+    <div class="card"><div class="hint">只調整「下一針日期」，不會自動改藥物劑量。超過原本日期 4 天以上時，畫面會提醒你依醫師／仿單確認處理方式。</div></div>
+    <div class="form" style="margin-top:10px">
+      <div class="field"><label>原本下一針</label><input id="travelOriginal" type="date" disabled></div>
+      <div class="field"><label>想延後幾天</label><input id="delayDays" type="number" min="1" max="14" value="3"></div>
+      <button class="btn pink" id="applyDelay">套用這次延後</button>
+      <button class="btn secondary" id="clearDelay">取消旅行延後</button>
+      <div class="card" id="travelPreview"><div class="label">預覽</div><div class="value" id="travelNewDate">—</div><div class="hint" id="travelHint"></div></div>
+    </div>
+  </div></details>
+    <details class="shot-sub"><summary>施打提醒</summary><div class="shot-sub-body">
+    <div class="section-title">施打提醒</div>
+    <div class="card"><div class="hint">提醒日期會自動跟著「下一針」走；旅行延後後也會同步改。PWA 版會在開啟 App 時補檢查提醒；瀏覽器完全關閉時，背景通知仍受瀏覽器限制。要做到 Android 上完全準時的背景排程，仍需原生 APK。</div></div>
+    <div class="form" style="margin-top:10px">
+      <div class="row"><div class="field"><label>提前幾天提醒</label><select id="reminderDays"><option value="0">當天</option><option value="1">前 1 天</option><option value="2">前 2 天</option></select></div><div class="field"><label>提醒時間</label><input id="reminderTime" type="time" value="09:00"></div></div>
+      <div class="actions"><button class="btn" id="enableReminder">開啟通知</button><button class="btn secondary" id="testReminder">測試通知</button><button class="btn danger" id="disableReminder">關閉提醒</button></div>
+      <div class="card"><div class="label">目前狀態</div><div class="value" id="reminderStatus">未開啟</div><div class="hint" id="reminderNext">尚未設定下一針</div></div>
+    </div>
+  </div></details>
+</section>
 
   <section class="panel" id="inventory">
     <div class="section-title">藥物庫存與成本</div>
@@ -118,16 +163,15 @@
   </section>
 
   <section class="panel" id="menu">
-    <div class="section-title">每日菜單</div>
-    <div class="card"><div class="hint">預設是 5 個工作日＋2 個休假日的 7 日循環。「臨時換餐」改的是今天的計畫；「實際執行」記最後真的吃了什麼，會以 toast 浮層開啟。</div></div>
+    <div class="section-title">飲食紀錄</div>
+    <div class="card"><div class="hint">這裡以「實際吃了什麼」為主。四個餐次都可直接新增／修改；原本的 7 日菜單降為下方的參考資料，不再是主要操作流程。</div></div>
     <div class="form" style="margin-top:10px">
-      <div class="row"><div class="field"><label>查看日期</label><input id="menuDate" type="date"></div><div class="field"><label>當日類型</label><input id="menuDayType" disabled></div></div>
-      <div class="card"><div class="label">今日營養總覽</div><div class="hint">前面的數字＝已勾選吃完；後面的數字＝整日菜單預估。營養值依食材與份量粗估。</div><div class="nutrition-grid" id="nutritionGrid"></div><div class="gap-box" id="nutritionGap"></div><details class="full-nutrition" id="fullNutritionDetails"><summary>完整營養成分（飲食＋補充劑）</summary><div class="hint" style="margin-top:6px">只加總有記錄的數值；沒有資料顯示「—」，不會自動當成 0。</div><div id="fullNutritionTable"></div><div id="fullNutritionCustom"></div></details></div>
+      <div class="row"><div class="field"><label>查看日期</label><input id="menuDate" type="date"></div><div class="field"><label>參考菜單類型</label><input id="menuDayType" disabled></div></div>
+      <div class="card"><div class="label">今日營養總覽</div><div class="hint">只統計已記錄的實際飲食與已服用補充劑；參考菜單不會自動算進今天。</div><div class="nutrition-grid" id="nutritionGrid"></div><div class="gap-box" id="nutritionGap"></div><details class="full-nutrition" id="fullNutritionDetails"><summary>完整營養成分（飲食＋補充劑）</summary><div class="hint" style="margin-top:6px">只加總有記錄的數值；沒有資料顯示「—」，不會自動當成 0。</div><div id="fullNutritionTable"></div><div id="fullNutritionCustom"></div></details></div>
       <div class="list" id="menuMealList"></div>
-      <div class="actions"><button class="btn" id="openChatgptPaste">貼上 ChatGPT 紀錄</button><button class="btn secondary" id="undoMealsPatchMenu" style="display:none">復原上次匯入</button><button class="btn secondary" id="resetTodayMenu">還原今天預設</button><button class="btn danger" id="clearTodayMenu">清空今天菜單</button></div>
+      <div class="actions"><button class="btn" id="openChatgptPaste">貼上 ChatGPT 紀錄</button><button class="btn secondary" id="undoMealsPatchMenu" style="display:none">復原上次匯入</button></div>
     </div>
-    <div class="section-title">本週 7 日菜單</div>
-    <div class="menu-week" id="menuWeek"></div>
+    <details class="reference-menu"><summary>參考菜單（選配）</summary><div class="hint" style="margin:8px 0">只供需要時參考，不會自動算進實際飲食。舊版「照菜單吃」的歷史勾選仍會保留。</div><div class="actions" style="margin-bottom:8px"><button class="btn secondary" id="resetTodayMenu">還原今天參考菜單</button><button class="btn danger" id="clearTodayMenu">清空今天參考菜單</button></div><div class="menu-week" id="menuWeek"></div></details>
     <div class="section-title">常吃食物庫</div>
     <div class="card"><div class="hint">實際執行時可直接選食物＋份數，猛健錄會現場加總營養。內建常用食物不用維護；自己常吃的品牌或固定份量可加在下面。</div>
       <details style="margin-top:10px"><summary style="cursor:pointer;font-weight:850">＋ 新增我的常吃食物</summary>
@@ -180,30 +224,12 @@
     <div class="section-title">最近狀況</div><div class="list" id="dailyList"></div>
   </section>
 
-  <section class="panel" id="travel">
-    <div class="section-title">旅行延後這一針</div>
-    <div class="card"><div class="hint">只調整「下一針日期」，不會自動改藥物劑量。超過原本日期 4 天以上時，畫面會提醒你依醫師／仿單確認處理方式。</div></div>
-    <div class="form" style="margin-top:10px">
-      <div class="field"><label>原本下一針</label><input id="travelOriginal" type="date" disabled></div>
-      <div class="field"><label>想延後幾天</label><input id="delayDays" type="number" min="1" max="14" value="3"></div>
-      <button class="btn pink" id="applyDelay">套用這次延後</button>
-      <button class="btn secondary" id="clearDelay">取消旅行延後</button>
-      <div class="card" id="travelPreview"><div class="label">預覽</div><div class="value" id="travelNewDate">—</div><div class="hint" id="travelHint"></div></div>
-    </div>
-  </section>
+  
 
-  <section class="panel" id="reminder">
-    <div class="section-title">施打提醒</div>
-    <div class="card"><div class="hint">提醒日期會自動跟著「下一針」走；旅行延後後也會同步改。PWA 版會在開啟 App 時補檢查提醒；瀏覽器完全關閉時，背景通知仍受瀏覽器限制。要做到 Android 上完全準時的背景排程，仍需原生 APK。</div></div>
-    <div class="form" style="margin-top:10px">
-      <div class="row"><div class="field"><label>提前幾天提醒</label><select id="reminderDays"><option value="0">當天</option><option value="1">前 1 天</option><option value="2">前 2 天</option></select></div><div class="field"><label>提醒時間</label><input id="reminderTime" type="time" value="09:00"></div></div>
-      <div class="actions"><button class="btn" id="enableReminder">開啟通知</button><button class="btn secondary" id="testReminder">測試通知</button><button class="btn danger" id="disableReminder">關閉提醒</button></div>
-      <div class="card"><div class="label">目前狀態</div><div class="value" id="reminderStatus">未開啟</div><div class="hint" id="reminderNext">尚未設定下一針</div></div>
-    </div>
-  </section>
+  
 
   <section class="panel" id="data">
-    <div class="section-title">資料與設定</div>
+    <div class="section-title">設定與備份</div>
     <div class="form">
       <div class="row"><div class="field"><label>起始體重</label><input id="startWeight" type="number" step="0.1" value="85"></div><div class="field"><label>目標體重</label><input id="goalWeight" type="number" step="0.1" value="70"></div></div>
       <div class="section-title" style="margin-top:6px">營養參考值</div>
@@ -293,11 +319,11 @@
   </div>
 </div>
 
-<div class="footer"><div class="footer-inner"><button class="btn secondary" id="installBtn" style="display:none">安裝猛健錄</button><button class="btn" id="quickShot">記一針</button></div></div>
-<script src="nutrition-full.js?v=0.5.0"></script>
-<script src="supplements.js?v=0.5.0"></script>
+<div class="footer"><div class="footer-inner"><button class="btn secondary" id="installBtn" style="display:none">安裝猛健錄</button><button class="btn" id="quickFood">記飲食</button><button class="btn secondary" id="quickShot">記一針</button></div></div>
+<script src="nutrition-full.js?v=0.6.0"></script>
+<script src="supplements.js?v=0.6.0"></script>
 <script>
-const APP_VERSION='0.5.0';
+const APP_VERSION='0.6.0';
 const KEY='mengjianlu_v030';
 const PREV_KEYS=['mengjianlu_v024','mengjianlu_v023','mengjianlu_v022','mengjianlu_v021','mengjianlu_v020','mengjianlu_v016','mengjianlu_v015','mengjianlu_v014','mengjianlu_v013','mengjianlu_v012','mengjianlu_v011'];
 const LEGACY_KEY='mj_helper_v010';
@@ -459,19 +485,30 @@ function nutrientStatus(total,key,known=true){
 }
 function nutrientStatusHtml(status){return `<div class="nutrition-status ${status.cls}">${status.text}${status.pct===null?'':`・${status.pct}%`}</div>`}
 function renderMenu(){
-  const date=menuDate.value||ymd(); const day=getMenuDay(date); const log=getMenuLog(date); const planned=sumNutrients(day,log,false); const eaten=sumNutrients(day,log,true);mergeSupplementNutrientsInto(eaten,date);
+  const date=menuDate.value||ymd(),day=getMenuDay(date),log=getMenuLog(date),eaten=sumNutrients(day,log,true);mergeSupplementNutrientsInto(eaten,date);
   menuDayType.value=`${day.label}・${day.kind}`;
-  nutritionGrid.innerHTML=nutrientMeta.map(n=>{const known=n.key!=='sodium'||eaten._sodiumKnown,status=nutrientStatus(eaten[n.key],n.key,known);if(n.key==='sodium'){const ev=eaten._sodiumKnown?nfmt(eaten.sodium):'—',pv=planned._sodiumKnown?nfmt(planned.sodium):'—',sub=(eaten._sodiumKnown&&planned._sodiumKnown)?'已吃 / 整日菜單':'部分資料未記錄鈉';return `<div class="nutrition-card ${status.cls}"><div class="nutrition-name">鈉</div><div class="nutrition-value">${ev} / ${pv} <small>mg</small></div><div class="nutrition-sub">${sub}</div>${nutrientStatusHtml(status)}</div>`}return `<div class="nutrition-card ${status.cls}"><div class="nutrition-name">${n.label}</div><div class="nutrition-value">${nfmt(eaten[n.key],n.digits)} / ${nfmt(planned[n.key],n.digits)} <small>${n.unit}</small></div><div class="nutrition-sub">已吃 / 整日菜單</div>${nutrientStatusHtml(status)}</div>`}).join('');
-  const gapKeys=['protein','fiber','calcium','iron','zinc']; const gapNames={protein:'蛋白質',fiber:'膳食纖維',calcium:'鈣',iron:'鐵',zinc:'鋅'}; const targetUnits={protein:'g',fiber:'g',calcium:'mg',iron:'mg',zinc:'mg'};
-  const kt=Number(db.settings.nutritionTargets.kcal||0),kgap=Math.max(0,kt-eaten.kcal),pgap=Math.max(0,Number(db.settings.nutritionTargets.protein||0)-eaten.protein),st=Number(db.settings.nutritionTargets.sodium||2000),swarn=Number(db.settings.nutritionTargets.sodiumWarn||1500),sodiumLine=`<br>鈉：${eaten._sodiumKnown?`${nfmt(eaten.sodium)} mg｜提醒 ${nfmt(swarn)}・上限 ${nfmt(st)} mg`:'—（部分資料未記錄鈉）'}`;const deletedCount=Object.values(log.deleted||{}).filter(Boolean).length;nutritionGap.innerHTML=`<b>${date===ymd()?'目前尚差':'當日尚差'}（相對個人參考值）</b><br>熱量：${nfmt(kgap)} kcal・蛋白質：${nfmt(pgap,1)} g<br>`+gapKeys.filter(k=>k!=='protein').map(k=>{const t=Number(db.settings.nutritionTargets[k]||0),g=Math.max(0,t-eaten[k]);return `${gapNames[k]}：尚差 ${nfmt(g,k==='fiber'||k==='iron'||k==='zinc'?1:0)} ${targetUnits[k]}`}).join('・')+sodiumLine+`<br><span class="hint">未到一天結束前，這裡只表示「目前尚差」，不等於判定今日營養不足。</span>`+(deletedCount?`<br><span class="gap-near">※ 今日已刪除 ${deletedCount} 筆計畫菜單；實際執行紀錄不受影響。</span>`:'')+(Object.keys(log.swaps||{}).some(k=>log.swaps[k])?'<br><span class="gap-near">※ 今日有換餐；計畫營養仍沿用原餐估算。</span>':'')+(Object.values(log.actual||{}).some(a=>a&&a.nutritionFactor===null&&!a.nutrients)?'<br><span class="gap-near">※ 有實際執行內容未計入營養；紀錄仍完整保留。</span>':'')+(Object.values(log.actual||{}).some(a=>a?.nutrients)?'<br><span class="gap-good">※ 有餐次使用「實際營養計算」，今日已攝取優先採實際值。</span>':'');
+  nutritionGrid.innerHTML=nutrientMeta.map(n=>{
+    const known=n.key!=='sodium'||eaten._sodiumKnown,status=nutrientStatus(eaten[n.key],n.key,known),target=Number(db.settings.nutritionTargets?.[n.key]||0);
+    if(n.key==='sodium'){const ev=known?nfmt(eaten.sodium):'—',limit=Number(db.settings.nutritionTargets.sodium||2000);return `<div class="nutrition-card ${status.cls}"><div class="nutrition-name">鈉</div><div class="nutrition-value">${ev} <small>mg</small></div><div class="nutrition-sub">上限 ${nfmt(limit)} mg</div>${nutrientStatusHtml(status)}</div>`}
+    const targetText=target>0?` / ${nfmt(target,n.digits)}`:'';
+    return `<div class="nutrition-card ${status.cls}"><div class="nutrition-name">${n.label}</div><div class="nutrition-value">${nfmt(eaten[n.key],n.digits)}${targetText} <small>${n.unit}</small></div><div class="nutrition-sub">${target>0?'實際已攝取 / 參考值':'實際已攝取'}</div>${nutrientStatusHtml(status)}</div>`
+  }).join('');
+  const gapKeys=['protein','fiber','calcium','iron','zinc'],gapNames={protein:'蛋白質',fiber:'膳食纖維',calcium:'鈣',iron:'鐵',zinc:'鋅'},targetUnits={protein:'g',fiber:'g',calcium:'mg',iron:'mg',zinc:'mg'};
+  const kt=Number(db.settings.nutritionTargets.kcal||0),kgap=Math.max(0,kt-eaten.kcal),st=Number(db.settings.nutritionTargets.sodium||2000),swarn=Number(db.settings.nutritionTargets.sodiumWarn||1500);
+  nutritionGap.innerHTML=`<b>${date===ymd()?'目前尚差':'當日尚差'}（依實際紀錄）</b><br>熱量：${nfmt(kgap)} kcal・`+gapKeys.map(k=>{const t=Number(db.settings.nutritionTargets[k]||0),g=Math.max(0,t-eaten[k]);return `${gapNames[k]}：尚差 ${nfmt(g,k==='fiber'||k==='iron'||k==='zinc'?1:0)} ${targetUnits[k]}`}).join('・')+`<br>鈉：${eaten._sodiumKnown?`${nfmt(eaten.sodium)} mg｜提醒 ${nfmt(swarn)}・上限 ${nfmt(st)} mg`:'—（部分資料未記錄鈉）'}<br><span class="hint">只依已記錄的實際飲食＋已服用補充劑計算；參考菜單不會自動算進來。</span>`;
   renderFullNutrition(date);
-  const activeMeals=day.meals.filter(m=>!log.deleted?.[m.key]);
-  menuMealList.innerHTML=activeMeals.length?activeMeals.map(m=>{const a=log.actual?.[m.key];const checked=a?a.mode!=='none':!!log.done?.[m.key];const actualTag=a?`<span class="actual-badge">實際已記：${esc(actualLabel(a))}${a.nutrients?'・已計算':''}</span>`:'';return `<div class="meal-card"><div class="meal-row"><input class="meal-check" type="checkbox" data-meal-done="${m.key}" ${checked?'checked':''} ${a?'disabled':''}><div class="meal-main"><div class="meal-name">${esc(m.name)}${actualTag}</div><div class="meal-text">${esc(menuMealText(date,m))}</div><div class="meal-meta"><span class="meal-chip">${Number(m.kcal)} kcal</span><span class="meal-chip">蛋白 ${Number(m.protein)}g</span><span class="meal-chip">碳水 ${Number(m.carbs)}g</span><span class="meal-chip">脂肪 ${Number(m.fat)}g</span><span class="meal-chip">纖維 ${nfmt(m.fiber,1)}g</span></div><div class="nutri-line">鈣 ${nfmt(m.calcium)} mg・鐵 ${nfmt(m.iron,1)} mg・鋅 ${nfmt(m.zinc,1)} mg｜澱粉：${esc(m.starch||'—')}${log.swaps?.[m.key]?'｜今日已換餐（營養沿用原餐估算）':''}</div><div class="meal-actions"><button class="smallbtn meal-swap" data-meal-edit="${m.key}">臨時換餐</button><button class="smallbtn actual" data-meal-actual="${m.key}">實際執行</button><button class="smallbtn delete-shot" data-meal-delete="${m.key}">刪除菜單</button></div></div></div></div>`}).join(''):`<div class="empty">今天的計畫菜單已清空。<br><span class="hint">「實際執行」紀錄仍保留；按「還原今天預設」即可恢復。</span></div>`;
-  menuMealList.querySelectorAll('[data-meal-done]').forEach(el=>el.onchange=()=>{const lg=getMenuLog(date);lg.done[el.dataset.mealDone]=el.checked;save()});
-  menuMealList.querySelectorAll('[data-meal-edit]').forEach(el=>el.onclick=()=>editMenuMeal(date,el.dataset.mealEdit));
+  menuMealList.innerHTML=day.meals.map(m=>{
+    const a=log.actual?.[m.key],legacy=!a&&!!log.done?.[m.key],has=a||legacy;
+    const label=a?(a.mode==='none'?'已記：未吃':'已記錄'):legacy?'舊版已勾選':'尚未記錄';
+    const text=a?(a.text||actualLabel(a)):legacy?`舊版紀錄：${menuMealText(date,m)}`:'今天還沒有這餐的實際紀錄';
+    let meta='';
+    if(a?.nutrients)meta=`${nfmt(a.nutrients.kcal)} kcal・蛋白 ${nfmt(a.nutrients.protein,1)}g・纖維 ${nfmt(a.nutrients.fiber,1)}g・鈉 ${a.nutrients._sodiumKnown===false?'—':nfmt(a.nutrients.sodium)}mg`;
+    else if(legacy)meta=`${nfmt(m.kcal)} kcal・蛋白 ${nfmt(m.protein,1)}g（舊版依參考菜單記錄）`;
+    return `<div class="meal-card"><div class="meal-row"><div class="meal-main"><div class="meal-name">${esc(m.name)} <span class="actual-badge">${label}</span></div><div class="meal-text ${has?'':'hint'}">${esc(text)}</div>${meta?`<div class="nutri-line">${meta}</div>`:''}<div class="meal-actions"><button class="smallbtn actual" data-meal-actual="${m.key}">${a?'修改實際紀錄':legacy?'補完整紀錄':'＋ 新增實際紀錄'}</button></div></div></div></div>`
+  }).join('');
   menuMealList.querySelectorAll('[data-meal-actual]').forEach(el=>el.onclick=()=>openActual(date,el.dataset.mealActual));
-  menuMealList.querySelectorAll('[data-meal-delete]').forEach(el=>el.onclick=()=>deleteMenuMeal(date,el.dataset.mealDelete));
-  menuWeek.innerHTML=db.menu.template.map(d=>{const totals=sumNutrients(d,{done:{}},false);return `<details class="week-day"><summary>${esc(d.label)}・${esc(d.kind)}｜${nfmt(totals.kcal)} kcal・蛋白 ${nfmt(totals.protein)}g・纖維 ${nfmt(totals.fiber,1)}g</summary><div class="week-meals">${d.meals.map(m=>`<div><b>${esc(m.name)}：</b>${esc(m.text)} <span class="badge">${Number(m.kcal)} kcal / P${Number(m.protein)}g</span></div>`).join('')}</div></details>`}).join('');  renderFoodLibrary();
+  menuWeek.innerHTML=db.menu.template.map(d=>{const totals=sumNutrients(d,{done:{}},false);return `<details class="week-day"><summary>${esc(d.label)}・${esc(d.kind)}｜${nfmt(totals.kcal)} kcal・蛋白 ${nfmt(totals.protein)}g・纖維 ${nfmt(totals.fiber,1)}g</summary><div class="week-meals">${d.meals.map(m=>`<div><b>${esc(m.name)}：</b>${esc(m.text)} <span class="badge">${Number(m.kcal)} kcal / P${Number(m.protein)}g</span></div>`).join('')}</div></details>`}).join('');
+  renderFoodLibrary();
 }
 function renderFoodLibrary(){const custom=db.foodLibrary?.custom||[];foodLibraryList.innerHTML=custom.length?custom.map(f=>`<div class="food-lib-row"><div><b>${esc(f.name)}</b>｜${esc(f.serving)}<div class="food-lib-meta">${nfmt(f.kcal)} kcal・P ${nfmt(f.protein,1)}g・碳水 ${nfmt(f.carbs,1)}g・脂肪 ${nfmt(f.fat,1)}g・纖維 ${nfmt(f.fiber,1)}g・鈉 ${hasSodiumValue(f.sodium)?nfmt(f.sodium)+'mg':'—'}</div></div><button class="smallbtn" data-delete-food="${esc(f.id)}">刪除</button></div>`).join(''):`<div class="hint">內建已有 ${baseFoods.length} 種常用食物；妳自己新增的品牌／固定份量會顯示在這裡。</div>`;foodLibraryList.querySelectorAll('[data-delete-food]').forEach(b=>b.onclick=()=>{db.foodLibrary.custom=db.foodLibrary.custom.filter(x=>x.id!==b.dataset.deleteFood);save()})}
 
@@ -537,6 +574,28 @@ function renderWeightChart(){
   const delta=last.value-first.value,fromStart=last.value-sw;
   summary.innerHTML=`共 <b>${data.length}</b> 筆｜第一筆 ${first.value.toFixed(1)} kg → 最新 <b>${last.value.toFixed(1)} kg</b>｜區間變化 <b>${delta>0?'+':''}${delta.toFixed(1)} kg</b>｜相較起始 ${fromStart>0?'+':''}${fromStart.toFixed(1)} kg`;
 }
+function renderTodayDashboard(){
+  const date=ymd(),day=getMenuDay(date),log=getMenuLog(date),eaten=sumNutrients(day,log,true);mergeSupplementNutrientsInto(eaten,date);
+  todayDashboardDate.textContent='今天・'+date.replaceAll('-','/');
+  todayKcal.textContent=nfmt(eaten.kcal);todayProtein.textContent=nfmt(eaten.protein,1);todaySodium.textContent=eaten._sodiumKnown?nfmt(eaten.sodium):'—';
+  todayMealList.innerHTML=day.meals.map(m=>{
+    const a=log.actual?.[m.key],legacy=!a&&!!log.done?.[m.key],status=a?(a.mode==='none'?'已記：未吃':'已記錄'):legacy?'舊版紀錄':'尚未記錄',text=a?(a.text||actualLabel(a)):legacy?menuMealText(date,m):'今天沒有紀錄';
+    let meta='';if(a?.nutrients)meta=`${nfmt(a.nutrients.kcal)} kcal・蛋白 ${nfmt(a.nutrients.protein,1)}g`;else if(legacy)meta=`${nfmt(m.kcal)} kcal・蛋白 ${nfmt(m.protein,1)}g`;
+    return `<div class="today-meal"><div class="today-meal-main"><div class="today-meal-name">${esc(m.name)} <span class="today-status ${a||legacy?'done':''}">${status}</span></div><div class="today-meal-text">${esc(text)}</div>${meta?`<div class="today-meal-meta">${meta}</div>`:''}</div><button class="smallbtn ${a||legacy?'':'actual'}" data-today-meal="${m.key}">${a?'修改':legacy?'補完整':'＋ 新增'}</button></div>`
+  }).join('');
+  todayMealList.querySelectorAll('[data-today-meal]').forEach(b=>b.onclick=()=>{menuDate.value=date;activateTabPanel('menu');render();openActual(date,b.dataset.todayMeal)});
+  const srows=supplementTodayRows(date),logs=db.supplements?.logs?.[date]||{},taken=srows.filter(r=>!!logs[r.id]).length;
+  todaySuppCount.textContent=taken+' / '+srows.length;
+  todaySupplementList.innerHTML=srows.length?srows.map(r=>{const checked=!!logs[r.id],meta=[r.item.dose,r.item.timing].filter(Boolean).map(esc).join('・');return `<label class="today-supp"><input type="checkbox" data-today-supp="${esc(r.id)}" ${checked?'checked':''}><span><b>${esc(r.item.name)}</b>${r.historical?' <span class="badge">歷史項目</span>':''}<div class="meta">${meta||'未填劑量／時段'}</div></span></label>`}).join(''):'<div class="hint">尚未建立固定補充劑。</div>';
+  todaySupplementList.querySelectorAll('[data-today-supp]').forEach(el=>el.onchange=()=>toggleSupplementTaken(date,el.dataset.todaySupp,el.checked));todaySupplementSummary.textContent=srows.length?`已吃 ${taken} / ${srows.length} 項`:'尚無補充劑';
+  const keys=[['熱量','kcal'],['蛋白質','protein'],['膳食纖維','fiber'],['鈉','sodium']];
+  todayNutritionGrid.innerHTML=keys.map(([label,key])=>{const known=key!=='sodium'||eaten._sodiumKnown,status=nutrientStatus(eaten[key],key,known),unit=key==='kcal'?'kcal':key==='sodium'?'mg':'g';let sub='';if(key==='sodium')sub=`提醒 ${nfmt(db.settings.nutritionTargets.sodiumWarn||1500)}・上限 ${nfmt(db.settings.nutritionTargets.sodium||2000)}`;else{const t=Number(db.settings.nutritionTargets[key]||0);sub=t?`參考 ${nfmt(t,key==='kcal'?0:1)} ${unit}`:'實際攝取'}return `<div class="today-nutri ${status.cls}"><div class="k">${label}</div><div class="v">${known?nfmt(eaten[key],key==='kcal'||key==='sodium'?0:1):'—'} ${unit}</div><div class="s">${sub}</div></div>`}).join('');
+  const kt=Number(db.settings.nutritionTargets.kcal||0),pt=Number(db.settings.nutritionTargets.protein||0),ft=Number(db.settings.nutritionTargets.fiber||0),warn=Number(db.settings.nutritionTargets.sodiumWarn||1500),limit=Number(db.settings.nutritionTargets.sodium||2000);
+  const sodiumGap=!eaten._sodiumKnown?'部分資料未記錄':eaten.sodium<warn?`距提醒值 ${nfmt(warn-eaten.sodium)} mg`:eaten.sodium<limit?`已過提醒值；距上限 ${nfmt(limit-eaten.sodium)} mg`:`已達／超過上限 ${nfmt(Math.max(0,eaten.sodium-limit))} mg`;
+  todayGapGrid.innerHTML=`<div class="today-gap"><span>熱量</span><b>${kt?('約還有 '+nfmt(Math.max(0,kt-eaten.kcal))+' kcal'):'未設定'}</b></div><div class="today-gap"><span>蛋白質</span><b>${pt?('尚差 '+nfmt(Math.max(0,pt-eaten.protein),1)+' g'):'未設定'}</b></div><div class="today-gap"><span>膳食纖維</span><b>${ft?('尚差 '+nfmt(Math.max(0,ft-eaten.fiber),1)+' g'):'未設定'}</b></div><div class="today-gap"><span>鈉</span><b>${sodiumGap}</b></div>`;
+  const lw=latest(db.weights),ns=getNext(),todayDaily=[...db.daily].filter(x=>x.date===date).sort((a,b)=>(b.updatedAt||'').localeCompare(a.updatedAt||''))[0];
+  todayWeightInfo.textContent=lw?Number(lw.value).toFixed(1)+' kg':'—';todayShotInfo.textContent=ns?fmtDate(ns):'尚未設定';todayAppetiteInfo.textContent=todayDaily?Number(todayDaily.appetite)+'/10':'—';
+}
 function render(){
   const sw=Number(db.settings.startWeight||85), gw=Number(db.settings.goalWeight||70); const lw=latest(db.weights); const cw=lw?Number(lw.value):sw; const total=Math.max(.1,sw-gw); const prog=Math.max(0,Math.min(100,(sw-cw)/total*100));
   currentWeight.textContent=cw.toFixed(1); startWeightTxt.textContent=sw.toFixed(1); goalWeightTxt.textContent=gw.toFixed(1); lossPct.textContent=((sw-cw)/sw*100).toFixed(1)+'%'; progressBar.style.width=prog+'%'; remainKg.textContent=Math.max(0,cw-gw).toFixed(1);
@@ -555,7 +614,7 @@ function render(){
   const currentDose=ls?.dose;const currentCount=currentDose?db.inventory.filter(x=>x.dose===currentDose).reduce((s,x)=>s+Number(x.remaining||0),0):0;stockCurrentDose.textContent=currentDose?`${currentDose} 還有 ${currentCount} 劑`:'尚無目前劑量';
   stockList.innerHTML=db.inventory.length?[...db.inventory].sort((a,b)=>(b.date||'').localeCompare(a.date||'')).map(x=>`<div class="item"><div class="item-top"><div class="item-title">${fmtDate(x.date)}・${esc(x.dose)}</div><span class="badge">剩 ${Number(x.remaining)}/${Number(x.qty)} 劑</span></div><div class="item-meta">單劑 $${money(unitCost(x))}｜總價 $${money(x.totalCost)}${x.source?'｜'+esc(x.source):''}${x.expiry?'｜效期 '+fmtDate(x.expiry):''}</div></div>`).join(''):'<div class="empty">還沒有藥物庫存</div>';
   reminderDays.value=String(db.reminder.daysBefore??0);reminderTime.value=db.reminder.time||'09:00';const ns2=getNext();const rt=reminderTarget();reminderStatus.textContent=db.reminder.enabled?'已開啟':'未開啟';reminderNext.textContent=ns2?(db.reminder.enabled?`預計 ${fmtDate(rt)} ${db.reminder.time} 提醒；下一針 ${fmtDate(ns2)}`:`下一針 ${fmtDate(ns2)}`):'尚未設定下一針';
-  startWeight.value=sw;goalWeight.value=gw;targetKcal.value=db.settings.nutritionTargets.kcal;targetProtein.value=db.settings.nutritionTargets.protein;targetFiber.value=db.settings.nutritionTargets.fiber;targetCalcium.value=db.settings.nutritionTargets.calcium;targetIron.value=db.settings.nutritionTargets.iron;targetZinc.value=db.settings.nutritionTargets.zinc;targetSodiumWarn.value=db.settings.nutritionTargets.sodiumWarn??1500;targetSodium.value=db.settings.nutritionTargets.sodium??2000;travelOriginal.value=getBaseNext()||'';previewDelay();renderMenu();renderCycleWeek();renderSupplements();
+  startWeight.value=sw;goalWeight.value=gw;targetKcal.value=db.settings.nutritionTargets.kcal;targetProtein.value=db.settings.nutritionTargets.protein;targetFiber.value=db.settings.nutritionTargets.fiber;targetCalcium.value=db.settings.nutritionTargets.calcium;targetIron.value=db.settings.nutritionTargets.iron;targetZinc.value=db.settings.nutritionTargets.zinc;targetSodiumWarn.value=db.settings.nutritionTargets.sodiumWarn??1500;targetSodium.value=db.settings.nutritionTargets.sodium??2000;travelOriginal.value=getBaseNext()||'';previewDelay();renderMenu();renderCycleWeek();renderSupplements();renderTodayDashboard();
   const realShots=db.shots.length>0;liveStrip.classList.toggle('active',realShots);if(realShots){const ld=cycleDay(today);liveCopy.textContent='正式療程進行中';liveModeText.textContent=ld!==null?`今天是 Day ${ld}｜最近一針 ${fmtDate(ls.date)}・${ls.dose}`:`最近一針 ${fmtDate(ls.date)}・${ls.dose}`;}else{liveCopy.textContent='正式療程尚未啟動';liveModeText.textContent='記下第一針後，猛健錄會自動開始 Day 0～6 追蹤。'}activateLive.textContent=realShots?'記下一針':'記第一針';goDaily.style.display=realShots?'inline-block':'none';
 }
 function previewDelay(){const base=getBaseNext();if(!base){travelNewDate.textContent='—';travelHint.textContent='先新增一筆注射紀錄';return}const n=Number(delayDays.value||0);const nd=addDays(base,n);travelNewDate.textContent=fmtDate(nd);travelHint.textContent=n<=4?`比原定日期晚 ${n} 天`:`比原定日期晚 ${n} 天；已超過 4 天，請依仿單／醫師確認這次是否應跳過。`;}
@@ -613,7 +672,7 @@ importMealsPatch.onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new
 undoMealsPatch.onclick=undoLastMealsPatch;
 resetAll.onclick=()=>{if(confirm('確定清空全部紀錄？這個動作無法復原。')){db=structuredClone(defaultData);save()}};
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>activateTabPanel(b.dataset.tab));
-quickShot.onclick=()=>document.querySelector('[data-tab="shot"]').click();activateLive.onclick=()=>document.querySelector('[data-tab="shot"]').click();goDaily.onclick=()=>document.querySelector('[data-tab="daily"]').click();
+quickFood.onclick=()=>{menuDate.value=ymd();activateTabPanel("menu");render()};quickShot.onclick=()=>document.querySelector('[data-tab="shot"]').click();activateLive.onclick=()=>document.querySelector('[data-tab="shot"]').click();goDaily.onclick=()=>document.querySelector('[data-tab="daily"]').click();document.querySelectorAll("[data-go-tab]").forEach(b=>b.onclick=()=>{activateTabPanel(b.dataset.goTab);if(b.dataset.goTab==="menu")menuDate.value=ymd();if(b.dataset.goTab==="supplement")supplementDate.value=ymd();render()});todayPasteChatgpt.onclick=()=>openChatgptPaste.click();todayUndoImport.onclick=()=>undoMealsPatchMenu.click();
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;updatePwaStatus()});
 window.addEventListener('appinstalled',()=>{deferredPrompt=null;updatePwaStatus()});
 installBtn.onclick=async()=>{if(deferredPrompt){deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;updatePwaStatus();return}alert('Firefox Windows：請從 GitHub Pages 正式網址開啟猛健錄，再點網址列右側的「網路應用程式」圖示，把猛健錄加入工作列／開始功能表。')};
@@ -624,6 +683,6 @@ async function registerPwa(){if(!('serviceWorker'in navigator)||location.protoco
 registerPwa();
 const t=ymd();todayPill.textContent=t;shotDate.value=t;weightDate.value=t;dailyDate.value=t;stockDate.value=t;menuDate.value=t;supplementDate.value=t;initSupplementsUI();const stockRepair=repairInventoryAssignments();if(stockRepair.changed)persistDb();render();updateStorageModeHint();updatePwaStatus();updateBackupStatus();refreshUndoMealsPatchButton();setTimeout(()=>checkReminder(),1200);setInterval(()=>checkReminder(),60000);
 </script>
-<script src="chatgpt-paste.js?v=0.5.0"></script>
+<script src="chatgpt-paste.js?v=0.6.0"></script>
 <script>if(window.CHATGPT_PASTE_APP_VERSION!==APP_VERSION||window.NUTRITION_FULL_VERSION!==APP_VERSION||window.SUPPLEMENTS_MODULE_VERSION!==APP_VERSION){console.error("模組版本不一致",window.CHATGPT_PASTE_APP_VERSION,window.NUTRITION_FULL_VERSION,window.SUPPLEMENTS_MODULE_VERSION,APP_VERSION);const b=document.getElementById("openChatgptPaste");if(b){b.disabled=true;b.title="模組版本不一致，請重新整理更新";}setTimeout(()=>alert("猛健錄偵測到程式模組版本不一致。請重新整理頁面後再操作；這次不會寫入任何資料。"),0)}</script>
 </body></html>

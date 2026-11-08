@@ -1,4 +1,4 @@
-window.CHATGPT_PASTE_APP_VERSION='0.5.0';
+window.CHATGPT_PASTE_APP_VERSION='0.6.0';
 let chatgptPatchPreview=null;
 const CHATGPT_REQUIRED_FOOD_FIELDS=['name','serving','qty','kcal','protein','carbs','fat','fiber','calcium','iron','zinc','sodium'];
 function chatgptMealName(key){return ({breakfast:'早餐',lunch:'午餐',snack:'加餐',dinner:'晚餐'})[key]||key}

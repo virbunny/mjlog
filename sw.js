@@ -1,4 +1,4 @@
-const CACHE_NAME='mengjianlu-pwa-v050';
+const CACHE_NAME='mengjianlu-pwa-v060';
 const PRECACHE=[
   './',
   './index.html',
@@ -7,11 +7,11 @@ const PRECACHE=[
   './icons/icon-192.png',
   './icons/icon-512.png',
   './飲食匯入格式範例.json',
-  './chatgpt-paste.css?v=0.5.0',
-  './nutrition-full.css?v=0.5.0',
-  './chatgpt-paste.js?v=0.5.0',
-  './nutrition-full.js?v=0.5.0',
-  './supplements.js?v=0.5.0',
+  './chatgpt-paste.css?v=0.6.0',
+  './nutrition-full.css?v=0.6.0',
+  './chatgpt-paste.js?v=0.6.0',
+  './nutrition-full.js?v=0.6.0',
+  './supplements.js?v=0.6.0',
   './猛健錄_ChatGPT飲食紀錄輸出格式規格_V1.md'
 ];
 
