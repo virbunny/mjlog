@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>猛健錄 V0.6.0 版面 Demo</title>
+<style>
+:root{--bg:#f4f8fb;--card:#fff;--ink:#243743;--muted:#6c7f8a;--line:#dbe6ec;--blue:#dff2ff;--blue2:#8dcdf1;--pink:#ffe8ef;--green:#e8f7ed;--green2:#5e9d70;--yellow:#fff4c9;--orange:#ffe5c6;--red:#ffe1e1;--danger:#b94a4a;--shadow:0 8px 24px rgba(47,75,91,.07)}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(#f8fbfd,#f1f6f9);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI","Noto Sans TC",sans-serif}
+button,input{font:inherit}.wrap{max-width:880px;margin:auto;padding:16px 14px 60px}.top{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px}.brand h1{font-size:24px;margin:0}.brand .sub{color:var(--muted);font-size:12px}.demo-badge{background:var(--yellow);border:1px solid #eadb9b;border-radius:999px;padding:6px 10px;font-size:11px;font-weight:800}
+.tabs{display:flex;gap:7px;overflow-x:auto;padding:4px 0 10px;position:sticky;top:0;background:rgba(244,248,251,.94);backdrop-filter:blur(8px);z-index:5}.tab{border:1px solid var(--line);background:white;border-radius:999px;padding:8px 12px;white-space:nowrap;color:#536b78}.tab.active{background:#dff2ff;border-color:#93cce9;color:#225d7a;font-weight:850}
+.panel{display:none}.panel.active{display:block}.hero{background:linear-gradient(135deg,#eaf7ff,#fff0f5);border:1px solid #d9e9f2;border-radius:22px;padding:16px;box-shadow:var(--shadow);margin-bottom:12px}.hero-top{display:flex;justify-content:space-between;gap:10px}.date{font-size:13px;color:var(--muted)}.hero h2{font-size:22px;margin:4px 0 2px}.mini{font-size:12px;color:var(--muted)}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}.quick>div{background:rgba(255,255,255,.82);border:1px solid rgba(207,225,235,.9);border-radius:14px;padding:9px}.quick b{display:block;font-size:16px}.quick span{font-size:10px;color:var(--muted)}
+.section{margin-top:14px}.section-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:7px}.section-title{font-weight:900;font-size:16px}.linkbtn,.smallbtn{border:1px solid #cfe0e9;background:#fff;border-radius:10px;padding:6px 9px;font-size:11px;color:#3d667b}.primary{background:#dff2ff;border-color:#8bc7e7;font-weight:800}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px;box-shadow:var(--shadow)}.meal-list,.supp-list{display:grid;gap:7px}.meal{display:flex;justify-content:space-between;gap:10px;align-items:center;border:1px solid #e3ebef;border-radius:14px;padding:10px}.meal-left{min-width:0}.meal-name{font-weight:850}.meal-text{font-size:12px;color:#536c79;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:620px}.meal-meta{font-size:10px;color:var(--muted);margin-top:3px}.empty{color:#8a99a1}.badge{font-size:10px;border-radius:999px;padding:3px 7px;background:var(--green);color:#4b7657;font-weight:800}.badge.wait{background:#eef2f4;color:#78868c}.actions{display:flex;gap:6px;flex-wrap:wrap}.supp{display:flex;align-items:flex-start;gap:9px;border-bottom:1px solid #edf2f4;padding:8px 2px}.supp:last-child{border-bottom:0}.supp input{margin-top:3px}.supp b{font-size:13px}.supp .meta{font-size:10px;color:var(--muted);margin-top:2px}
+.progress-line{height:8px;background:#edf2f4;border-radius:999px;overflow:hidden;margin-top:8px}.progress-line i{display:block;height:100%;width:60%;background:#85caa0}
+.nutri-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.nutri{border-radius:14px;padding:10px;border:1px solid var(--line);background:white}.nutri .k{font-size:11px;color:var(--muted)}.nutri .v{font-size:17px;font-weight:900;margin-top:2px}.nutri .s{font-size:10px;margin-top:3px}.good{background:var(--green)}.warn{background:var(--orange)}.low{background:var(--red)}.normal{background:var(--blue)}
+.gaps{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.gap{background:#f9fbfc;border:1px solid var(--line);border-radius:12px;padding:9px}.gap b{display:block}.gap span{font-size:11px;color:var(--muted)}
+details{border:1px solid var(--line);border-radius:14px;background:white;padding:10px}summary{cursor:pointer;font-weight:850}.ref-menu{display:grid;gap:7px;margin-top:8px}.ref-menu div{font-size:12px;padding:7px;border-radius:10px;background:#f7fafc}
+.notice{font-size:11px;color:#6c7f8a;background:#f8fbfd;border:1px dashed #cbdce5;border-radius:12px;padding:9px}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.field{display:grid;gap:4px}.field label{font-size:11px;color:var(--muted)}.field input{border:1px solid var(--line);border-radius:10px;padding:9px;background:#fff}.full{grid-column:1/-1}
+.list-card{display:grid;gap:8px}.row-card{display:flex;justify-content:space-between;gap:10px;align-items:center;border:1px solid var(--line);border-radius:13px;padding:9px}.row-card .meta{font-size:11px;color:var(--muted)}
+.bottom-note{margin-top:18px;font-size:11px;color:#7d8e98;text-align:center}
+@media(max-width:620px){.wrap{padding:10px 10px 50px}.quick,.nutri-grid{grid-template-columns:repeat(2,1fr)}.gaps,.form-grid{grid-template-columns:1fr}.meal{align-items:flex-start}.meal-text{max-width:58vw}.hero h2{font-size:20px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><h1>猛健錄</h1><div class="sub">V0.6.0 新架構 Demo｜實際紀錄優先</div></div>
+    <div class="demo-badge">DEMO・不讀取正式資料</div>
+  </div>
+
+  <nav class="tabs">
+    <button class="tab active" data-tab="today">今天</button>
+    <button class="tab" data-tab="food">飲食紀錄</button>
+    <button class="tab" data-tab="supp">補充劑</button>
+    <button class="tab" data-tab="weight">體重</button>
+    <button class="tab" data-tab="shot">注射</button>
+    <button class="tab" data-tab="stock">藥物庫存</button>
+    <button class="tab" data-tab="daily">每日狀況</button>
+    <button class="tab" data-tab="settings">設定</button>
+  </nav>
+
+  <main>
+    <section class="panel active" id="today">
+      <div class="hero">
+        <div class="hero-top"><div><div class="date">今天・11 月 8 日</div><h2>先記實際吃了什麼</h2><div class="mini">不要求照菜單。所有營養都以實際紀錄＋已吃補充劑計算。</div></div><button class="smallbtn primary" data-go="food">＋ 記一餐</button></div>
+        <div class="quick">
+          <div><span>今日熱量</span><b>1,210</b><span>kcal</span></div>
+          <div><span>蛋白質</span><b>71.4</b><span>g</span></div>
+          <div><span>鈉</span><b>1,420</b><span>mg</span></div>
+          <div><span>補充劑</span><b id="suppCountHero">3 / 5</b><span>已吃</span></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-head"><div class="section-title">今天吃了什麼</div><button class="linkbtn" data-go="food">全部紀錄</button></div>
+        <div class="card meal-list">
+          <div class="meal"><div class="meal-left"><div class="meal-name">早餐 <span class="badge">已記錄</span></div><div class="meal-text">咖啡、鮮奶、蛋、豆漿</div><div class="meal-meta">428 kcal・蛋白質 24.1 g</div></div><div class="actions"><button class="smallbtn">修改</button></div></div>
+          <div class="meal"><div class="meal-left"><div class="meal-name">午餐 <span class="badge">已記錄</span></div><div class="meal-text">香蕉、無糖豆漿</div><div class="meal-meta">229 kcal・蛋白質 11.5 g</div></div><div class="actions"><button class="smallbtn">修改</button></div></div>
+          <div class="meal"><div class="meal-left"><div class="meal-name">點心 <span class="badge wait">尚未記錄</span></div><div class="meal-text empty">今天沒有紀錄</div></div><div class="actions"><button class="smallbtn primary">＋ 新增</button></div></div>
+          <div class="meal"><div class="meal-left"><div class="meal-name">晚餐 <span class="badge">已記錄</span></div><div class="meal-text">豆腐、毛豆、蛋、鮪魚</div><div class="meal-meta">553 kcal・蛋白質 35.8 g</div></div><div class="actions"><button class="smallbtn">修改</button></div></div>
+          <div class="actions"><button class="smallbtn primary">貼上 ChatGPT 紀錄</button><button class="smallbtn">復原上次匯入</button></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-head"><div class="section-title">今天補充劑</div><button class="linkbtn" data-go="supp">管理補充劑</button></div>
+        <div class="card">
+          <div class="supp-list">
+            <label class="supp"><input class="demo-supp" type="checkbox" checked><span><b>B 群・2 錠</b><div class="meta">早餐後</div></span></label>
+            <label class="supp"><input class="demo-supp" type="checkbox" checked><span><b>生物素・1 粒</b><div class="meta">早餐後</div></span></label>
+            <label class="supp"><input class="demo-supp" type="checkbox" checked><span><b>鋅・15 mg</b><div class="meta">任意時間</div></span></label>
+            <label class="supp"><input class="demo-supp" type="checkbox"><span><b>維生素 C・500 mg</b><div class="meta">晚餐後</div></span></label>
+            <label class="supp"><input class="demo-supp" type="checkbox"><span><b>鐵・5 mg</b><div class="meta">晚餐後</div></span></label>
+          </div>
+          <div class="progress-line"><i id="suppProgress"></i></div>
+          <div class="mini" id="suppSummary" style="margin-top:5px">已吃 3 / 5 項</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-head"><div class="section-title">今日營養</div><button class="linkbtn" data-go="food">看完整營養</button></div>
+        <div class="nutri-grid">
+          <div class="nutri normal"><div class="k">熱量</div><div class="v">1,210</div><div class="s">/ 1,400 kcal</div></div>
+          <div class="nutri good"><div class="k">蛋白質</div><div class="v">71.4 g</div><div class="s">接近 80 g</div></div>
+          <div class="nutri low"><div class="k">膳食纖維</div><div class="v">14.8 g</div><div class="s">尚差 10.2 g</div></div>
+          <div class="nutri warn"><div class="k">鈉</div><div class="v">1,420 mg</div><div class="s">提醒 1,500・上限 2,000</div></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title" style="margin-bottom:7px">今天還差多少</div>
+        <div class="card gaps">
+          <div class="gap"><span>熱量</span><b>約還有 190 kcal</b></div>
+          <div class="gap"><span>蛋白質</span><b>尚差 8.6 g</b></div>
+          <div class="gap"><span>膳食纖維</span><b>尚差 10.2 g</b></div>
+          <div class="gap"><span>鈉</span><b>距提醒值 80 mg</b></div>
+        </div>
+      </div>
+
+      <div class="section">
+        <details>
+          <summary>其他今天資訊</summary>
+          <div class="ref-menu">
+            <div><b>體重：</b>84.2 kg</div>
+            <div><b>下一針：</b>11/08 20:00・2.5 mg</div>
+            <div><b>食慾：</b>3 / 10</div>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="panel" id="food">
+      <div class="section-head"><div><div class="section-title">飲食紀錄</div><div class="mini">這裡只看「實際吃了什麼」。</div></div><button class="smallbtn primary">貼上 ChatGPT 紀錄</button></div>
+      <div class="card">
+        <div class="form-grid">
+          <div class="field"><label>日期</label><input type="date" value="2026-11-08"></div>
+          <div class="field"><label>餐次</label><input value="早餐"></div>
+          <div class="field full"><label>實際內容</label><input value="咖啡、鮮奶、蛋、豆漿"></div>
+        </div>
+        <div class="actions" style="margin-top:9px"><button class="smallbtn primary">＋ 新增食物</button><button class="smallbtn">從常吃食物選</button></div>
+      </div>
+      <div class="section"><div class="section-title" style="margin-bottom:7px">今日四餐</div>
+        <div class="card meal-list">
+          <div class="meal"><div><b>早餐</b><div class="meal-text">咖啡、鮮奶、蛋、豆漿</div></div><button class="smallbtn">編輯</button></div>
+          <div class="meal"><div><b>午餐</b><div class="meal-text">香蕉、無糖豆漿</div></div><button class="smallbtn">編輯</button></div>
+          <div class="meal"><div><b>點心</b><div class="meal-text empty">尚未記錄</div></div><button class="smallbtn primary">新增</button></div>
+          <div class="meal"><div><b>晚餐</b><div class="meal-text">豆腐、毛豆、蛋、鮪魚</div></div><button class="smallbtn">編輯</button></div>
+        </div>
+      </div>
+      <div class="section"><details><summary>參考菜單（選配）</summary><div class="notice" style="margin-top:8px">參考菜單不再影響「今天吃了什麼」與營養統計；只有妳主動打開時才看。</div><div class="ref-menu"><div>早餐參考：蛋＋豆漿＋饅頭</div><div>午餐參考：香蕉＋豆漿</div><div>晚餐參考：豆腐＋毛豆＋蛋</div></div></details></div>
+      <div class="section"><details><summary>完整營養成分</summary><div class="notice" style="margin-top:8px">正式版會沿用 V0.5.0 的「飲食｜補充劑｜合計｜目標／上限」完整表格。</div></details></div>
+    </section>
+
+    <section class="panel" id="supp">
+      <div class="section-head"><div><div class="section-title">補充劑</div><div class="mini">固定清單＋每日是否已吃。</div></div><button class="smallbtn primary">＋ 新增固定補充劑</button></div>
+      <div class="card supp-list">
+        <label class="supp"><input type="checkbox" checked><span><b>B 群</b><div class="meta">2 錠・早餐後・B12 等</div></span></label>
+        <label class="supp"><input type="checkbox" checked><span><b>生物素</b><div class="meta">1 粒・早餐後・500 µg</div></span></label>
+        <label class="supp"><input type="checkbox" checked><span><b>鋅</b><div class="meta">15 mg・任意時間</div></span></label>
+        <label class="supp"><input type="checkbox"><span><b>維生素 C</b><div class="meta">500 mg・晚餐後</div></span></label>
+        <label class="supp"><input type="checkbox"><span><b>鐵</b><div class="meta">5 mg・晚餐後</div></span></label>
+      </div>
+      <div class="section"><details><summary>完整營養資料</summary><div class="notice" style="margin-top:8px">保留 V0.5.0 的完整維生素／礦物質欄位；平常不用展開。</div></details></div>
+    </section>
+
+    <section class="panel" id="weight"><div class="section-title">體重</div><div class="card"><div class="row-card"><div><b>84.2 kg</b><div class="meta">最新紀錄・11/08</div></div><button class="smallbtn primary">＋ 新增體重</button></div><div class="notice" style="margin-top:9px">正式版沿用目前的體重曲線、里程碑與刪除功能。</div></div></section>
+
+    <section class="panel" id="shot">
+      <div class="section-title">注射</div><div class="card list-card"><div class="row-card"><div><b>下一針</b><div class="meta">11/08 20:00・2.5 mg</div></div><button class="smallbtn primary">記錄注射</button></div><div class="row-card"><div><b>上次注射</b><div class="meta">11/01・2.5 mg・腹部</div></div><button class="smallbtn">查看</button></div></div>
+      <div class="section"><details><summary>旅行／延後施打</summary><div class="notice" style="margin-top:8px">原「旅行延後」主分頁移到這裡。</div></details></div>
+      <div class="section"><details><summary>施打提醒</summary><div class="notice" style="margin-top:8px">原「施打提醒」主分頁也併到注射。</div></details></div>
+    </section>
+
+    <section class="panel" id="stock"><div class="section-title">藥物庫存</div><div class="card"><div class="quick"><div><span>剩餘</span><b>8</b><span>劑</span></div><div><span>目前價值</span><b>$24,000</b><span>估算</span></div><div><span>已施打</span><b>2</b><span>劑</span></div><div><span>批次</span><b>2</b><span>筆</span></div></div><div class="actions" style="margin-top:10px"><button class="smallbtn primary">＋ 新增購入批次</button></div></div></section>
+
+    <section class="panel" id="daily"><div class="section-title">每日狀況</div><div class="card form-grid"><div class="field"><label>食慾 0–10</label><input value="3"></div><div class="field"><label>飲水 ml</label><input value="1800"></div><div class="field"><label>噁心</label><input value="無"></div><div class="field"><label>排便</label><input value="正常"></div><div class="field full"><label>備註</label><input placeholder="今天身體狀況"></div></div></section>
+
+    <section class="panel" id="settings"><div class="section-title">設定</div><div class="card list-card"><div class="row-card"><div><b>營養目標</b><div class="meta">熱量、蛋白質、纖維、鈉提醒／上限</div></div><button class="smallbtn">設定</button></div><div class="row-card"><div><b>資料備份</b><div class="meta">完整 JSON 匯出／匯入</div></div><button class="smallbtn">開啟</button></div><div class="row-card"><div><b>App 更新</b><div class="meta">PWA 與版本資訊</div></div><button class="smallbtn">查看</button></div></div></section>
+  </main>
+
+  <div class="bottom-note">這是版面 Demo。按鈕只示範導覽與勾選，不會讀寫猛健錄正式資料。</div>
+</div>
+<script>
+const tabs=[...document.querySelectorAll('.tab')];
+function go(id){tabs.forEach(x=>x.classList.toggle('active',x.dataset.tab===id));document.querySelectorAll('.panel').forEach(x=>x.classList.toggle('active',x.id===id));window.scrollTo({top:0,behavior:'smooth'})}
+tabs.forEach(b=>b.onclick=()=>go(b.dataset.tab));
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+function refreshSupp(){const xs=[...document.querySelectorAll('.demo-supp')],n=xs.filter(x=>x.checked).length,total=xs.length;document.getElementById('suppCountHero').textContent=n+' / '+total;document.getElementById('suppSummary').textContent='已吃 '+n+' / '+total+' 項';document.getElementById('suppProgress').style.width=(total?n/total*100:0)+'%'}
+document.querySelectorAll('.demo-supp').forEach(x=>x.onchange=refreshSupp);refreshSupp();
+</script>
+</body>
+</html>
